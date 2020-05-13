@@ -2,11 +2,9 @@
 Projet Île Interdite
 ====================
 
-**TODO: remplir votre cartouche d'identification**
-
-:**Équipe**: team-42
-:**Membres**: NOM Prénom, NOM Prénom, NOM Prénom, NOM Prénom, …
-:**Chef de projet**: NOM Prénom
+:**Équipe**: Les Patates Douces
+:**Membres**: CARMINATI Vincenzo, CORBALAN Clément, SOSPEDRA Anne, CHAUVINEAU Marion, MOREAU Lucas
+:**Chef de projet**: SOSPEDRA Anne
 
 
 Description du projet
