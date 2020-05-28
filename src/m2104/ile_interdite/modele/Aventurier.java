@@ -6,5 +6,11 @@ package m2104.ile_interdite.modele;
  */
 public abstract class Aventurier {
     
-    int id;
+    private int position;
+    
+    Aventurier(int p){
+        position = p;
+    }
+    
+    
 }
