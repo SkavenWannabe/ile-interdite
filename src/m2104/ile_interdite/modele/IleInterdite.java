@@ -73,10 +73,8 @@ public class IleInterdite extends Observable<Message> {
                 case "NAVIGATEUR":
                     aventuriers.add(new Navigateur(p));
                     break;
-                case "EXPORATEUR":
+                case "EXPLORATEUR":
                     aventuriers.add(new Explorateur(p));
-                    break;
-                default:
                     break;
             }
         }
@@ -115,5 +113,9 @@ public class IleInterdite extends Observable<Message> {
         roles.push("NAVIGATEUR");
         Collections.shuffle(roles);
         return roles;
+    }
+    
+    public ArrayList<Aventurier> getAventuriers(){
+        return aventuriers;
     }
 }

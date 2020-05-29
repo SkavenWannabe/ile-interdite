@@ -18,4 +18,8 @@ public class Pilote extends Aventurier{
         pouvoir = true;
     }
     
+    @Override
+    public String toString(){
+        return "Pilote";
+    }
 }

@@ -15,4 +15,8 @@ public class Messager extends Aventurier{
         super(p);
     }
     
+    @Override
+    public String toString(){
+        return "Messager";
+    }
 }

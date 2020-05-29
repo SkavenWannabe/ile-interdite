@@ -15,4 +15,8 @@ public class Plongeur extends Aventurier{
         super(p);
     }
     
+    @Override
+    public String toString(){
+        return "Plongeur";
+    }
 }

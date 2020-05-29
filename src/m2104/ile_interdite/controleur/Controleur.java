@@ -31,6 +31,10 @@ public class Controleur implements Observateur<Message> {
                 assert msg.hasNbJoueurs();
                 String[] nomAventuriers = this.ileInterdite.inscrireJoueurs(msg.getNbJoueurs());
                 this.ileInterdite.initialisation(msg.getNbJoueurs());
+                System.out.println("\n--Partie initialisée !--");
+                System.out.println("Nombre de joueurs : " + this.ileInterdite.getAventuriers().size());
+                System.out.println("Rôles : ");
+                System.out.println(this.ileInterdite.getAventuriers());
                 this.ihm.creerVuesAventuriers(nomAventuriers);
                 break;
             default:

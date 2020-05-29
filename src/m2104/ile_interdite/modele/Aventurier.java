@@ -12,5 +12,4 @@ public abstract class Aventurier {
         position = p;
     }
     
-    
 }
