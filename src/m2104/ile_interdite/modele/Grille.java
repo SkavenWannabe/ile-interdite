@@ -17,7 +17,7 @@ public class Grille {
     private Tuille[] grille = new Tuille[36];
     
     Grille(){
-        Stack special = new Stack<String>();
+        Stack special;
         special = initSpecial();
         for(int i =0; i<36; i++){
             switch(i) {
@@ -31,7 +31,11 @@ public class Grille {
             }
         }
     }
-    
+
+    public Tuille[] getGrille() {
+        return grille;
+    }
+
     public Stack<String> initSpecial(){
         Stack special = new Stack<String>();
         for(int i=0; i<2; i++)

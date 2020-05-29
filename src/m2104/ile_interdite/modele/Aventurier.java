@@ -11,5 +11,8 @@ public abstract class Aventurier {
     Aventurier(int p){
         position = p;
     }
-    
+
+    public int getPosition() {
+        return position;
+    }
 }

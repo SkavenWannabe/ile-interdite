@@ -35,6 +35,7 @@ public class Controleur implements Observateur<Message> {
                 System.out.println("Nombre de joueurs : " + this.ileInterdite.getAventuriers().size());
                 System.out.println("Rôles : ");
                 System.out.println(this.ileInterdite.getAventuriers());
+                System.out.println(ileInterdite);
                 this.ihm.creerVuesAventuriers(nomAventuriers);
                 break;
             default:

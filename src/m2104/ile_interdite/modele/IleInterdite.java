@@ -29,6 +29,37 @@ public class IleInterdite extends Observable<Message> {
         this.addObservateur(observateur);
     }
 
+    /*
+        GET
+     */
+    public ArrayList<Aventurier> getAventuriers(){
+        return aventuriers;
+    }
+    public int getDiff() {
+        return diff;
+    }
+    public int getTour() {
+        return tour;
+    }
+    public HashMap getTresors() {
+        return tresors;
+    }
+    public Stack getPaquetTresor() {
+        return paquetTresor;
+    }
+    public Stack getDefausseTresor() {
+        return defausseTresor;
+    }
+    public Stack getPaquetInonde() {
+        return paquetInonde;
+    }
+    public Stack getDefausseInonde() {
+        return defausseInonde;
+    }
+    public Grille getGrille() {
+        return grille;
+    }
+
     public String[] inscrireJoueurs(int nbJoueurs) {
         // TODO: à remplacer par une réelle assignation des types d'aventuriers
         String[] nomAventuriers = new String[nbJoueurs];
@@ -50,8 +81,7 @@ public class IleInterdite extends Observable<Message> {
         paquetInonde = grille.tuillesValide();
         Collections.shuffle(paquetInonde);
         System.out.println("PAQUETS INITIALISES");
-        Stack roles = new Stack();
-        roles = initRoles();
+        Stack roles = initRoles();
         int p;
         for(int i = 0; i<nbJoueurs; i++){
             p = 0;
@@ -114,8 +144,45 @@ public class IleInterdite extends Observable<Message> {
         Collections.shuffle(roles);
         return roles;
     }
-    
-    public ArrayList<Aventurier> getAventuriers(){
-        return aventuriers;
+
+
+    @Override
+    public String toString() {
+        String ret; //String contenant le résultat de la méthode.
+        ret = "Ile interdite, tour(s) n° " + tour + ", difficulté " + diff + "\n"; //récupération du nombre de tours et la difficulté
+
+        //création de la partie Grille de ret
+        for(int i = 0; i < grille.getGrille().length; i++) {
+            if(i%6 == 0)
+                ret += "\n";
+
+            if(grille.getGrille()[i].getEtat() == Etat.ABYSSE)
+                ret += "   ";
+
+            else if (grille.getGrille()[i].getSpecial() == "HELICO") {
+                ret += " H ";
+            }
+
+            else if (grille.getGrille()[i].getSpecial() == "TRESOR_PIERRE" ||
+                    grille.getGrille()[i].getSpecial() == "TRESOR_CALICE" ||
+                    grille.getGrille()[i].getSpecial() == "TRESOR_CRISTAL" ||
+                    grille.getGrille()[i].getSpecial() == "TRESOR_STATUE") {
+                ret += " T ";
+            }
+
+            else {
+                int j = 0;
+                while(j < aventuriers.size() && i != aventuriers.get(j).getPosition()) {
+                    j++;
+                }
+                if(j < aventuriers.size()) {
+                    ret += " " + aventuriers.get(j).toString().substring(0,1) + " ";
+                } else {
+                    ret += " █ ";
+                }
+            }
+
+        }
+        return ret;
     }
 }
