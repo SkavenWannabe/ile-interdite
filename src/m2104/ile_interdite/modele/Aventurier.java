@@ -15,4 +15,6 @@ public abstract class Aventurier {
     public int getPosition() {
         return position;
     }
+
+    public abstract String toString();
 }

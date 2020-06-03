@@ -152,21 +152,21 @@ public class IleInterdite extends Observable<Message> {
         ret = "Ile interdite, tour(s) n° " + tour + ", difficulté " + diff + "\n"; //récupération du nombre de tours et la difficulté
 
         //création de la partie Grille de ret
-        for(int i = 0; i < grille.getGrille().length; i++) {
+        for(int i = 0; i < grille.getTuilles().length; i++) {
             if(i%6 == 0)
                 ret += "\n";
 
-            if(grille.getGrille()[i].getEtat() == Etat.ABYSSE)
+            if(grille.getTuilles()[i].getEtat() == Etat.ABYSSE)
                 ret += "   ";
 
-            else if (grille.getGrille()[i].getSpecial() == "HELICO") {
+            else if (grille.getTuilles()[i].getSpecial() == "HELICO") {
                 ret += " H ";
             }
 
-            else if (grille.getGrille()[i].getSpecial() == "TRESOR_PIERRE" ||
-                    grille.getGrille()[i].getSpecial() == "TRESOR_CALICE" ||
-                    grille.getGrille()[i].getSpecial() == "TRESOR_CRISTAL" ||
-                    grille.getGrille()[i].getSpecial() == "TRESOR_STATUE") {
+            else if (grille.getTuilles()[i].getSpecial() == "TRESOR_PIERRE" ||
+                    grille.getTuilles()[i].getSpecial() == "TRESOR_CALICE" ||
+                    grille.getTuilles()[i].getSpecial() == "TRESOR_CRISTAL" ||
+                    grille.getTuilles()[i].getSpecial() == "TRESOR_STATUE") {
                 ret += " T ";
             }
 

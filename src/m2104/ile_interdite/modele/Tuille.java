@@ -15,8 +15,8 @@ public class Tuille {
     private Etat etat;
     private String special;
     
-    Tuille(int i, Etat etat, String special){
-        num = i;
+    Tuille(int num, Etat etat, String special){
+        this.num = num;
         this.etat = etat;
         this.special = special;
     }

@@ -14,7 +14,7 @@ import java.util.Stack;
  */
 public class Grille {
     
-    private Tuille[] grille = new Tuille[36];
+    private Tuille[] tuilles = new Tuille[36];
     
     Grille(){
         Stack special;
@@ -23,17 +23,17 @@ public class Grille {
             switch(i) {
                 case 0: case 1: case 4: case 5: case 6: case 11:
                 case 24: case 29: case 30: case 31: case 34: case 35: 
-                    grille[i] = new Tuille(i,Etat.ABYSSE,"");
+                    tuilles[i] = new Tuille(i,Etat.ABYSSE,"");
                     break;
                 default:
-                    grille[i] = new Tuille(i,Etat.SEC, (String) special.pop());
+                    tuilles[i] = new Tuille(i,Etat.SEC, (String) special.pop());
                     break;
             }
         }
     }
 
-    public Tuille[] getGrille() {
-        return grille;
+    public Tuille[] getTuilles() {
+        return tuilles;
     }
 
     public Stack<String> initSpecial(){
@@ -61,17 +61,17 @@ public class Grille {
     
     public Stack tuillesValide(){
         Stack valides = new Stack();
-        int j = 0;
+
         for(int i =0; i<36; i++){
-            if(grille[i].getEtat() != Etat.ABYSSE){
+            if(tuilles[i].getEtat() != Etat.ABYSSE){
                 valides.push(i);
-                j++;
             }
         }
+
         return valides;
     }
     
     public Tuille getTuille(int i){
-        return grille[i];
+        return tuilles[i];
     }
 }
