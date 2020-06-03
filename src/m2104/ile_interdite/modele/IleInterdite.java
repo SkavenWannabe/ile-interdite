@@ -81,6 +81,11 @@ public class IleInterdite extends Observable<Message> {
         paquetInonde = grille.tuillesValide();
         Collections.shuffle(paquetInonde);
         System.out.println("PAQUETS INITIALISES");
+        for(int i = 0; i<6; i++){
+            grille.changeEtat((int) paquetInonde.peek(),-1);
+            defausseInonde.push(paquetInonde.pop());
+        }
+        System.out.println("GRILLE INITIALISEE");
         Stack roles = initRoles();
         int p;
         for(int i = 0; i<nbJoueurs; i++){

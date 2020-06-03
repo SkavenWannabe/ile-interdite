@@ -18,7 +18,7 @@ public class Grille {
     
     Grille(){
         Stack special;
-        special = initSpecial();
+        special = this.initSpecial();
         for(int i =0; i<36; i++){
             switch(i) {
                 case 0: case 1: case 4: case 5: case 6: case 11:
@@ -74,4 +74,24 @@ public class Grille {
     public Tuille getTuille(int i){
         return tuilles[i];
     }
+    
+    public void changeEtat(int position, int modif){
+        switch(tuilles[position].getEtat()){
+            case SEC:
+                if (modif == -1)
+                    tuilles[position].setEtat(Etat.INONDE);
+                break;
+            case INONDE:
+                if (modif == -1)
+                    tuilles[position].setEtat(Etat.ABYSSE);
+                else
+                    tuilles[position].setEtat(Etat.SEC);
+                break;
+            case ABYSSE:
+                //To do : exception
+                break;
+            default:
+                break;
+        }
+    }  
 }

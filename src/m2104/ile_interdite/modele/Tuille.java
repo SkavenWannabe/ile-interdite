@@ -17,7 +17,7 @@ public class Tuille {
     
     Tuille(int num, Etat etat, String special){
         this.num = num;
-        this.etat = etat;
+        this.setEtat(etat);
         this.special = special;
     }
     
@@ -27,5 +27,9 @@ public class Tuille {
     
     public String getSpecial(){
         return special;
+    }
+    
+    public void setEtat(Etat etat){
+        this.etat = etat;
     }
 }
