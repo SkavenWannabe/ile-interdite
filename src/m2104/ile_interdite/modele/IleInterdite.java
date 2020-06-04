@@ -198,7 +198,10 @@ public class IleInterdite extends Observable<Message> {
                 if(j < aventuriers.size()) {
                     ret += " " + aventuriers.get(j).toString().substring(0,1) + " ";
                 } else {
-                    ret += " █ ";
+                    if (grille.getTuilles()[i].getEtat() == Etat.INONDE)
+                        ret += " ~ ";
+                    else
+                        ret += " █ ";
                 }
             }
 
