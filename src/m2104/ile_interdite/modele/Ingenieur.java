@@ -17,6 +17,6 @@ public class Ingenieur extends Aventurier{
     
     @Override
     public String toString(){
-        return "Ingenieur";
+        return "Ingenieur " + super.toString();
     }
 }

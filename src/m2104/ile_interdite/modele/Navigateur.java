@@ -17,6 +17,6 @@ public class Navigateur extends Aventurier{
     
     @Override
     public String toString(){
-        return "Navigateur";
+        return "Navigateur " + super.toString();
     }
 }

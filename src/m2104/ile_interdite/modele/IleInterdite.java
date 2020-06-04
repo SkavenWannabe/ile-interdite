@@ -112,8 +112,23 @@ public class IleInterdite extends Observable<Message> {
                     aventuriers.add(new Explorateur(p));
                     break;
             }
+            for(int j = 0; j<2; j++){
+                if(paquetTresor.peek() == CarteTresor.MONTEE_EAU){
+                    defausseTresor.push(paquetTresor.pop());
+                    j--;
+                }
+                else
+                    aventuriers.get(i).ajouterCarte((CarteTresor) paquetTresor.pop());
+            }
         }
         System.out.println("ROLES INITIALISES");
+        System.out.println("MAINS DE DEPART INITIALISEES");
+        int g = 0;
+        while(g<defausseTresor.size()){
+            paquetTresor.push(defausseTresor.pop());
+            g++;
+        }
+        Collections.shuffle(paquetTresor);
         System.out.println("INITIALISATION TERMINEE !");
     }
     
