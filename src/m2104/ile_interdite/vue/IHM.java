@@ -2,6 +2,8 @@ package m2104.ile_interdite.vue;
 
 import java.awt.Color;
 import java.util.HashMap;
+
+import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
 import patterns.observateur.Observable;
 import patterns.observateur.Observateur;
@@ -23,9 +25,9 @@ public class IHM extends Observable<Message> {
         this.vueInscription = new VueInscriptionJoueurs(this);
     }
     
-    public void creerVuesJeu(String[] nomAventurier, int difficulte) {
+    public void creerVuesJeu(String[] nomAventurier, int difficulte, Grille grille) {
     	String[] nomsJoueurs = this.vueInscription.getNomJoueurs();
-    	jeu = new VueJeu(nomsJoueurs,nomsJoueurs.length,difficulte);
+    	jeu = new VueJeu(nomsJoueurs,nomsJoueurs.length,difficulte, grille);
     }
     
     public void creerVuesAventuriers(String[] nomAventuriers) {

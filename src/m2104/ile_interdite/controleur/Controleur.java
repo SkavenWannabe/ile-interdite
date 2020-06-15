@@ -31,13 +31,14 @@ public class Controleur implements Observateur<Message> {
                 assert msg.hasNbJoueurs();
                 this.ileInterdite.initialisation(msg.getNbJoueurs(),msg.getDifficulte());
                 String[] nomAventuriers = this.ileInterdite.inscrireJoueurs(msg.getNbJoueurs());
+                
                 System.out.println("\n--Partie initialisée !--");
                 System.out.println("Nombre de joueurs : " + this.ileInterdite.getAventuriers().size());
                 System.out.println("Rôles : ");
                 System.out.println(this.ileInterdite.getAventuriers());
                 System.out.println(ileInterdite);
-                this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte());
-                //this.ihm.creerVuesAventuriers(nomAventuriers);
+                
+                this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille());
                 break;
             default:
                 if (Parameters.LOGS) {

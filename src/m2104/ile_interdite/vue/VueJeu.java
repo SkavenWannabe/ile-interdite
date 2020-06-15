@@ -1,6 +1,7 @@
 package m2104.ile_interdite.vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import m2104.ile_interdite.modele.Grille;
 
 public class VueJeu {
 	private JFrame fenetre;
@@ -31,6 +34,7 @@ public class VueJeu {
 	private String [] nomsJoueurs;
 	private int nbJoueur;
 	private int dif;
+	private Grille grille;
 	
 	private JButton tresors;
 	private JButton tresorsDef;
@@ -47,7 +51,7 @@ public class VueJeu {
 	private JButton innondeDef;
 	private JLabel nom;
 	
-	public VueJeu(String[] nomsJoueurs, int nbJoueur, int difficulte) {
+	public VueJeu(String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille) {
 		//initialisation attribut
 		this.nomsJoueurs = nomsJoueurs;
 		this.nbJoueur = nbJoueur;
@@ -76,15 +80,19 @@ public class VueJeu {
         mainPanel.add(panelWeast, BorderLayout.WEST);
         
         // Initialisation Haut de page
-        nomTour = new JLabel("Tour x :");
+        nomTour = new JLabel("Tour 1 : ");
         panelNorth.add(nomTour); panelNorth.add(new JLabel());
         for (int i =0; i<nbJoueur; i++) {
-        	panelNorth.add(new JLabel (nomsJoueurs[i]));panelNorth.add(new JLabel());
+        	JLabel labelnom = new JLabel (nomsJoueurs[i]);
+        	panelNorth.add(labelnom);panelNorth.add(new JLabel());
+        	if (i==1) {
+        		labelnom.setForeground(Color.red);
+        	}
         }        
         
         // Initialisation Centre de page
         // Partie Vince
-        panelCentre.add(new JButton("essai Centre"));
+        panelCentre.add(new PannelGrille(grille.getTuilles()));
 
         
         // Initialisation partie East
@@ -190,4 +198,9 @@ public class VueJeu {
         fenetre.add(mainPanel);
         fenetre.setVisible(true);
 	}
+	
+	
+	
+	
+	
 }
