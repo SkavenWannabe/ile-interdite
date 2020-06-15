@@ -15,12 +15,19 @@ public class IHM extends Observable<Message> {
     private final VueInscriptionJoueurs vueInscription;
     private final HashMap<Integer, VueAventurier> vueAventuriers;
 
+    private VueJeu jeu;
+
     public IHM(Observateur<Message> observateur) {
         this.addObservateur(observateur);
         this.vueAventuriers = new HashMap<>();
         this.vueInscription = new VueInscriptionJoueurs(this);
     }
-
+    
+    public void creerVuesJeu(String[] nomAventurier, int difficulte) {
+    	String[] nomsJoueurs = this.vueInscription.getNomJoueurs();
+    	jeu = new VueJeu(nomsJoueurs,nomsJoueurs.length,difficulte);
+    }
+    
     public void creerVuesAventuriers(String[] nomAventuriers) {
         // - le pouvoir est disponible dans le modèle
         String[] nomsJoueurs = this.vueInscription.getNomJoueurs();
