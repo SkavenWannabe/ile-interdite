@@ -37,12 +37,13 @@ public class VueInscriptionJoueurs {
     private VueReglesDuJeu regles;
     
     private JPanel mainPanel = new JPanel(new GridLayout(1,2));
-    private JPanel panelInit = new JPanel(new GridLayout(5,1));
+    private JPanel panelGauche = new JPanel(new GridLayout(2,1));
+    private JPanel panelBtnG = new JPanel(new GridLayout(3,1));
     
-    private JPanel main2 = new JPanel(new GridLayout(3,1));
+    private JPanel panelDroit = new JPanel(new GridLayout(3,1));
     private JPanel panelChoix = new JPanel(new GridLayout(5,2));
     private JPanel panelChoixDif = new JPanel(new GridLayout(3,2));
-    private JPanel panelBtn = new JPanel(new GridLayout(3,3));
+    private JPanel panelBtnD = new JPanel(new GridLayout(3,3));
     
     private JButton nvPartie;
     private JButton rdj;
@@ -83,23 +84,23 @@ public class VueInscriptionJoueurs {
         });
         
         //Mise a jour de la fenêtre
-        panelInit.add(new JLabel());
-        panelInit.add(new JPanel() {
+        panelGauche.add(new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 try {
-                    BufferedImage img = ImageIO.read(new File("fautladeletequandonlavireoublierpassilvousplaitsinonsavaetregenantaexpliquer.png"));
+                    BufferedImage img = ImageIO.read(new File("ile_interdite_init.png"));
                     g.drawImage(img,0,0, null, null);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-        }); //ajout case vide, voir mettre image ?
-        panelInit.add(nvPartie);
-        panelInit.add(rdj);
-        panelInit.add(quitter);
+        }); 
+        panelBtnG.add(nvPartie);
+        panelBtnG.add(rdj);
+        panelBtnG.add(quitter);
         
-        mainPanel.add(panelInit);
+        panelGauche.add(panelBtnG);
+        mainPanel.add(panelGauche);
         fenetre.add(mainPanel);
         fenetre.setVisible(true);
     }
@@ -189,16 +190,16 @@ public class VueInscriptionJoueurs {
                 fenetre.dispose();
             }
         });
-        panelBtn.add(new JLabel());panelBtn.add(new JLabel());panelBtn.add(new JLabel());
-        panelBtn.add(new JLabel());panelBtn.add(inscrire);panelBtn.add(new JLabel());
-        panelBtn.add(new JLabel());panelBtn.add(new JLabel());panelBtn.add(new JLabel());
+        panelBtnD.add(new JLabel());panelBtnD.add(new JLabel());panelBtnD.add(new JLabel());
+        panelBtnD.add(new JLabel());panelBtnD.add(inscrire);panelBtnD.add(new JLabel());
+        panelBtnD.add(new JLabel());panelBtnD.add(new JLabel());panelBtnD.add(new JLabel());
         
         
         // Ajout de tout les composants
-        main2.add(panelChoix);
-        main2.add(panelChoixDif);
-        main2.add(panelBtn);
-        mainPanel.add(main2);
+        panelDroit.add(panelChoix);
+        panelDroit.add(panelChoixDif);
+        panelDroit.add(panelBtnD);
+        mainPanel.add(panelDroit);
         fenetre.add(mainPanel);
         
         fenetre.setVisible(true);
