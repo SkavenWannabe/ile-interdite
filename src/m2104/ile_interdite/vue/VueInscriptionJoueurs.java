@@ -88,7 +88,7 @@ public class VueInscriptionJoueurs {
             @Override
             protected void paintComponent(Graphics g) {
                 try {
-                    BufferedImage img = ImageIO.read(new File("assets/ile_interdite_init.png"));
+                    BufferedImage img = ImageIO.read(new File("src/assets/ile_interdite_init.png"));
                     g.drawImage(img.getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT),0,0, null, null);
                 } catch (IOException e) {
                     e.printStackTrace();
