@@ -1,14 +1,16 @@
 package m2104.ile_interdite.vue;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
-import javax.swing.BorderFactory;
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -82,7 +84,17 @@ public class VueInscriptionJoueurs {
         
         //Mise a jour de la fenêtre
         panelInit.add(new JLabel());
-        panelInit.add(new JLabel()); //ajout case vide, voir mettre image ?
+        panelInit.add(new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                try {
+                    BufferedImage img = ImageIO.read(new File("fautladeletequandonlavireoublierpassilvousplaitsinonsavaetregenantaexpliquer.png"));
+                    g.drawImage(img,0,0, null, null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }); //ajout case vide, voir mettre image ?
         panelInit.add(nvPartie);
         panelInit.add(rdj);
         panelInit.add(quitter);
