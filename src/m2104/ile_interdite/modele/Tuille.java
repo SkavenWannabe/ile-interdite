@@ -13,9 +13,9 @@ public class Tuille {
     
     private int num;
     private Etat etat;
-    private CarteTresor special;
+    private String special;
     
-    Tuille(int num, Etat etat, CarteTresor special){
+    Tuille(int num, Etat etat, String special){
         this.num = num;
         this.setEtat(etat);
         this.special = special;
@@ -25,7 +25,7 @@ public class Tuille {
         return etat;
     }
     
-    public CarteTresor getSpecial(){
+    public String getSpecial(){
         return special;
     }
     

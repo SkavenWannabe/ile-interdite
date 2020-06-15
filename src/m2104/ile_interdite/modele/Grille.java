@@ -26,7 +26,7 @@ public class Grille {
                     tuilles[i] = new Tuille(i,Etat.ABYSSE,null);
                     break;
                 default:
-                    tuilles[i] = new Tuille(i,Etat.SEC, (CarteTresor) special.pop());
+                    tuilles[i] = new Tuille(i,Etat.SEC, (String) special.pop());
                     break;
             }
         }
