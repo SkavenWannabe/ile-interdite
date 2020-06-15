@@ -68,10 +68,10 @@ public class IleInterdite extends Observable<Message> {
         return nomAventuriers;
     }
     
-    public void initialisation(int nbJoueurs){
+    public void initialisation(int nbJoueurs, int difficulte){
        
         System.out.println("INITIALISATION ...");
-        diff = 2;
+        diff = difficulte;
         System.out.println("DIFFICULTE INITIALISEE");
         tresors.put(CarteTresor.TRESOR_PIERRE,false);
         tresors.put(CarteTresor.TRESOR_CALICE,false);
