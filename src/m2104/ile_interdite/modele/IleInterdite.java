@@ -132,6 +132,18 @@ public class IleInterdite extends Observable<Message> {
         System.out.println("INITIALISATION TERMINEE !");
     }
     
+    public void resetPiocheTresor(){
+        for(int i = 0; i < defausseTresor.size(); i++)
+            paquetTresor.push(defausseTresor.pop());
+        Collections.shuffle(paquetTresor);
+    }
+    
+    public void resetPiocheInonde(){
+        for(int i = 0; i < defausseInonde.size(); i++)
+            paquetInonde.push(defausseInonde.pop());
+        Collections.shuffle(paquetInonde);
+    }
+    
     public Stack<CarteTresor> initPaquetTresor (){
         
         Stack paquet = new Stack<CarteTresor>();
