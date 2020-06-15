@@ -19,7 +19,7 @@ public class Controleur implements Observateur<Message> {
         this.ileInterdite = new IleInterdite(this);
         this.ihm = new IHM(this);
     }
-
+//
     @Override
     public void traiterMessage(Message msg) {
         if (Parameters.LOGS) {
