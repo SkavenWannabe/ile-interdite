@@ -20,6 +20,6 @@ public class Pilote extends Aventurier{
     
     @Override
     public String toString(){
-        return "Pilote " + super.toString();
+        return "Pilote";
     }
 }

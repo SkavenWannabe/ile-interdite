@@ -53,14 +53,4 @@ public abstract class Aventurier {
     public int getPosition() {
         return position;
     }
-
-    public String toString(){
-        String affich = "|";
-        int k = 0;
-        while(k<main.size()){
-            affich = affich + main.get(k)+"|";
-            k++;
-        }
-        return affich;
-    }
 }

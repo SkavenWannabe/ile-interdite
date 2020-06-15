@@ -29,8 +29,8 @@ public class Controleur implements Observateur<Message> {
         switch (msg.getCommande()) {
             case VALIDER_JOUEURS:
                 assert msg.hasNbJoueurs();
-                String[] nomAventuriers = this.ileInterdite.inscrireJoueurs(msg.getNbJoueurs());
                 this.ileInterdite.initialisation(msg.getNbJoueurs());
+                String[] nomAventuriers = this.ileInterdite.inscrireJoueurs(msg.getNbJoueurs());
                 System.out.println("\n--Partie initialisée !--");
                 System.out.println("Nombre de joueurs : " + this.ileInterdite.getAventuriers().size());
                 System.out.println("Rôles : ");
