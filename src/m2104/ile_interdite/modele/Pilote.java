@@ -17,7 +17,25 @@ public class Pilote extends Aventurier{
         super(p);
         pouvoir = true;
     }
-    
+
+    @Override
+    public int[] deplacementPossible(Grille grille) {
+        if(!pouvoir)
+            //si il n'a pas son pouvoir son déplacement est celui de l'aventurier de base
+            return super.deplacementPossible(grille);
+        else {
+            int[] ret = new int[36];
+            for(int i = 0; i < ret.length; i++) {
+                ret[i] = i;
+            }
+            return ret;
+        }
+    }
+
+    public void setPouvoir(boolean pouvoir) {
+        this.pouvoir = pouvoir;
+    }
+
     @Override
     public String toString(){
         return "Pilote";

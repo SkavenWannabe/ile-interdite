@@ -14,7 +14,11 @@ public class Navigateur extends Aventurier{
     public Navigateur(int p) {
         super(p);
     }
-    
+
+    public void deplaceAutreJoueur(Aventurier aventurier, int position) {
+        aventurier.changerPosition(position);
+    }
+
     @Override
     public String toString(){
         return "Navigateur";
