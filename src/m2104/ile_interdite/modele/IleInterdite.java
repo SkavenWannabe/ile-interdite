@@ -167,7 +167,7 @@ public class IleInterdite extends Observable<Message> {
     public void piocheInonde(){
         
         int j;
-        switch(diff){
+        switch(diff){                   //Défini le nombre de carte à piocher en fonction du niveau d'eau
             case 1: case 2:
                 j = 2;
                 break;
@@ -194,7 +194,7 @@ public class IleInterdite extends Observable<Message> {
             
             if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
                 for(int k = 0; k < aventuriers.size(); k++){
-                    if(aventuriers.get(k).getPosition() == id){
+                    if(aventuriers.get(k).getPosition() == id){ //Si l'aventurier est sur la tuille qui tombe dans l'abysse ...
                         //Il se noit, faites quelque chose !
                     }
                 }
