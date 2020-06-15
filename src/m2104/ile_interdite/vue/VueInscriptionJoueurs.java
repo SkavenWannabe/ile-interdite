@@ -33,7 +33,7 @@ public class VueInscriptionJoueurs {
     private JComboBox<Integer> choixNbJoueurs;
     private JLabel [] labelNomJoueurs = new JLabel[4];
     private JTextField [] saisieNomJoueurs = new JTextField[4];
-    private JButton inscrire = new JButton("Inscrire");
+    private JButton inscrire = new JButton("Jouer");
     private VueReglesDuJeu regles;
     
     private JPanel mainPanel = new JPanel(new GridLayout(1,2));
@@ -88,13 +88,13 @@ public class VueInscriptionJoueurs {
             @Override
             protected void paintComponent(Graphics g) {
                 try {
-                    BufferedImage img = ImageIO.read(new File("ile_interdite_init.png"));
-                    g.drawImage(img,0,0, null, null);
+                    BufferedImage img = ImageIO.read(new File("src/assets/ile_interdite_init.png"));
+                    g.drawImage(img.getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT),0,0, null, null);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-        }); 
+        });
         panelBtnG.add(nvPartie);
         panelBtnG.add(rdj);
         panelBtnG.add(quitter);
