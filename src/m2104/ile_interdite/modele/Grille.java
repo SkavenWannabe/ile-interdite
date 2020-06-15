@@ -23,7 +23,7 @@ public class Grille {
             switch(i) {
                 case 0: case 1: case 4: case 5: case 6: case 11:
                 case 24: case 29: case 30: case 31: case 34: case 35: 
-                    tuilles[i] = new Tuille(i,Etat.ABYSSE,null);
+                    tuilles[i] = new Tuille(i,Etat.ABYSSE,"");
                     break;
                 default:
                     tuilles[i] = new Tuille(i,Etat.SEC, (String) special.pop());
