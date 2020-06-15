@@ -37,7 +37,7 @@ public class Controleur implements Observateur<Message> {
                 System.out.println("Rôles : ");
                 System.out.println(this.ileInterdite.getAventuriers());
                 System.out.println(ileInterdite);
-                
+                this.ileInterdite.nouveauTour();
                 this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille());
                 break;
             default:

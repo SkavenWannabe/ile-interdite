@@ -123,6 +123,14 @@ public class Message implements Serializable {
         return new Message(Utils.Commandes.VOIR_DEFAUSSE, null, null, null, null, null, null);
     }
 
+    public static Message defaite(){
+        return new Message(Utils.Commandes.DEFAITE, null, null, null, null, null, null);
+    }
+    
+    public static Message victoire(){
+        return new Message(Utils.Commandes.VICTOIRE, null, null, null, null, null, null);
+    }
+    
     /**
      * @return the commande
      */
