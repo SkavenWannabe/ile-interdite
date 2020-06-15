@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
 public class VueReglesDuJeu {
@@ -87,7 +87,7 @@ public class VueReglesDuJeu {
         regles.setDisabledTextColor(Color.BLACK);
         regles.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         regles.setFont(new Font("Arial", Font.PLAIN, 14));
-        scroll = new JScrollPane(regles,VERTICAL_SCROLLBAR_AS_NEEDED,HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll = new JScrollPane(regles,VERTICAL_SCROLLBAR_AS_NEEDED,HORIZONTAL_SCROLLBAR_NEVER);
         centre.add(scroll, BorderLayout.CENTER);
         
         JPanel panelBas = new JPanel(new GridLayout(1,3));
