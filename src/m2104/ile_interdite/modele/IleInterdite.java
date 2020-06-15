@@ -69,7 +69,6 @@ public class IleInterdite extends Observable<Message> {
     }
     
     public void initialisation(int nbJoueurs, int difficulte){
-       
         System.out.println("INITIALISATION ...");
         diff = difficulte;
         System.out.println("DIFFICULTE INITIALISEE");
@@ -279,14 +278,14 @@ public class IleInterdite extends Observable<Message> {
             if(grille.getTuilles()[i].getEtat() == Etat.ABYSSE)
                 ret += "   ";
 
-            else if (grille.getTuilles()[i].getSpecial() == "HELICO") {
+            else if (grille.getTuilles()[i].getSpecial() == CarteTresor.HELICO) {
                 ret += " H ";
             }
 
-            else if (grille.getTuilles()[i].getSpecial() == "TRESOR_PIERRE" ||
-                    grille.getTuilles()[i].getSpecial() == "TRESOR_CALICE" ||
-                    grille.getTuilles()[i].getSpecial() == "TRESOR_CRISTAL" ||
-                    grille.getTuilles()[i].getSpecial() == "TRESOR_STATUE") {
+            else if (grille.getTuilles()[i].getSpecial() == CarteTresor.TRESOR_PIERRE ||
+                    grille.getTuilles()[i].getSpecial() == CarteTresor.TRESOR_CALICE ||
+                    grille.getTuilles()[i].getSpecial() == CarteTresor.TRESOR_CRISTAL ||
+                    grille.getTuilles()[i].getSpecial() == CarteTresor.TRESOR_STATUE) {
                 ret += " T ";
             }
 
