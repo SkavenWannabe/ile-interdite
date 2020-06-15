@@ -69,7 +69,7 @@ public class IleInterdite extends Observable<Message> {
     }
     
     public void initialisation(int nbJoueurs, int difficulte){
-       
+
         System.out.println("INITIALISATION ...");
         diff = difficulte;
         System.out.println("DIFFICULTE INITIALISEE");
@@ -132,40 +132,40 @@ public class IleInterdite extends Observable<Message> {
         Collections.shuffle(paquetTresor);
         System.out.println("INITIALISATION TERMINEE !");
     }
-    
+
     public void resetPiocheTresor(){
         for(int i = 0; i < defausseTresor.size(); i++)  //Replace toutes les cartes de la défausse dans la pioche
             paquetTresor.push(defausseTresor.pop());
         Collections.shuffle(paquetTresor);              //Melange la nouvelle pioche ainsi formée
     }
-    
+
     public void resetPiocheInonde(){
         for(int i = 0; i < defausseInonde.size(); i++)  //Replace toutes les cartes de la défausse dans la pioche
             paquetInonde.push(defausseInonde.pop());
         Collections.shuffle(paquetInonde);              //Melange la nouvelle pioche ainsi formée
     }
-    
+
     public void piocheTresor(){
-        
+
         for(int i = 0; i < 2; i ++){
             if (paquetTresor.isEmpty())                                                                     //Si la pioche est vide, on la reset avant de piocher
                 resetPiocheTresor();
             if (paquetTresor.peek() == CarteTresor.MONTEE_EAU){                                             //Si c'est une carte 'Montée des Eaux', on :
                 diff ++;                                                                                    //- Augmente le cran du niveau d'eau de 1
                 if (diff == 10){                                                                            //  (Et s'il atteind 10, on met fin à la partie)
-                    
+
                 }
                 resetPiocheInonde();                                                                        //- On remélange la défausse et la pioche
                 defausseTresor.push(paquetTresor.pop());                                                    //- On met la carte dans la défausse du paquet Trésor
             }
             else
                 aventuriers.get(tour % aventuriers.size()).ajouterCarte((CarteTresor) paquetTresor.pop());  //Sinon on met la carte dans la main du joueur actuel
-        
+
         }
     }
-    
+
     public void piocheInonde(){
-        
+
         int j;
         switch(diff){                   //Défini le nombre de carte à piocher en fonction du niveau d'eau
             case 1: case 2:
@@ -183,15 +183,15 @@ public class IleInterdite extends Observable<Message> {
                 j = 0;
                 break;
         }
-        
+
         for(int i = 0; i < j; i++){
-            
+
             if (paquetInonde.isEmpty())
                 resetPiocheInonde();
-            
+
             int id = (int) paquetInonde.pop();
             grille.changeEtat(id, -1);
-            
+
             if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
                 for(int k = 0; k < aventuriers.size(); k++){
                     if(aventuriers.get(k).getPosition() == id){ //Si l'aventurier est sur la tuille qui tombe dans l'abysse ...
@@ -199,41 +199,41 @@ public class IleInterdite extends Observable<Message> {
                     }
                 }
             }
-            
+
             //Attendre confirmation pour continuer
         }
     }
-    
+
     public void asseche(int position){
         grille.changeEtat(position, 1);
     }
-    
+
     public void deplace(int position){
         aventuriers.get(tour % aventuriers.size()).changerPosition(position);
     }
-    
+
     public void donnerTresor(Aventurier receveur, int numCarte){
         receveur.ajouterCarte(aventuriers.get(tour % aventuriers.size()).enleverCarte(numCarte));
     }
-    
+
     public void gagneTresor(CarteTresor tresor){
         tresors.replace(tresor, true);
     }
-    
+
     public void helico(int ancien, int nouveau){
         for(int i = 0; i < aventuriers.size(); i++)
             if(aventuriers.get(i).getPosition() == ancien)
                 aventuriers.get(i).changerPosition(nouveau);
     }
-    
+
     public int[] deplacementPossible(){
         return aventuriers.get(tour % aventuriers.size()).deplacementPossible(grille);
     }
-    
+
     //to Do : Methode PersonnageProche à faire (VINC au boulot)
-    
+
     public Stack<CarteTresor> initPaquetTresor (){
-        
+
         Stack paquet = new Stack<CarteTresor>();
         for(int i = 0; i<5; i++)
             paquet.push(CarteTresor.TRESOR_CALICE);
@@ -252,7 +252,7 @@ public class IleInterdite extends Observable<Message> {
         Collections.shuffle(paquet);
         return paquet;
     }
-    
+
     public Stack<String> initRoles(){
         Stack roles = new Stack();
         roles.push("PLONGEUR");
