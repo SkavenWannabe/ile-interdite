@@ -164,31 +164,29 @@ public class VueJeu {
         });
         indication = new JLabel("Pioche = fin de tour");
         
-        
-        // TODO: rajouter les ActionListener
         indication2 = new JLabel("Action Restantes : " + nbCoup);
         deplacer = new JButton("Deplacer");
         deplacer.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur deplacer");
+        		ihm.notifierObservateurs(Message.bouger());
         	}
         });
         assecher = new JButton("Assecher");
         assecher.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur assecher");
+        		ihm.notifierObservateurs(Message.testAssecher());
         	}
         });
         gagnerT = new JButton("Gagner Tresors");
         gagnerT.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur gagnerT");
+        		//ihm.notifierObservateurs(Message.recupererTresor());
         	}
         });
         donnerT = new JButton("Donner Tresors");
         donnerT.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur donnerT");
+        		//ihm.notifierObservateurs(Message.donner());
         	}
         });
         
@@ -247,9 +245,7 @@ public class VueJeu {
 	
 	
 	public void piocheTresors() {
-//		nbCoup -= 1;
-//		indication2.setText("Action restantes : " + nbCoup);
-		System.out.println("MVC pioche tresors");
+		
 	}
 	
 	public void piocheInnondation() {

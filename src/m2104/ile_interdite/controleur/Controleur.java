@@ -55,6 +55,24 @@ public class Controleur implements Observateur<Message> {
             case VOIR_DEFAUSSE:
             	ihm.afficherDeffausse(ileInterdite.getDefausseTresor());
             	break;
+            case TEST_BOUGER:
+            	ihm.deplacementPossible(this.ileInterdite.deplacementPossible());
+            	break;
+            case BOUGER:
+            	
+            	break;
+            case TEST_ASSECHER:
+            	
+            	break;
+            case ASSECHER:
+            	
+            	break;
+            case DONNER:
+            	
+            	break;
+            case RECUPERER_TRESOR:
+            	
+            	break;
             default:
                 if (Parameters.LOGS) {
                     System.err.println("Action interdite : " + msg.getCommande().toString());

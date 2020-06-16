@@ -48,6 +48,14 @@ public class IHM extends Observable<Message> {
     	jeu.afficherMain(i,carte);
     }
     
+    public void deplacementPossible(int[] tab) {
+    	
+    }
+    
+    public void assecherPossible(int[] tab) {
+    	
+    }
+    
     public void creerVuesAventuriers(String[] nomAventuriers) {
         // - le pouvoir est disponible dans le modèle
         String[] nomsJoueurs = this.vueInscription.getNomJoueurs();

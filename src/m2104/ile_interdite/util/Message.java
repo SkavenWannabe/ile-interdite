@@ -41,8 +41,12 @@ public class Message implements Serializable {
      * @param idAventurier
      * @return un nouveau {@link #Message} pour la commande {@link m2104.ile_interdite.util.Utils.Commandes#BOUGER}
      */
-    public static Message bouger(int idAventurier) {
-        return new Message(Utils.Commandes.BOUGER, idAventurier, null, null, null, null, null);
+    public static Message testBouger() {
+        return new Message(Utils.Commandes.TEST_BOUGER, null, null, null, null, null, null);
+    }
+
+    public static Message bouger() {
+        return new Message(Utils.Commandes.BOUGER, null, null, null, null, null, null);
     }
 
     /**
@@ -50,6 +54,9 @@ public class Message implements Serializable {
      * @param idAventurier
      * @return un nouveau {@link #Message} pour la commande {@link m2104.ile_interdite.util.Utils.Commandes#ASSECHER}
      */
+    public static Message testAssecher() {
+        return new Message(Utils.Commandes.TEST_ASSECHER, null, null, null, null, null, null);
+    }
     public static Message assecher(int idAventurier) {
         return new Message(Utils.Commandes.ASSECHER, idAventurier, null, null, null, null, null);
     }

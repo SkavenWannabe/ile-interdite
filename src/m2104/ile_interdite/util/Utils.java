@@ -15,13 +15,15 @@ public class Utils {
 
     public static enum Commandes {
         VALIDER_JOUEURS("Valider l'inscription des joueurs"),
+        TEST_BOUGER("verifie le deplacement possible"),
         BOUGER("Déplacer son pion"),
+        TEST_ASSECHER("Verifie si il peu assecher une tuille"),
         ASSECHER("Assécher une tuile"),
         DONNER("Donner une carte à un autre joueur"),
         RECUPERER_TRESOR("Récupérer le trésor de la tuile"),
         TERMINER("Terminer son tour"),
         RECEVOIR("Recevoir la carte donnée par un autre joueur"),
-        CHOISIR_CARTE_INNONDE("Utiliser une carte trésor"),
+        CHOISIR_CARTE_INNONDE("Utiliser une carte innondation"),
         CHOISIR_CARTE_TRESORS("Utiliser une carte trésor"),
         CHOISIR_TUILE("Sélectionner une tuile"),
         DEPLACER("Déplacer un autre joueur"),
