@@ -36,6 +36,7 @@ public class VueJeu {
 	private VueReglesDuJeu regles;
 	private VueInscriptionJoueurs init;
 	private VueNiveau niveau;
+	private VueDeffausse deffausse;
 	
 	private JLabel nomTour;
 	private int nbCoup = 3;
@@ -225,6 +226,7 @@ public class VueJeu {
 	}
 	
 	public void afficherDeffausse(Stack deffausse) {
+		this.deffausse = new VueDeffausse(deffausse);
 		System.out.println("MVC montrer deffausse");
 	}
 	
