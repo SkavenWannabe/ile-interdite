@@ -53,4 +53,7 @@ public abstract class Aventurier {
     public int getPosition() {
         return position;
     }
+    public ArrayList<CarteTresor> getMain(){
+        return main;
+    }
 }

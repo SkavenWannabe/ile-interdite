@@ -26,6 +26,7 @@ public class IleInterdite extends Observable<Message> {
     private ArrayList<Aventurier> aventuriers = new ArrayList<>();
     private int nbActions;
     private int nbInondations;
+    private HashMap specialAbysse = new HashMap(4);
     
     public IleInterdite(Observateur<Message> observateur) {
         this.addObservateur(observateur);
@@ -88,6 +89,10 @@ public class IleInterdite extends Observable<Message> {
         tresors.put(CarteTresor.TRESOR_CALICE,false);
         tresors.put(CarteTresor.TRESOR_CRISTAL,false);
         tresors.put(CarteTresor.TRESOR_STATUE,false);
+        specialAbysse.put(CarteTresor.TRESOR_PIERRE,0);
+        specialAbysse.put(CarteTresor.TRESOR_CALICE,0);
+        specialAbysse.put(CarteTresor.TRESOR_CRISTAL,0);
+        specialAbysse.put(CarteTresor.TRESOR_STATUE,0);
         System.out.println("TRESORS INITIALISES");
         paquetTresor = initPaquetTresor();
         paquetInonde = grille.tuillesValide();
@@ -159,6 +164,7 @@ public class IleInterdite extends Observable<Message> {
 
     public void piocheTresor(){
 
+        boolean eau = false;
         for(int i = 0; i < 2; i ++){
             if (paquetTresor.isEmpty())                                                                     //Si la pioche est vide, on la reset avant de piocher
                 resetPiocheTresor();
@@ -166,13 +172,16 @@ public class IleInterdite extends Observable<Message> {
                 diff ++;                                                                                    //- Augmente le cran du niveau d'eau de 1
                 if (diff == 10)                                                                             //  (Et s'il atteind 10, on met fin à la partie)
                     notifierObservateurs(Message.defaite());
-                resetPiocheInonde();                                                                        //- On remélange la défausse et la pioche
                 defausseTresor.push(paquetTresor.pop());                                                    //- On met la carte dans la défausse du paquet Trésor
-                nbInondations = setNbInondations();
+                eau = true;
             }
             else
                 aventuriers.get(tour % aventuriers.size()).ajouterCarte((CarteTresor) paquetTresor.pop());  //Sinon on met la carte dans la main du joueur actuel
 
+        }
+        if (eau){
+           resetPiocheInonde();                                                                             //- On remélange la défausse et la pioche
+           nbInondations = setNbInondations();
         }
     }
 
@@ -203,10 +212,19 @@ public class IleInterdite extends Observable<Message> {
         int id = (int) paquetInonde.pop();                          //Pioche la position de la tuile a inonder
         grille.changeEtat(id, -1);                                  //Change l'état de la tuile à inonder
 
+        
         if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
-            if(grille.getTuille(id).getSpecial().equals("HELICO"))  //Si la tuile sombre dans l'abysse et était l'héliport, la partie est perdue
+            String spec = grille.getTuille(id).getSpecial();
+            if(spec.equals("HELICO"))                               //Si la tuile sombre dans l'abysse et était l'héliport, la partie est perdue
                 notifierObservateurs(Message.defaite());
             else{
+                if(spec.equals("TRESOR_PIERRE") || spec.equals("TRESOR_CALICE") || spec.equals("TRESOR_STATUE") || spec.equals("TRESOR_CRISTAL")){
+                        int a = (int) specialAbysse.get(spec)+1;
+                        if (a == 2)
+                            notifierObservateurs(Message.defaite());
+                        else
+                            specialAbysse.replace(spec,a);
+                }
                 for(int k = 0; k < aventuriers.size(); k++){
                     if(aventuriers.get(k).getPosition() == id){     //Si l'aventurier est sur la tuille qui tombe dans l'abysse ...
                         //Il se noit, faites quelque chose !
@@ -214,6 +232,8 @@ public class IleInterdite extends Observable<Message> {
                 }
             }
         }
+        else
+            defausseInonde.push(id);
         
         nbInondations--;
     }
