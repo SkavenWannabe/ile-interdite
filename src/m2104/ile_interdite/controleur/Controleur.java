@@ -53,7 +53,7 @@ public class Controleur implements Observateur<Message> {
             	ihm.piocheInnondation();
             	break;
             case VOIR_DEFAUSSE:
-            	ihm.afficherDeffausse(ileInterdite.getDefausseTresor());
+            	ihm.afficherDefausse(ileInterdite.getDefausseTresor());
             	break;
             case TEST_BOUGER:
             	ihm.deplacementPossible(this.ileInterdite.deplacementPossible());

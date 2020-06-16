@@ -40,8 +40,8 @@ public class IHM extends Observable<Message> {
     	jeu.piocheInnondation();
     }
     
-    public void afficherDeffausse(Stack deffausse) {
-    	jeu.afficherDefausse(deffausse);
+    public void afficherDefausse(Stack defausse) {
+    	jeu.afficherDefausse(defausse);
     }
     
     public void afficherMain(int i, ArrayList<CarteTresor> carte) {
