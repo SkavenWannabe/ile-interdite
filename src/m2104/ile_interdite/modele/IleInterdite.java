@@ -163,7 +163,7 @@ public class IleInterdite extends Observable<Message> {
         Collections.shuffle(paquetInonde);              //Melange la nouvelle pioche ainsi formée
     }
 
-    public void piocheTresor(){
+    public ArrayList<CarteTresor> piocheTresor(){
 
         boolean eau = false;
         for(int i = 0; i < 2; i ++){
@@ -171,6 +171,7 @@ public class IleInterdite extends Observable<Message> {
                 resetPiocheTresor();
             if (paquetTresor.peek() == CarteTresor.MONTEE_EAU){                         //Si c'est une carte 'Montée des Eaux', on :
                 diff ++;                                                                //- Augmente le cran du niveau d'eau de 1
+                //notifierObservateurs();
                 if (diff == 10)                                                         //  (Et s'il atteind 10, on met fin à la partie)
                     notifierObservateurs(Message.defaite());
                 defausseTresor.push(paquetTresor.pop());                                //- On met la carte dans la défausse du paquet Trésor
@@ -184,6 +185,8 @@ public class IleInterdite extends Observable<Message> {
            resetPiocheInonde();                                                         //- On remélange la défausse et la pioche
            nbInondations = setNbInondations();
         }
+        
+        return getAventurierEnCours().getMain();
     }
 
     public int setNbInondations(){
@@ -334,7 +337,7 @@ public class IleInterdite extends Observable<Message> {
             return getAventurierEnCours().deplacementPossible(grille);
     }
     
-    //to Do : Methode PersonnageProche à faire (VINC au boulot)
+    //TODO : Methode PersonnageProche à faire (VINC au boulot)
 
     public Stack<CarteTresor> initPaquetTresor (){
 

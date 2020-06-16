@@ -45,8 +45,7 @@ public class Controleur implements Observateur<Message> {
                 }
                 break;
             case CHOISIR_CARTE_TRESORS:
-            	this.ileInterdite.piocheTresor();
-            	ihm.piocheTresors();
+            	ihm.piocheTresors(this.ileInterdite.piocheTresor());
             	break;
             case CHOISIR_CARTE_INNONDE:
             	this.ileInterdite.piocheInonde();

@@ -33,7 +33,8 @@ public class IHM extends Observable<Message> {
     	jeu = new VueJeu(this, nomsJoueurs,nomsJoueurs.length,difficulte, grille);
     }
     
-    public void piocheTresors() {
+    public void piocheTresors(ArrayList<CarteTresor> main) {
+        //TODO : Faudra faire quelque chose de cette main
     	jeu.piocheTresors();
     }
     public void piocheInnondation() {
