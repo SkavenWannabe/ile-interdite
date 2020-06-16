@@ -349,40 +349,4 @@ public class IleInterdite extends Observable<Message> {
         }
         return ret;
     }
-    
-    public void partieGagnable(){
-        boolean helico = true;
-        // On vérifie que l'Héliport ne soit pas coulé (déjà fait autre part du coup on le laisse ?)
-        for(int i = 0; i < grille.getTuilles().length; i++){
-            if (grille.getTuilles()[i].getSpecial() == "HELICO" && grille.getTuille(i).getEtat()== Etat.ABYSSE){
-                helico = false;
-            }
-        }
-        //On vérifie que chaque case qui possède encore un trésor ne soit pas coulée
-        boolean tresorPierre = true;
-        boolean tresorCalice = true;
-        boolean tresorCristal = true;
-        boolean tresorStatue = true;
-        for (int i = 0; i < grille.getTuilles().length; i++){
-            if(grille.getTuilles()[i].getSpecial() == "TRESOR_PIERRE"  && grille.getTuille(i).getEtat()== Etat.ABYSSE ){ //Ajout de la présence de trésor ?
-                tresorPierre = false;
-            }else if(grille.getTuilles()[i].getSpecial() == "TRESOR_CALICE"  && grille.getTuille(i).getEtat()== Etat.ABYSSE){
-                tresorCalice = false;
-            }else if(grille.getTuilles()[i].getSpecial() == "TRESOR_CRISTAL"  && grille.getTuille(i).getEtat()== Etat.ABYSSE){
-                tresorCristal = false;
-            }else if(grille.getTuilles()[i].getSpecial() == "TRESOR_STATUE"  && grille.getTuille(i).getEtat()== Etat.ABYSSE){
-                tresorStatue = false;
-            }
-        }
-        //La vérification que personne ne se soit noyé et déjà vérifié dans piocheInnonde()
-        
-        //Le niveau d'eau ne doit pas dépasser 10
-        boolean eauPasTropHaute = this.diff < 10;
-        
-       
-        if (!helico && !tresorPierre && !tresorCalice && !tresorCristal && !tresorStatue && !eauPasTropHaute){
-            notifierObservateurs(Message.defaite());
-        } 
-    }
-    
 }
