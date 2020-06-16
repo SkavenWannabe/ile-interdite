@@ -30,7 +30,7 @@ public class VueNiveau extends JPanel{
         this.niveau = niveauInitial;
         panelsGauches = new HashMap<>();
 
-        window = new JPanel() ;
+        window = new JPanel();
 
         this.mainPanel = new JPanel() ;
         this.window.add(mainPanel);
