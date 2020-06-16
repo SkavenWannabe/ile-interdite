@@ -1,9 +1,11 @@
 package m2104.ile_interdite.vue;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
+import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
 import patterns.observateur.Observable;
@@ -40,6 +42,10 @@ public class IHM extends Observable<Message> {
     
     public void afficherDeffausse(Stack deffausse) {
     	jeu.afficherDeffausse(deffausse);
+    }
+    
+    public void afficherMain(int i, ArrayList<CarteTresor> carte) {
+    	jeu.afficherMain(i,carte);
     }
     
     public void creerVuesAventuriers(String[] nomAventuriers) {

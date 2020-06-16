@@ -125,6 +125,9 @@ public class Message implements Serializable {
         return new Message(Utils.Commandes.VOIR_DEFAUSSE, null, null, null, null, null, null);
     }
 
+    public static Message noyade(int idTuile){
+        return new Message(Utils.Commandes.NOYADE, null, null, null, idTuile, null, null);
+    }
 
     public static Message defaite(){
         return new Message(Utils.Commandes.DEFAITE, null, null, null, null, null, null);
