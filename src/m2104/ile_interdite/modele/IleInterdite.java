@@ -68,8 +68,8 @@ public class IleInterdite extends Observable<Message> {
     public int getNbInondations(){
         return nbInondations;
     }
-    public ArrayList<CarteTresor> getMainAventurierEnCours(){
-        return aventuriers.get(tour % aventuriers.size()).getMain();
+    public ArrayList<CarteTresor> getMain(int numAv){
+        return aventuriers.get(numAv).getMain();
     }
 
     /*
@@ -143,12 +143,7 @@ public class IleInterdite extends Observable<Message> {
         }
         System.out.println("ROLES INITIALISES");
         System.out.println("MAINS DE DEPART INITIALISEES");
-        int g = 0;
-        while(g<defausseTresor.size()){
-            paquetTresor.push(defausseTresor.pop());
-            g++;
-        }
-        Collections.shuffle(paquetTresor);
+        resetPiocheTresor();
         nbActions = 3;
         System.out.println("INITIALISATION TERMINEE !");
     }
