@@ -149,14 +149,14 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public void resetPiocheTresor(){
-        for(int i = 0; i < defausseTresor.size(); i++)  //Replace toutes les cartes de la défausse dans la pioche
+        while(defausseTresor.size() < 0)                //Replace toutes les cartes de la défausse dans la pioche
             paquetTresor.push(defausseTresor.pop());
         Collections.shuffle(paquetTresor);              //Melange la nouvelle pioche ainsi formée
     }
 
     public void resetPiocheInonde(){
-        for(int i = 0; i < defausseInonde.size(); i++)  //Replace toutes les cartes de la défausse dans la pioche
-            paquetInonde.push(defausseInonde.pop());
+        while(defausseInonde.size() < 0)                //Replace toutes les cartes de la défausse dans la pioche
+            paquetInonde.push(defausseInonde.pop());    
         Collections.shuffle(paquetInonde);              //Melange la nouvelle pioche ainsi formée
     }
 
@@ -262,15 +262,48 @@ public class IleInterdite extends Observable<Message> {
     }    
     
     public void helico(int ancien, int nouveau){
+
         for(int i = 0; i < aventuriers.size(); i++)
             if(aventuriers.get(i).getPosition() == ancien)
                 aventuriers.get(i).changerPosition(nouveau);    //Change la position de chaque aventurier se trouvant sur la case de départ de l'hélico à celle d'arrivée
     }
 
+    public boolean estGagnable(){
+        
+        int j = 0;
+        while(!(grille.getTuille(j).getSpecial().equals("HELICO")))
+            j++;
+        
+        int k = 0;
+        while(k < aventuriers.size() && aventuriers.get(k).getPosition() == j)
+            k++;
+       
+        if(k == aventuriers.size()){
+            if((boolean) tresors.get(CarteTresor.TRESOR_CALICE) &&
+               (boolean) tresors.get(CarteTresor.TRESOR_PIERRE) &&
+               (boolean) tresors.get(CarteTresor.TRESOR_STATUE) &&
+               (boolean) tresors.get(CarteTresor.TRESOR_CRISTAL))
+                    return true;
+            else
+                return false;
+        }
+        else 
+            return false;
+    }
+    
     public int[] deplacementPossible(){
         return aventuriers.get(tour % aventuriers.size()).deplacementPossible(grille);  //Renvoie la lise des tuiles que l'aventurier en cours peut atteindre
     }
 
+    public int[] assechePossible(){
+        if (aventuriers.get(tour % aventuriers.size()).toString().equals("Pilote") || aventuriers.get(tour % aventuriers.size()).toString().equals("Plongeur")){
+            Messager m = new Messager(aventuriers.get(tour % aventuriers.size()).getPosition());
+            return m.deplacementPossible(grille);
+        }
+        else
+            return aventuriers.get(tour % aventuriers.size()).deplacementPossible(grille);
+    }
+    
     //to Do : Methode PersonnageProche à faire (VINC au boulot)
 
     public Stack<CarteTresor> initPaquetTresor (){
