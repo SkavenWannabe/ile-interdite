@@ -44,11 +44,13 @@ public class PannelGrille extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
     	super.paintComponent(g);
-    	// effacerComposant();
-    	// dessinerTuilles();
-    	// dessinerJoueurs();
-    	// dessinerSelection();
-    	
+    	// effacerComposant();    	
+    	dessinerTuiles(g);
+        dessinerAventuriers(g);
+        dessinerSelection(g);
+    }
+
+    private void dessinerTuiles(Graphics g) {
         for(int i = 0; i < tuiles.length; i++) {
             if(tuillesEtat[i] == "ABYSSE") {
                 g.drawImage(abysse.getScaledInstance(getWidth() / 6, getHeight() / 6, Image.SCALE_DEFAULT), (i % 6) * getWidth() / 6, i/6 * getHeight()/6, null, null);
@@ -80,7 +82,7 @@ public class PannelGrille extends JPanel {
                     case "PorteArgent":
                         nbTuilles = 7;
                         break;
-                    case "PorteDor":
+                    case "PorteOr":
                         nbTuilles = 8;
                         break;
                     case "TourGuet":
@@ -136,11 +138,9 @@ public class PannelGrille extends JPanel {
                     g.drawImage(tuilles_innondes.get(nbTuilles).getScaledInstance(getWidth() / 6, getHeight() / 6, Image.SCALE_DEFAULT), (i % 6) * getWidth() / 6, i/6 * getHeight()/6, null, null);
                 }
             }
-        }
-        dessinerAventuriers(g);
-        dessinerSelection(g);
+        }	
     }
-
+    
     private void dessinerAventuriers(Graphics g) {
     	aventuriers.forEach((k,v) -> {
     		String couleur = "Gris";
@@ -293,7 +293,7 @@ public class PannelGrille extends JPanel {
                 } else if(tuis[i].getSpecial() == "INGENIEUR") {
                     tuiles[i] = "PorteBronze";
                 } else if(tuis[i].getSpecial() == "NAVIGATEUR") {
-                    tuiles[i] = "PorteDor";
+                    tuiles[i] = "PorteOr";
                 } else {
                     tuiles[i] = (String) nomNormal.pop();
                 }
@@ -341,6 +341,7 @@ public class PannelGrille extends JPanel {
     }
 
     public void changerEtatTuile(int tuile, String etat) {
+    	System.out.println("Etat : " + etat);
     	tuillesEtat[tuile] = etat;
     	effacerSelection();
     	repaint();

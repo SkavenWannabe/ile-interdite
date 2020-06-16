@@ -55,12 +55,12 @@ public class IHM extends Observable<Message> {
     	jeu.clickPossible(tab);
     }
     
-    public void placerAventurier(int position, String role) {
-    	jeu.placerAventurier(position, role);
-    }
-    
     public void deplacerAventurier(String role, int tuile) {
     	jeu.deplacerAventurier(role, tuile);
+    }
+    
+    public void changerEtatTuile (int tuile, String etat) {
+    	jeu.changerEtatTuile(tuile, etat);
     }
     
     public void creerVuesAventuriers(String[] nomAventuriers) {

@@ -73,6 +73,7 @@ public class Controleur implements Observateur<Message> {
             	break;
             case ASSECHER:
             	ileInterdite.asseche(msg.getIdTuile());
+            	ihm.changerEtatTuile(msg.getIdTuile(), ileInterdite.getGrille().getTuille(msg.getIdTuile()).getEtat().toString());
             	break;
             case DONNER:
             	ileInterdite.donnerTresor(msg.getIdAventurier(),msg.getIdCarte());

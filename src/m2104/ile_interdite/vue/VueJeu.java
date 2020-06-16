@@ -281,16 +281,17 @@ public class VueJeu implements MouseListener {
     	panelGrille.selectionnerTuiles(tab);
     }
     
-    public void placerAventurier(int position, String role) {
-    	
-    }
-    
     public void deplacerAventurier(String role, int tuile) {
     	nbCoup -= 1;
     	indication2.setText(("Action Restantes : " + nbCoup));
     	panelGrille.deplacerAventurier(role, tuile);
+    	actionCourante = "";
     }
 
+    public void changerEtatTuile (int tuile, String etat) {
+    	panelGrille.changerEtatTuile(tuile, etat);
+    	actionCourante = "";
+    }
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
