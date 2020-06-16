@@ -59,19 +59,19 @@ public class Controleur implements Observateur<Message> {
             	ihm.deplacementPossible(this.ileInterdite.deplacementPossible());
             	break;
             case BOUGER:
-            	
+            	ileInterdite.deplace(msg.getIdTuile());
             	break;
             case TEST_ASSECHER:
-            	
+            	//ihm.assechePossible(this.ileInterdite.deplacementPossible());
             	break;
             case ASSECHER:
-            	
+            	ileInterdite.asseche(msg.getIdTuile());
             	break;
             case DONNER:
-            	
+            	ileInterdite.donnerTresor(msg.getIdAventurier(),msg.getIdCarte());
             	break;
             case RECUPERER_TRESOR:
-            	
+            	ileInterdite.gagneTresor(msg.getIdTuile());
             	break;
             default:
                 if (Parameters.LOGS) {

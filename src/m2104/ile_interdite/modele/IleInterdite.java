@@ -38,6 +38,9 @@ public class IleInterdite extends Observable<Message> {
     public ArrayList<Aventurier> getAventuriers(){
         return aventuriers;
     }
+    public Aventurier getAventurierEnCours(){
+        return aventuriers.get(tour % aventuriers.size());
+    }
     public int getDiff() {
         return diff;
     }
@@ -164,21 +167,21 @@ public class IleInterdite extends Observable<Message> {
 
         boolean eau = false;
         for(int i = 0; i < 2; i ++){
-            if (paquetTresor.isEmpty())                                                                     //Si la pioche est vide, on la reset avant de piocher
+            if (paquetTresor.isEmpty())                                                 //Si la pioche est vide, on la reset avant de piocher
                 resetPiocheTresor();
-            if (paquetTresor.peek() == CarteTresor.MONTEE_EAU){                                             //Si c'est une carte 'Montée des Eaux', on :
-                diff ++;                                                                                    //- Augmente le cran du niveau d'eau de 1
-                if (diff == 10)                                                                             //  (Et s'il atteind 10, on met fin à la partie)
+            if (paquetTresor.peek() == CarteTresor.MONTEE_EAU){                         //Si c'est une carte 'Montée des Eaux', on :
+                diff ++;                                                                //- Augmente le cran du niveau d'eau de 1
+                if (diff == 10)                                                         //  (Et s'il atteind 10, on met fin à la partie)
                     notifierObservateurs(Message.defaite());
-                defausseTresor.push(paquetTresor.pop());                                                    //- On met la carte dans la défausse du paquet Trésor
+                defausseTresor.push(paquetTresor.pop());                                //- On met la carte dans la défausse du paquet Trésor
                 eau = true;
             }
             else
-                aventuriers.get(tour % aventuriers.size()).ajouterCarte((CarteTresor) paquetTresor.pop());  //Sinon on met la carte dans la main du joueur actuel
+                getAventurierEnCours().ajouterCarte((CarteTresor) paquetTresor.pop());  //Sinon on met la carte dans la main du joueur actuel
 
         }
         if (eau){
-           resetPiocheInonde();                                                                             //- On remélange la défausse et la pioche
+           resetPiocheInonde();                                                         //- On remélange la défausse et la pioche
            nbInondations = setNbInondations();
         }
     }
@@ -204,34 +207,34 @@ public class IleInterdite extends Observable<Message> {
     
     public void piocheInonde(){
 
-        if (paquetInonde.isEmpty())                                 //Si la pioche est vide, la réinitialise
+        if (paquetInonde.isEmpty())                                     //Si la pioche est vide, la réinitialise
             resetPiocheInonde();
 
-        int id = (int) paquetInonde.pop();                          //Pioche la position de la tuile a inonder
-        grille.changeEtat(id, -1);                                  //Change l'état de la tuile à inonder
+        int id = (int) paquetInonde.pop();                              //Pioche la position de la tuile a inonder
+        grille.changeEtat(id, -1);                                      //Change l'état de la tuile à inonder
 
         
         if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
             String spec = grille.getTuille(id).getSpecial();
-            if(spec.equals("HELICO"))                               //Si la tuile sombre dans l'abysse et était l'héliport, la partie est perdue
+            if(spec.equals("HELICO"))                                   //Si la tuile sombre dans l'abysse et était l'héliport, la partie est perdue
                 notifierObservateurs(Message.defaite());
             else{
                 if(spec.equals("TRESOR_PIERRE") || spec.equals("TRESOR_CALICE") || spec.equals("TRESOR_STATUE") || spec.equals("TRESOR_CRISTAL")){
                         int a = (int) specialAbysse.get(spec)+1;
-                        if (a == 2 && !((boolean) tresors.get(spec)))
+                        if (a == 2 && !((boolean) tresors.get(spec)))   //Si les deux tuille d'un trésor non encore possédé sombre dans l'abysse, la partie est perdue
                             notifierObservateurs(Message.defaite());
                         else
                             specialAbysse.replace(spec,a);
                 }
                 for(int k = 0; k < aventuriers.size(); k++){
-                    if(aventuriers.get(k).getPosition() == id){     //Si l'aventurier est sur la tuille qui tombe dans l'abysse ...
-                        notifierObservateurs(Message.noyade(id));
+                    if(aventuriers.get(k).getPosition() == id){         //Si un aventurier est sur la tuille qui tombe dans l'abysse ...
+                        notifierObservateurs(Message.noyade(id));       //On prévient le contrôleur d'une potentiel noyade
                     }
                 }
             }
         }
         else
-            defausseInonde.push(id);
+            defausseInonde.push(id);                                    //Si la tuille ne sombre pas dans l'abysse, on ajoute sa position dans la défausse
         
         nbInondations--;
     }
@@ -242,18 +245,45 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public void deplace(int position){
-        aventuriers.get(tour % aventuriers.size()).changerPosition(position); //Change la position de l'aventurier en cours avec sa nouvelle position
-        nbActions--;                                                          //Réduit le compteur d'action de 1
+        getAventurierEnCours().changerPosition(position); //Change la position de l'aventurier en cours avec sa nouvelle position
+        nbActions--;                                      //Réduit le compteur d'action de 1
     }
 
-    public void donnerTresor(Aventurier receveur, int numCarte){
-        receveur.ajouterCarte(aventuriers.get(tour % aventuriers.size()).enleverCarte(numCarte));   //Ajoute dans la main de l'aventurier receveur la carte qu'on enlève de la main de l'aventurier donneur
-        nbActions--;                                                                                //Réduit le compteur d'action de 1
+    public void donnerTresor(int receveur, int numCarte){
+        aventuriers.get(receveur).ajouterCarte(getAventurierEnCours().enleverCarte(numCarte));  //Ajoute dans la main de l'aventurier receveur la carte qu'on enlève de la main de l'aventurier donneur
+        nbActions--;                                                                                                //Réduit le compteur d'action de 1
     }
 
-    public void gagneTresor(CarteTresor tresor){
-        tresors.replace(tresor, true);  //Place la valeur bnoolean associé au tresor à true
-        nbActions--;                    //Réduit le compteur d'action de 1
+    public void gagneTresor(int tuille){
+        CarteTresor tresor;
+        switch(grille.getTuille(tuille).getSpecial()){  //A partir de la caractéristique Spécial de la tuille, détermine le trésor à obtenir
+            case "TRESOR_PIERRE":
+                tresor = CarteTresor.TRESOR_PIERRE;
+                break;
+            case "TRESOR_CALICE":
+                tresor = CarteTresor.TRESOR_CALICE;
+                break;
+            case "TRESOR_CRISTAL":
+                tresor = CarteTresor.TRESOR_CRISTAL;
+                break;
+            case "TRESOR_STATUE":
+                tresor = CarteTresor.TRESOR_STATUE;
+                break;
+            default:
+                tresor = CarteTresor.HELICO;
+                break;
+        }
+        tresors.replace(tresor, true);                  //Place la valeur boolean associé au tresor à true
+        
+        int k;
+        for(int i = 0; i < 4; i++){
+            k = 0;
+            while(getAventurierEnCours().getMain().get(k) == tresor)
+                k++;
+            getAventurierEnCours().enleverCarte(k);
+        }
+        
+        nbActions--;                                    //Réduit le compteur d'action de 1
     }
 
     public void nouveauTour(){
@@ -292,16 +322,16 @@ public class IleInterdite extends Observable<Message> {
     }
     
     public int[] deplacementPossible(){
-        return aventuriers.get(tour % aventuriers.size()).deplacementPossible(grille);  //Renvoie la lise des tuiles que l'aventurier en cours peut atteindre
+        return getAventurierEnCours().deplacementPossible(grille);  //Renvoie la lise des tuiles que l'aventurier en cours peut atteindre
     }
 
     public int[] assechePossible(){
-        if (aventuriers.get(tour % aventuriers.size()).toString().equals("Pilote") || aventuriers.get(tour % aventuriers.size()).toString().equals("Plongeur")){
-            Messager m = new Messager(aventuriers.get(tour % aventuriers.size()).getPosition());
+        if (getAventurierEnCours().toString().equals("Pilote") || aventuriers.get(tour % aventuriers.size()).toString().equals("Plongeur")){
+            Messager m = new Messager(getAventurierEnCours().getPosition());
             return m.deplacementPossible(grille);
         }
         else
-            return aventuriers.get(tour % aventuriers.size()).deplacementPossible(grille);
+            return getAventurierEnCours().deplacementPossible(grille);
     }
     
     //to Do : Methode PersonnageProche à faire (VINC au boulot)
