@@ -56,13 +56,13 @@ public class Controleur implements Observateur<Message> {
             	ihm.afficherDefausse(ileInterdite.getDefausseTresor());
             	break;
             case TEST_BOUGER:
-            	ihm.deplacementPossible(this.ileInterdite.deplacementPossible());
+            	ihm.clickPossible(this.ileInterdite.deplacementPossible());
             	break;
             case BOUGER:
-            	
+            	//ihm.deplacerAventurier();
             	break;
             case TEST_ASSECHER:
-            	
+            	ihm.clickPossible(this.ileInterdite.assechePossible());
             	break;
             case ASSECHER:
             	

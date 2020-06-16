@@ -32,6 +32,7 @@ public class VueJeu {
 	private JPanel panelBtn;
 	private JPanel panelInnondation;
 	private JPanel panelNiveau;
+	private PannelGrille panelGrille;
 	
 	private JPanel panelJ1;
 	private JPanel panelJ2;
@@ -75,6 +76,7 @@ public class VueJeu {
 		this.nomsJoueurs = nomsJoueurs;
 		this.nbJoueur = nbJoueur;
 		this.dif = difficulte;
+		this.grille = grille;
 		
 		//initialisation Fenetre
 		fenetre = new JFrame("Ile interdite");
@@ -121,7 +123,8 @@ public class VueJeu {
         }        
         
         // Initialisation Centre de page
-        panelCentre.add(new PannelGrille(grille.getTuilles()));
+        panelGrille = new PannelGrille(grille.getTuilles());
+        panelCentre.add(panelGrille);
 
         
         // Initialisation partie East
@@ -264,4 +267,15 @@ public class VueJeu {
 		}
 		
 	}
+	
+    public void clickPossible(int[] tab) {
+    	panelGrille.selectionnerTuiles(tab);
+    }
+    
+    public void deplacerAventurier(int position, int joueur) {
+    	nbCoup -= 1;
+    	indication2.setText(("Action Restantes : " + nbCoup));
+    	panelGrille.deplacerJoueur(joueur, position);
+    }
+    
 }

@@ -24,6 +24,9 @@ public class PannelGrille extends JPanel {
     private ArrayList<BufferedImage> tuilles_innondes = new ArrayList<>(); //contient les images des tuilles innondé
     private BufferedImage abysse; //contient l'image de la tuile de l'abysse
     private String[] tuilles;
+    private String[] tuillesEtat;
+    
+    private boolean[] tuillesSelectionnable;
 
 
     PannelGrille(Tuille[] tuis) {
@@ -33,14 +36,18 @@ public class PannelGrille extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-
+    	// effacerComposant();
+    	// dessinerTuilles();
+    	// dessinerJoueurs();
+    	// dessinerSelection();
+    	
         for(int i = 0; i < tuilles.length; i++) {
-            if(tuilles[i] == "ABYSSE") {
+            if(tuillesEtat[i] == "ABYSSE") {
                 g.drawImage(abysse.getScaledInstance(getWidth() / 6, getHeight() / 6, Image.SCALE_DEFAULT), (i % 6) * getWidth() / 6, i/6 * getHeight()/6, null, null);
             } else {
                 int nbTuilles = 0;
 
-                switch (tuilles[i].split(" ")[0]) {
+                switch (tuilles[i]) {
                     case "Heliport":
                         nbTuilles = 0;
                         break;
@@ -115,11 +122,18 @@ public class PannelGrille extends JPanel {
                         break;
                 }
 
-                if(tuilles[i].split(" ")[1].equals("SEC")) {
+                if(tuillesEtat[i].equals("SEC")) {
                     g.drawImage(tuilles_sec.get(nbTuilles).getScaledInstance(getWidth() / 6, getHeight() / 6, Image.SCALE_DEFAULT), (i % 6) * getWidth() / 6, i/6 * getHeight()/6, null, null);
                 } else {
                     g.drawImage(tuilles_innondes.get(nbTuilles).getScaledInstance(getWidth() / 6, getHeight() / 6, Image.SCALE_DEFAULT), (i % 6) * getWidth() / 6, i/6 * getHeight()/6, null, null);
                 }
+                
+                if(tuillesSelectionnable[i]) {
+                	g.drawRect(i%6*getWidth(), i/6*getHeight(), getWidth()/6, getHeight()/6);
+                	g.setColor(Color.green);
+                }
+                
+                // Dessiner les joueurs
             }
         }
     }
@@ -177,6 +191,8 @@ public class PannelGrille extends JPanel {
 
     private void initTuilles(Tuille[] tuis) {
         tuilles = new String[tuis.length];
+        tuillesEtat = new String[tuis.length];
+        tuillesSelectionnable = new boolean[tuis.length];
 
         boolean[] premierTrouve = new boolean[4];
         Stack nomNormal = new Stack();
@@ -198,7 +214,8 @@ public class PannelGrille extends JPanel {
 
         for(int i = 0; i < tuilles.length; i++) {
             if(tuis[i].getEtat() == Etat.ABYSSE) {
-                tuilles[i] = "ABYSSE";
+            	tuilles[i]="";
+                tuillesEtat[i] = "ABYSSE";
             } else {
                 if(tuis[i].getSpecial() == "HELICO") {
                     tuilles[i] = "Heliport";
@@ -245,18 +262,57 @@ public class PannelGrille extends JPanel {
                 }
 
                 if(tuis[i].getEtat() == Etat.INONDE) {
-                    tuilles[i] += " INONDE";
+                    tuillesEtat[i] = "INONDE";
                 } else {
-                    tuilles[i] += " SEC";
+                    tuillesEtat[i] = "SEC";
                 }
             }
+            tuillesSelectionnable[i] = false;
         }
     }
     
-    
-    public void majGrille(int[] tab) {
-    	
+
+    public void changerEtatTuile(int tuile, int sense) {
+    	int i=0;
+    	while (i < tuillesEtat.length) {
+    		if (i == tuile) {
+    			if(sense == -1) {
+    				if(tuillesEtat[i] == "SEC") {
+    					tuillesEtat[i] = "INNONDE";
+    				} else if (tuillesEtat[i] == "INNONDE") {
+    					tuillesEtat[i] = "ABYSSE";
+    				}
+    			} else if(sense == 1) {
+    				if(tuillesEtat[i] == "INNONDE") {
+    					tuillesEtat[i] = "SEC";
+    				}
+    			}
+    		}
+    	}
+    	effacerTableau();
+    	repaint();
+    }
+
+    public void deplacerJoueur(int joueur, int tuile) {
+    	// MAJ joeur
+    	effacerTableau();
+    	repaint();
     }
     
+    public void selectionnerTuiles(int[] tab) {
+    	int j =0;
+    	for (int i = 0; i < tuillesSelectionnable.length; i++) {
+    		if (i == tab[j]) {
+    			tuillesSelectionnable[j] = true;    			
+    			j++;
+    		}
+    	}  	
+    	repaint();
+    }
     
+    public void effacerTableau() {
+    	for (int i = 0; i < tuillesSelectionnable.length; i++) {
+    		tuillesSelectionnable[i] = false;
+    	}
+    }
 }

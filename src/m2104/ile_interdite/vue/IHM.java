@@ -48,12 +48,12 @@ public class IHM extends Observable<Message> {
     	jeu.afficherMain(i,carte);
     }
     
-    public void deplacementPossible(int[] tab) {
-    	PannelGrille.majGrille(tab);
+    public void clickPossible(int[] tab) {
+    	jeu.clickPossible(tab);
     }
     
-    public void assecherPossible(int[] tab) {
-    	
+    public void deplacerAventurier(int position, int joueur) {
+    	jeu.deplacerAventurier(position, joueur);
     }
     
     public void creerVuesAventuriers(String[] nomAventuriers) {
