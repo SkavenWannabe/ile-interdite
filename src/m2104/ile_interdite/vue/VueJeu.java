@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -109,7 +110,7 @@ public class VueJeu {
         innonde = new JButton("Carte Innondation");
         innonde.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("click sur innonde");
+                ihm.notifierObservateurs(Message.choisirCarteInnondation());
         	}
         });
         innondeDef = new JButton();
@@ -132,7 +133,7 @@ public class VueJeu {
         tresorsDef = new JButton();
         tresorsDef.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur deffause tresors");
+        		ihm.notifierObservateurs(Message.voirDefausse());
         	}
         });
         tresors = new JButton("Carte Tresors");
@@ -219,5 +220,12 @@ public class VueJeu {
 		System.out.println("MVC pioche tresors");
 	}
 	
+	public void piocheInnondation() {
+		System.out.println("MVC pioche innondation");
+	}
+	
+	public void afficherDeffausse(Stack deffausse) {
+		System.out.println("MVC montrer deffausse");
+	}
 	
 }

@@ -44,6 +44,13 @@ public class Controleur implements Observateur<Message> {
             	this.ileInterdite.piocheTresor();
             	ihm.piocheTresors();
             	break;
+            case CHOISIR_CARTE_INNONDE:
+            	this.ileInterdite.piocheInonde();
+            	ihm.piocheInnondation();
+            	break;
+            case VOIR_DEFAUSSE:
+            	ihm.afficherDeffausse(ileInterdite.getDefausseTresor());
+            	break;
             default:
                 if (Parameters.LOGS) {
                     System.err.println("Action interdite : " + msg.getCommande().toString());

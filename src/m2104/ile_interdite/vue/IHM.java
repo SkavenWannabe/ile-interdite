@@ -2,6 +2,7 @@ package m2104.ile_interdite.vue;
 
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.Stack;
 
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
@@ -33,7 +34,13 @@ public class IHM extends Observable<Message> {
     public void piocheTresors() {
     	jeu.piocheTresors();
     }
+    public void piocheInnondation() {
+    	jeu.piocheInnondation();
+    }
     
+    public void afficherDeffausse(Stack deffausse) {
+    	jeu.afficherDeffausse(deffausse);
+    }
     
     public void creerVuesAventuriers(String[] nomAventuriers) {
         // - le pouvoir est disponible dans le modèle
