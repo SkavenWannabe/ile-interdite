@@ -25,10 +25,15 @@ public class IHM extends Observable<Message> {
         this.vueInscription = new VueInscriptionJoueurs(this);
     }
     
-    public void creerVuesJeu(String[] nomAventurier, int difficulte, Grille grille) {
+    public void creerVuesJeu(IHM this, String[] nomAventurier, int difficulte, Grille grille) {
     	String[] nomsJoueurs = this.vueInscription.getNomJoueurs();
-    	jeu = new VueJeu(nomsJoueurs,nomsJoueurs.length,difficulte, grille);
+    	jeu = new VueJeu(this, nomsJoueurs,nomsJoueurs.length,difficulte, grille);
     }
+    
+    public void piocheTresors() {
+    	jeu.piocheTresors();
+    }
+    
     
     public void creerVuesAventuriers(String[] nomAventuriers) {
         // - le pouvoir est disponible dans le modèle

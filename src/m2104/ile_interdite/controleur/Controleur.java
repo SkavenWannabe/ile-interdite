@@ -40,6 +40,10 @@ public class Controleur implements Observateur<Message> {
                 this.ileInterdite.nouveauTour();
                 this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille());
                 break;
+            case CHOISIR_CARTE_TRESORS:
+            	this.ileInterdite.piocheTresor();
+            	ihm.piocheTresors();
+            	break;
             default:
                 if (Parameters.LOGS) {
                     System.err.println("Action interdite : " + msg.getCommande().toString());

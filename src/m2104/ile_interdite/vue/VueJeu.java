@@ -12,8 +12,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import m2104.ile_interdite.modele.Grille;
+import m2104.ile_interdite.util.Message;
+import patterns.observateur.Observable;
 
 public class VueJeu {
+    private final IHM ihm;
+
 	private JFrame fenetre;
 	
 	private JPanel mainPanel;
@@ -33,6 +37,7 @@ public class VueJeu {
 	private VueNiveau niveau;
 	
 	private JLabel nomTour;
+	private int nbCoup = 3;
 	private String [] nomsJoueurs;
 	private int nbJoueur;
 	private int dif;
@@ -53,8 +58,9 @@ public class VueJeu {
 	private JButton innondeDef;
 	private JLabel nom;
 	
-	public VueJeu(String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille) {
+	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille) {
 		//initialisation attribut
+		this.ihm = ihm;
 		this.nomsJoueurs = nomsJoueurs;
 		this.nbJoueur = nbJoueur;
 		this.dif = difficulte;
@@ -132,14 +138,14 @@ public class VueJeu {
         tresors = new JButton("Carte Tresors");
         tresors.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur tresors");
+                ihm.notifierObservateurs(Message.choisirCarteTresors());
         	}
         });
         indication = new JLabel("Pioche = fin de tour");
         
         
         // TODO: rajouter les ActionListener
-        indication2 = new JLabel("Action Restantes : 3");
+        indication2 = new JLabel("Action Restantes : " + nbCoup);
         deplacer = new JButton("Deplacer");
         deplacer.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -207,7 +213,11 @@ public class VueJeu {
 	}
 	
 	
-	
+	public void piocheTresors() {
+//		nbCoup -= 1;
+//		indication2.setText("Action restantes : " + nbCoup);
+		System.out.println("MVC pioche tresors");
+	}
 	
 	
 }
