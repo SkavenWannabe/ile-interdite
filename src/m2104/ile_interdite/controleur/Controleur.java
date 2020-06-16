@@ -45,8 +45,7 @@ public class Controleur implements Observateur<Message> {
                 }
                 break;
             case CHOISIR_CARTE_TRESORS:
-            	this.ileInterdite.piocheTresor();
-            	ihm.piocheTresors();
+            	ihm.piocheTresors(this.ileInterdite.piocheTresor());
             	break;
             case CHOISIR_CARTE_INNONDE:
             	this.ileInterdite.piocheInonde();
@@ -59,19 +58,20 @@ public class Controleur implements Observateur<Message> {
             	ihm.clickPossible(this.ileInterdite.deplacementPossible());
             	break;
             case BOUGER:
-            	//ihm.deplacerAventurier();
+            	ileInterdite.deplace(msg.getIdTuile());
+                //ihm.deplacerAventurier();
             	break;
             case TEST_ASSECHER:
-            	ihm.clickPossible(this.ileInterdite.assechePossible());
+                ihm.clickPossible(this.ileInterdite.assechePossible());
             	break;
             case ASSECHER:
-            	
+            	ileInterdite.asseche(msg.getIdTuile());
             	break;
             case DONNER:
-            	
+            	ileInterdite.donnerTresor(msg.getIdAventurier(),msg.getIdCarte());
             	break;
             case RECUPERER_TRESOR:
-            	
+            	ileInterdite.gagneTresor(msg.getIdTuile());
             	break;
             default:
                 if (Parameters.LOGS) {
