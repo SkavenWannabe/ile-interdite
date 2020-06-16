@@ -25,6 +25,8 @@ public class VueJeu {
 	private JPanel panelMvt;
 	private JPanel panelBtn;
 	private JPanel panelCartes;
+	private JPanel panelInnondation;
+	private JPanel panelNiveau;
 	
 	private VueReglesDuJeu regles;
 	private VueInscriptionJoueurs init;
@@ -66,12 +68,14 @@ public class VueJeu {
         mainPanel = new JPanel(new BorderLayout());
         panelNorth = new JPanel(new GridLayout(1,nbJoueur+4));
         panelSouth = new JPanel();
-        panelEast = new JPanel(new GridLayout(3,1));
+        panelEast = new JPanel(new GridLayout(2,1));
         panelWeast = new JPanel(new GridLayout(4,1));
-        panelCentre = new JPanel();
+        panelCentre = new JPanel(new BorderLayout());
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
         panelCartes = new JPanel();
+        panelInnondation = new JPanel(new GridLayout(2,1));
+        panelNiveau = new JPanel(new BorderLayout());
         
         mainPanel.add(panelNorth, BorderLayout.NORTH);
         mainPanel.add(panelSouth, BorderLayout.SOUTH);
@@ -109,10 +113,13 @@ public class VueJeu {
         	}
         });
         
-        panelEast.add(innonde);
-        panelEast.add(innondeDef);
+        panelInnondation.add(innonde);
+        panelInnondation.add(innondeDef);
         niveau = new VueNiveau(dif);
-        panelEast.add(niveau);
+        panelNiveau.add(niveau);
+        
+        panelEast.add(panelInnondation);
+        panelEast.add(panelNiveau);
         
         
         // Initialisation partie Weast
@@ -132,7 +139,7 @@ public class VueJeu {
         
         
         // TODO: rajouter les ActionListener
-        indication2 = new JLabel("Action Restantes : ");
+        indication2 = new JLabel("Action Restantes : 3");
         deplacer = new JButton("Deplacer");
         deplacer.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
