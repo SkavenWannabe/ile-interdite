@@ -218,14 +218,14 @@ public class IleInterdite extends Observable<Message> {
             else{
                 if(spec.equals("TRESOR_PIERRE") || spec.equals("TRESOR_CALICE") || spec.equals("TRESOR_STATUE") || spec.equals("TRESOR_CRISTAL")){
                         int a = (int) specialAbysse.get(spec)+1;
-                        if (a == 2)
+                        if (a == 2 && !((boolean) tresors.get(spec)))
                             notifierObservateurs(Message.defaite());
                         else
                             specialAbysse.replace(spec,a);
                 }
                 for(int k = 0; k < aventuriers.size(); k++){
                     if(aventuriers.get(k).getPosition() == id){     //Si l'aventurier est sur la tuille qui tombe dans l'abysse ...
-                        //Il se noit, faites quelque chose !
+                        notifierObservateurs(Message.noyade(id));
                     }
                 }
             }
