@@ -64,16 +64,16 @@ public class PannelGrille extends JPanel {
                     case "ForetPourpre":
                         nbTuilles = 3;
                         break;
-                    case "PorteArgent":
+                    case "PorteBronze":
                         nbTuilles = 4;
                         break;
-                    case "PorteBronze":
+                    case "PorteCuivre":
                         nbTuilles = 5;
                         break;
-                    case "PorteCuivre":
+                    case "PorteFer":
                         nbTuilles = 6;
                         break;
-                    case "PorteFer":
+                    case "PorteArgent":
                         nbTuilles = 7;
                         break;
                     case "PorteDor":
@@ -106,19 +106,19 @@ public class PannelGrille extends JPanel {
                     case "RocheFantome":
                         nbTuilles = 17;
                         break;
-                    case "DunesIllusion":
+                    case "TempleLune":
                         nbTuilles = 18;
                         break;
-                    case "FalaiseOubli":
+                    case "TempleSoleil":
                         nbTuilles = 19;
                         break;
-                    case "TempleLune":
+                    case "ValCrepuscule":
                         nbTuilles = 20;
                         break;
-                    case "TempleSoleil":
+                    case "DunesIllusion":
                         nbTuilles = 21;
                         break;
-                    case "ValCrepuscule":
+                    case "FalaiseOubli":
                         nbTuilles = 22;
                         break;
                     case "Observatoire":
@@ -164,6 +164,7 @@ public class PannelGrille extends JPanel {
             res.forEach(x -> {
                 try {
                     tuilles_innondes.add(ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
+                    System.out.println(x);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -185,6 +186,7 @@ public class PannelGrille extends JPanel {
                     x -> {
                 try {
                     tuilles_sec.add(ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
+                    System.out.println(x);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -193,6 +195,8 @@ public class PannelGrille extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("tuilles_innondes : " + tuilles_innondes.size());
+        System.out.println("tuilles_sec : " + tuilles_sec.size());
     }
 
     private void initTuilles(Tuille[] tuis) {
@@ -274,6 +278,7 @@ public class PannelGrille extends JPanel {
                 }
             }
             tuillesSelectionnable[i] = false;
+            System.out.println("Tuile No " + i + " Etat : " + tuillesEtat[i] + " Special : " + tuilles[i] + " Select : " + tuillesSelectionnable[i]);
         }
     }
     
