@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,8 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import m2104.ile_interdite.modele.Grille;
+import m2104.ile_interdite.util.Message;
+import patterns.observateur.Observable;
 
 public class VueJeu {
+    private final IHM ihm;
+
 	private JFrame fenetre;
 	
 	private JPanel mainPanel;
@@ -25,12 +30,15 @@ public class VueJeu {
 	private JPanel panelMvt;
 	private JPanel panelBtn;
 	private JPanel panelCartes;
+	private JPanel panelInnondation;
+	private JPanel panelNiveau;
 	
 	private VueReglesDuJeu regles;
 	private VueInscriptionJoueurs init;
 	private VueNiveau niveau;
 	
 	private JLabel nomTour;
+	private int nbCoup = 3;
 	private String [] nomsJoueurs;
 	private int nbJoueur;
 	private int dif;
@@ -51,8 +59,9 @@ public class VueJeu {
 	private JButton innondeDef;
 	private JLabel nom;
 	
-	public VueJeu(String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille) {
+	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille) {
 		//initialisation attribut
+		this.ihm = ihm;
 		this.nomsJoueurs = nomsJoueurs;
 		this.nbJoueur = nbJoueur;
 		this.dif = difficulte;
@@ -66,12 +75,14 @@ public class VueJeu {
         mainPanel = new JPanel(new BorderLayout());
         panelNorth = new JPanel(new GridLayout(1,nbJoueur+4));
         panelSouth = new JPanel();
-        panelEast = new JPanel(new GridLayout(3,1));
+        panelEast = new JPanel(new GridLayout(2,1));
         panelWeast = new JPanel(new GridLayout(4,1));
-        panelCentre = new JPanel();
+        panelCentre = new JPanel(new BorderLayout());
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
         panelCartes = new JPanel();
+        panelInnondation = new JPanel(new GridLayout(2,1));
+        panelNiveau = new JPanel(new BorderLayout());
         
         mainPanel.add(panelNorth, BorderLayout.NORTH);
         mainPanel.add(panelSouth, BorderLayout.SOUTH);
@@ -99,7 +110,7 @@ public class VueJeu {
         innonde = new JButton("Carte Innondation");
         innonde.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("click sur innonde");
+                ihm.notifierObservateurs(Message.choisirCarteInnondation());
         	}
         });
         innondeDef = new JButton();
@@ -109,30 +120,33 @@ public class VueJeu {
         	}
         });
         
-        panelEast.add(innonde);
-        panelEast.add(innondeDef);
+        panelInnondation.add(innonde);
+        panelInnondation.add(innondeDef);
         niveau = new VueNiveau(dif);
-        panelEast.add(niveau);
+        panelNiveau.add(niveau);
+        
+        panelEast.add(panelInnondation);
+        panelEast.add(panelNiveau);
         
         
         // Initialisation partie Weast
         tresorsDef = new JButton();
         tresorsDef.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur deffause tresors");
+        		ihm.notifierObservateurs(Message.voirDefausse());
         	}
         });
         tresors = new JButton("Carte Tresors");
         tresors.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur tresors");
+                ihm.notifierObservateurs(Message.choisirCarteTresors());
         	}
         });
         indication = new JLabel("Pioche = fin de tour");
         
         
         // TODO: rajouter les ActionListener
-        indication2 = new JLabel("Action Restantes : ");
+        indication2 = new JLabel("Action Restantes : " + nbCoup);
         deplacer = new JButton("Deplacer");
         deplacer.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -200,7 +214,18 @@ public class VueJeu {
 	}
 	
 	
+	public void piocheTresors() {
+//		nbCoup -= 1;
+//		indication2.setText("Action restantes : " + nbCoup);
+		System.out.println("MVC pioche tresors");
+	}
 	
+	public void piocheInnondation() {
+		System.out.println("MVC pioche innondation");
+	}
 	
+	public void afficherDeffausse(Stack deffausse) {
+		System.out.println("MVC montrer deffausse");
+	}
 	
 }

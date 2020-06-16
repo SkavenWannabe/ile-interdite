@@ -94,10 +94,12 @@ public class Message implements Serializable {
      *
      * @return un nouveau {@link #Message} pour la commande {@link m2104.ile_interdite.util.Utils.Commandes#CHOISIR_CARTE}
      */
-    public static Message choisirCarte() {
-        return new Message(Utils.Commandes.CHOISIR_CARTE, null, null, null, null, null, null);
+    public static Message choisirCarteInnondation() {
+        return new Message(Utils.Commandes.CHOISIR_CARTE_INNONDE, null, null, null, null, null, null);
     }
-
+    public static Message choisirCarteTresors() {
+        return new Message(Utils.Commandes.CHOISIR_CARTE_TRESORS, null, null, null, null, null, null);
+    }
     /**
      *
      * @return un nouveau {@link #Message} pour la commande {@link m2104.ile_interdite.util.Utils.Commandes#CHOISIR_TUILE}
@@ -122,6 +124,7 @@ public class Message implements Serializable {
     public static Message voirDefausse() {
         return new Message(Utils.Commandes.VOIR_DEFAUSSE, null, null, null, null, null, null);
     }
+
 
     public static Message defaite(){
         return new Message(Utils.Commandes.DEFAITE, null, null, null, null, null, null);
