@@ -68,6 +68,9 @@ public class IleInterdite extends Observable<Message> {
     public int getNbInondations(){
         return nbInondations;
     }
+    public ArrayList<CarteTresor> getMainAventurierEnCours(){
+        return aventuriers.get(tour % aventuriers.size()).getMain();
+    }
 
     /*
         METHODES
