@@ -132,11 +132,7 @@ public class VueJeu {
         	}
         });
         innondeDef = new JButton();
-        innondeDef.addActionListener(new java.awt.event.ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur deffause innonde");
-        	}
-        });
+        innondeDef.setEnabled(false);
         
         panelInnondation.add(innonde);
         panelInnondation.add(innondeDef);
@@ -149,6 +145,7 @@ public class VueJeu {
         
         // Initialisation partie Weast
         tresorsDef = new JButton();
+        tresorsDef.setEnabled(false);
         tresorsDef.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		ihm.notifierObservateurs(Message.voirDefausse());
@@ -243,7 +240,7 @@ public class VueJeu {
 	
 	
 	public void piocheTresors() {
-		
+		tresorsDef.setEnabled(true);
 	}
 	
 	public void piocheInnondation() {

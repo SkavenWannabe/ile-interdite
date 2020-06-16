@@ -49,7 +49,7 @@ public class IHM extends Observable<Message> {
     }
     
     public void deplacementPossible(int[] tab) {
-    	
+    	PannelGrille.majGrille(tab);
     }
     
     public void assecherPossible(int[] tab) {

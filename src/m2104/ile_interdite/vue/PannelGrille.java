@@ -252,4 +252,11 @@ public class PannelGrille extends JPanel {
             }
         }
     }
+    
+    
+    public void majGrille(int[] tab) {
+    	
+    }
+    
+    
 }
