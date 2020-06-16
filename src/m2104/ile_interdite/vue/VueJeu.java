@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import m2104.ile_interdite.modele.Aventurier;
 import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
@@ -123,6 +124,7 @@ public class VueJeu {
         }        
         
         // Initialisation Centre de page
+        
         panelGrille = new PannelGrille(grille.getTuilles());
         panelCentre.add(panelGrille);
 

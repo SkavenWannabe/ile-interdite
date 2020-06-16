@@ -1,5 +1,6 @@
 package m2104.ile_interdite.vue;
 
+import m2104.ile_interdite.modele.Aventurier;
 import m2104.ile_interdite.modele.Etat;
 import m2104.ile_interdite.modele.Tuille;
 
@@ -22,16 +23,19 @@ import java.util.stream.Stream;
 public class PannelGrille extends JPanel {
     private ArrayList<BufferedImage> tuilles_sec = new ArrayList<>(); //contient les images des tuilles non innondé
     private ArrayList<BufferedImage> tuilles_innondes = new ArrayList<>(); //contient les images des tuilles innondé
+    private ArrayList<BufferedImage> pions = new ArrayList<>(); //contient les images des pions
     private BufferedImage abysse; //contient l'image de la tuile de l'abysse
     private String[] tuilles;
     private String[] tuillesEtat;
-    
+    private String[] aventurier;
     private boolean[] tuillesSelectionnable;
 
 
     PannelGrille(Tuille[] tuis) {
+        initImagesTuiles();
+        initImagesAventuriers();
         initTuilles(tuis);
-        init_images();
+//        initJoueur(aventurier);
     }
 
     @Override
@@ -133,14 +137,14 @@ public class PannelGrille extends JPanel {
                 	g.setColor(Color.green);
                 }
                 
-                // Dessiner les joueurs
+                
             }
         }
     }
 
 
 
-    private void init_images() {
+    private void initImagesTuiles() {
         try {
             //récupération de l'image de l'abysse
             abysse = ImageIO.read(new File("src/assets/ocean.jpg"));
@@ -153,6 +157,7 @@ public class PannelGrille extends JPanel {
 
             List<String> res = walk.map(x -> x.toString()) //on convertie tous les Path en String
                     .filter(f -> f.contains("_Inonde") && f.endsWith(".png")) //on filtre de manière a ne garder que les fichiers contenant _Inonde et finissant par .png
+                    .sorted()
                     .collect(Collectors.toList()); // on convertie le résultat en list
 
             //pour tous les éléments trouvés
@@ -172,6 +177,7 @@ public class PannelGrille extends JPanel {
 
             res = walk.map(x -> x.toString()) //on convertie tous les Path en String
                     .filter(f -> !f.contains("_Inonde") && f.endsWith(".png")) //on filtre de manière a ne garder que les fichiers ne contenant pas _Inonde et finissant par .png
+                    .sorted()
                     .collect(Collectors.toList()); // on convertie le résultat en list
 
             //pour tous les éléments trouvés
@@ -271,46 +277,60 @@ public class PannelGrille extends JPanel {
         }
     }
     
+    public void initImagesAventuriers() {
+    	try {
+    		//récupération des images des pions
+	
+	        //on récupére les Path vers tous les fichiers dans src/assets/tuiles
+	        Stream<Path> walk = Files.walk(Paths.get("src/assets/pions"));
+	
+	
+	        List<String> res = walk.map(x -> x.toString()) //on convertie tous les Path en String
+	                .filter(f -> f.endsWith(".png")) //on filtre de manière a ne garder que les fichiers finissant par .png
+	                .collect(Collectors.toList()); // on convertie le résultat en list
+	        
+	      //pour tous les éléments trouvés
+            res.forEach(
+                    x -> {
+                try {
+                    pions.add(ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+    	}catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void initJoueur(String[] av) {
+        this.aventurier = new String[av.length];
+        for(int i = 0; i < aventurier.length; i++) {
+        	aventurier[i] = av[i];
+        }
+    }
 
-    public void changerEtatTuile(int tuile, int sense) {
-    	int i=0;
-    	while (i < tuillesEtat.length) {
-    		if (i == tuile) {
-    			if(sense == -1) {
-    				if(tuillesEtat[i] == "SEC") {
-    					tuillesEtat[i] = "INNONDE";
-    				} else if (tuillesEtat[i] == "INNONDE") {
-    					tuillesEtat[i] = "ABYSSE";
-    				}
-    			} else if(sense == 1) {
-    				if(tuillesEtat[i] == "INNONDE") {
-    					tuillesEtat[i] = "SEC";
-    				}
-    			}
-    		}
-    	}
-    	effacerTableau();
+    public void changerEtatTuile(int tuile, String etat) {
+    	tuillesEtat[tuile] = etat;
+    	effacerSelectionnable();
     	repaint();
     }
 
     public void deplacerJoueur(int joueur, int tuile) {
     	// MAJ joeur
-    	effacerTableau();
+    	effacerSelectionnable();
     	repaint();
     }
     
     public void selectionnerTuiles(int[] tab) {
-    	int j =0;
-    	for (int i = 0; i < tuillesSelectionnable.length; i++) {
-    		if (i == tab[j]) {
-    			tuillesSelectionnable[j] = true;    			
-    			j++;
-    		}
+    	for (int i = 0; i < tab.length; i++) {
+    		tuillesSelectionnable[tab[i]] = true;
     	}  	
     	repaint();
     }
     
-    public void effacerTableau() {
+    public void effacerSelectionnable() {
     	for (int i = 0; i < tuillesSelectionnable.length; i++) {
     		tuillesSelectionnable[i] = false;
     	}
