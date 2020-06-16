@@ -239,7 +239,7 @@ public class VueAventurier {
                 }
                 switch (commande) {
                     case BOUGER:
-                        ihm.notifierObservateurs(Message.bouger(idAventurier));
+                        ihm.notifierObservateurs(Message.bouger());
                         break;
                     case ASSECHER:
                         ihm.notifierObservateurs(Message.assecher(idAventurier));

@@ -2,9 +2,9 @@ package m2104.ile_interdite.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Stack;
 
 import javax.swing.JButton;
@@ -12,9 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
-import patterns.observateur.Observable;
 
 public class VueJeu {
     private final IHM ihm;
@@ -27,16 +27,25 @@ public class VueJeu {
 	private JPanel panelEast;
 	private JPanel panelWeast;
 	private JPanel panelCentre;
+	
 	private JPanel panelMvt;
 	private JPanel panelBtn;
-	private JPanel panelCartes;
 	private JPanel panelInnondation;
 	private JPanel panelNiveau;
 	
+	private JPanel panelJ1;
+	private JPanel panelJ2;
+	private JPanel panelJ3;
+	private JPanel panelJ4;
+	private JPanel panelCartesJ1;
+	private JPanel panelCartesJ2;
+	private JPanel panelCartesJ3;
+	private JPanel panelCartesJ4;
+
 	private VueReglesDuJeu regles;
 	private VueInscriptionJoueurs init;
 	private VueNiveau niveau;
-	private VueDeffausse deffausse;
+	private VueDefausse defausse;
 	
 	private JLabel nomTour;
 	private int nbCoup = 3;
@@ -79,12 +88,21 @@ public class VueJeu {
         panelEast = new JPanel(new GridLayout(2,1));
         panelWeast = new JPanel(new GridLayout(4,1));
         panelCentre = new JPanel(new BorderLayout());
+        
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
-        panelCartes = new JPanel();
         panelInnondation = new JPanel(new GridLayout(2,1));
         panelNiveau = new JPanel(new BorderLayout());
         
+        panelJ1 = new JPanel(new GridLayout(2,1));
+        panelJ2 = new JPanel(new GridLayout(2,1));
+        panelJ3 = new JPanel(new GridLayout(2,1));
+        panelJ4 = new JPanel(new GridLayout(2,1));
+        panelCartesJ1 = new JPanel(new BorderLayout());
+        panelCartesJ2 = new JPanel(new BorderLayout());
+        panelCartesJ3 = new JPanel(new BorderLayout());
+        panelCartesJ4 = new JPanel(new BorderLayout());
+
         mainPanel.add(panelNorth, BorderLayout.NORTH);
         mainPanel.add(panelSouth, BorderLayout.SOUTH);
         mainPanel.add(panelCentre, BorderLayout.CENTER);
@@ -103,7 +121,6 @@ public class VueJeu {
         }        
         
         // Initialisation Centre de page
-        // Partie Vince
         panelCentre.add(new PannelGrille(grille.getTuilles()));
 
         
@@ -145,31 +162,29 @@ public class VueJeu {
         });
         indication = new JLabel("Pioche = fin de tour");
         
-        
-        // TODO: rajouter les ActionListener
         indication2 = new JLabel("Action Restantes : " + nbCoup);
         deplacer = new JButton("Deplacer");
         deplacer.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur deplacer");
+        		ihm.notifierObservateurs(Message.bouger());
         	}
         });
         assecher = new JButton("Assecher");
         assecher.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur assecher");
+        		ihm.notifierObservateurs(Message.testAssecher());
         	}
         });
         gagnerT = new JButton("Gagner Tresors");
         gagnerT.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur gagnerT");
+        		//ihm.notifierObservateurs(Message.recupererTresor());
         	}
         });
         donnerT = new JButton("Donner Tresors");
         donnerT.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		System.out.println("Click sur donnerT");
+        		//ihm.notifierObservateurs(Message.donner());
         	}
         });
         
@@ -202,13 +217,25 @@ public class VueJeu {
         panelBtn.add(retour);
         panelWeast.add(panelBtn);
         
-        // Initialisation Bas de page
-        for (int i =0; i<nbJoueur; i++) {
-        	nom = new JLabel(nomsJoueurs[i]);
-        	panelSouth.add(nom);
-        	panelSouth.add(panelCartes);
-        } 
+        // Initialisation Bas de page    
+        panelJ1.add(new JLabel(nomsJoueurs[0]));
+        panelJ1.add(panelCartesJ1);
+        panelJ2.add(new JLabel(nomsJoueurs[1]));
+        panelJ2.add(panelCartesJ2);
         
+        if (nbJoueur == 4) {
+            panelJ3.add(new JLabel(nomsJoueurs[2]));
+            panelJ3.add(panelCartesJ3);
+            panelJ4.add(new JLabel(nomsJoueurs[3]));
+            panelJ4.add(panelCartesJ4);
+        }else if (nbJoueur == 3) {
+            panelJ3.add(new JLabel(nomsJoueurs[2]));
+            panelJ3.add(panelCartesJ3);
+        }
+        panelSouth.add(panelJ1);
+        panelSouth.add(panelJ2);
+        panelSouth.add(panelJ3);
+        panelSouth.add(panelJ4);
         
         fenetre.add(mainPanel);
         fenetre.setVisible(true);
@@ -216,18 +243,28 @@ public class VueJeu {
 	
 	
 	public void piocheTresors() {
-//		nbCoup -= 1;
-//		indication2.setText("Action restantes : " + nbCoup);
-		System.out.println("MVC pioche tresors");
+		
 	}
 	
 	public void piocheInnondation() {
 		System.out.println("MVC pioche innondation");
 	}
 	
-	public void afficherDeffausse(Stack deffausse) {
-		this.deffausse = new VueDeffausse(deffausse);
-		System.out.println("MVC montrer deffausse");
+	public void afficherDefausse(Stack defausse) {
+		this.defausse = new VueDefausse(defausse);
+		System.out.println("MVC montrer defausse");
 	}
 	
+	public void afficherMain(int i, ArrayList<CarteTresor> carte) {
+		if(i == 0) {
+			//modifier panelCartesJ1
+		}else if(i == 1) {
+			//modifier panelCartesJ2
+		}else if(i == 2) {
+			//modifier panelCartesJ3
+		}else if(i == 3) {
+			//modifier panelCartesJ4
+		}
+		
+	}
 }
