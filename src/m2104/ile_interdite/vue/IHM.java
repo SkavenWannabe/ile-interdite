@@ -1,6 +1,7 @@
 package m2104.ile_interdite.vue;
 
 import java.awt.Color;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
@@ -29,9 +30,9 @@ public class IHM extends Observable<Message> {
         this.vueInscription = new VueInscriptionJoueurs(this);
     }
     
-    public void creerVuesJeu(IHM this, String[] nomAventurier, int difficulte, Grille grille) {
+    public void creerVuesJeu(IHM this, String[] nomAventurier, int difficulte, Grille grille, HashMap<String,Integer> aventuriers) {
     	String[] nomsJoueurs = this.vueInscription.getNomJoueurs();
-    	jeu = new VueJeu(this, nomsJoueurs,nomsJoueurs.length,difficulte, grille);
+    	jeu = new VueJeu(this, nomsJoueurs,nomsJoueurs.length,difficulte, grille, aventuriers);
     }
     
     public void piocheTresors(ArrayList<CarteTresor> main) {
@@ -54,8 +55,12 @@ public class IHM extends Observable<Message> {
     	jeu.clickPossible(tab);
     }
     
-    public void deplacerAventurier(int position, int joueur) {
-    	jeu.deplacerAventurier(position, joueur);
+    public void placerAventurier(int position, String role) {
+    	jeu.placerAventurier(position, role);
+    }
+    
+    public void deplacerAventurier(String role, int tuile) {
+    	jeu.deplacerAventurier(role, tuile);
     }
     
     public void creerVuesAventuriers(String[] nomAventuriers) {

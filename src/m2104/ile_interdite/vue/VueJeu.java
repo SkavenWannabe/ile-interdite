@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 import javax.swing.JButton;
@@ -17,7 +20,7 @@ import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
 
-public class VueJeu {
+public class VueJeu implements MouseListener {
     private final IHM ihm;
 
 	private JFrame fenetre;
@@ -51,6 +54,7 @@ public class VueJeu {
 	
 	private JLabel nomTour;
 	private int nbCoup = 3;
+	private String actionCourante = "";
 	private String [] nomsJoueurs;
 	private int nbJoueur;
 	private int dif;
@@ -71,7 +75,7 @@ public class VueJeu {
 	private JButton innondeDef;
 	private JLabel nom;
 	
-	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille) {
+	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille, HashMap<String,Integer> aventuriers) {
 		//initialisation attribut
 		this.ihm = ihm;
 		this.nomsJoueurs = nomsJoueurs;
@@ -125,7 +129,8 @@ public class VueJeu {
         
         // Initialisation Centre de page
         
-        panelGrille = new PannelGrille(grille.getTuilles());
+        panelGrille = new PannelGrille(grille.getTuilles(), aventuriers);
+        panelGrille.addMouseListener(this);
         panelCentre.add(panelGrille);
 
         
@@ -168,12 +173,14 @@ public class VueJeu {
         deplacer = new JButton("Deplacer");
         deplacer.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		ihm.notifierObservateurs(Message.bouger());
+        		actionCourante = "Deplacer";
+        		ihm.notifierObservateurs(Message.testBouger());
         	}
         });
         assecher = new JButton("Assecher");
         assecher.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		actionCourante = "Assecher";
         		ihm.notifierObservateurs(Message.testAssecher());
         	}
         });
@@ -274,10 +281,55 @@ public class VueJeu {
     	panelGrille.selectionnerTuiles(tab);
     }
     
-    public void deplacerAventurier(int position, int joueur) {
+    public void placerAventurier(int position, String role) {
+    	
+    }
+    
+    public void deplacerAventurier(String role, int tuile) {
     	nbCoup -= 1;
     	indication2.setText(("Action Restantes : " + nbCoup));
-    	panelGrille.deplacerJoueur(joueur, position);
+    	panelGrille.deplacerAventurier(role, tuile);
     }
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		switch (actionCourante) {
+		case "Deplacer" : 
+			ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+			break;
+		case "Assecher" :
+			ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));	
+			break;
+		}
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
     
 }

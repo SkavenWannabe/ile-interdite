@@ -1,5 +1,7 @@
 package m2104.ile_interdite.controleur;
 
+import java.util.HashMap;
+
 import m2104.ile_interdite.modele.IleInterdite;
 import m2104.ile_interdite.util.Message;
 import m2104.ile_interdite.util.Parameters;
@@ -38,8 +40,13 @@ public class Controleur implements Observateur<Message> {
                 System.out.println(this.ileInterdite.getAventuriers());
                 System.out.println(ileInterdite);
                 
+                HashMap<String,Integer> aventuriers = new HashMap<String, Integer>();
+                for (int i = 0; i < msg.getNbJoueurs(); i++) {
+                	aventuriers.put(this.ileInterdite.getAventuriers().get(i).toString(), this.ileInterdite.getAventuriers().get(i).getPosition());
+                }
+                
                 this.ileInterdite.nouveauTour();
-                this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille());
+                this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille(), aventuriers);
                 for (int i = 0; i < msg.getNbJoueurs(); i++) {
                 	this.ihm.afficherMain(i,this.ileInterdite.getMain(i));
                 }
@@ -59,7 +66,7 @@ public class Controleur implements Observateur<Message> {
             	break;
             case BOUGER:
             	ileInterdite.deplace(msg.getIdTuile());
-                //ihm.deplacerAventurier();
+            	ihm.deplacerAventurier(ileInterdite.getAventurierEnCours().toString(),msg.getIdTuile());
             	break;
             case TEST_ASSECHER:
                 ihm.clickPossible(this.ileInterdite.assechePossible());

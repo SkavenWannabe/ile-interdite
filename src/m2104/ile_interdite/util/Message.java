@@ -45,8 +45,8 @@ public class Message implements Serializable {
         return new Message(Utils.Commandes.TEST_BOUGER, null, null, null, null, null, null);
     }
 
-    public static Message bouger() {
-        return new Message(Utils.Commandes.BOUGER, null, null, null, null, null, null);
+    public static Message bouger(int tuile) {
+        return new Message(Utils.Commandes.BOUGER, null, null, null, tuile, null, null);
     }
 
     /**
@@ -57,8 +57,8 @@ public class Message implements Serializable {
     public static Message testAssecher() {
         return new Message(Utils.Commandes.TEST_ASSECHER, null, null, null, null, null, null);
     }
-    public static Message assecher(int idAventurier) {
-        return new Message(Utils.Commandes.ASSECHER, idAventurier, null, null, null, null, null);
+    public static Message assecher(int tuile) {
+        return new Message(Utils.Commandes.ASSECHER, null, null, null, tuile, null, null);
     }
 
     /**
