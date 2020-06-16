@@ -41,7 +41,7 @@ public class IHM extends Observable<Message> {
     }
     
     public void afficherDeffausse(Stack deffausse) {
-    	jeu.afficherDeffausse(deffausse);
+    	jeu.afficherDefausse(deffausse);
     }
     
     public void afficherMain(int i, ArrayList<CarteTresor> carte) {

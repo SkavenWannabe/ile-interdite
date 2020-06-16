@@ -2,7 +2,6 @@ package m2104.ile_interdite.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import javax.swing.JPanel;
 import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
-import patterns.observateur.Observable;
 
 public class VueJeu {
     private final IHM ihm;
@@ -47,7 +45,7 @@ public class VueJeu {
 	private VueReglesDuJeu regles;
 	private VueInscriptionJoueurs init;
 	private VueNiveau niveau;
-	private VueDeffausse deffausse;
+	private VueDefausse defausse;
 	
 	private JLabel nomTour;
 	private int nbCoup = 3;
@@ -252,8 +250,8 @@ public class VueJeu {
 		System.out.println("MVC pioche innondation");
 	}
 	
-	public void afficherDeffausse(Stack deffausse) {
-		this.deffausse = new VueDeffausse(deffausse);
+	public void afficherDefausse(Stack defausse) {
+		this.defausse = new VueDefausse(defausse);
 		System.out.println("MVC montrer defausse");
 	}
 	
