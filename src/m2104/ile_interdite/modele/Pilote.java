@@ -5,6 +5,8 @@
  */
 package m2104.ile_interdite.modele;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author PC SALON
@@ -24,11 +26,12 @@ public class Pilote extends Aventurier{
             //si il n'a pas son pouvoir son déplacement est celui de l'aventurier de base
             return super.deplacementPossible(grille);
         else {
-            int[] ret = new int[36];
-            for(int i = 0; i < ret.length; i++) {
-                ret[i] = i;
+            ArrayList<Integer> ret = new ArrayList<>();
+            for(int i = 0; i < ret.size(); i++) {
+                if (grille.getTuille(i).getEtat() != Etat.ABYSSE)
+                    ret.add(i);
             }
-            return ret;
+            return ret.stream().mapToInt(i -> i).toArray();
         }
     }
 
