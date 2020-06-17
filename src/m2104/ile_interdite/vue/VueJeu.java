@@ -2,6 +2,7 @@ package m2104.ile_interdite.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -58,7 +59,6 @@ public class VueJeu implements MouseListener {
 	private VueDefausse defausse;
 	
 	private JLabel nomTour;
-	private int nbCoup = 3;
 	private String actionCourante = "";
 	private String [] nomsJoueurs;
 	private int nbJoueur;
@@ -76,6 +76,10 @@ public class VueJeu implements MouseListener {
 	private JButton donnerT;
 	private JButton rdj;
 	private JButton retour;
+	private JLabel labelNom1;
+	private JLabel labelNom2;
+	private JLabel labelNom3;
+	private JLabel labelNom4;
 	
 	private JButton innonde;
 	private JButton innondeDef;
@@ -121,13 +125,20 @@ public class VueJeu implements MouseListener {
         // Initialisation Haut de page
         nomTour = new JLabel("Tour 1 : ");
         panelNorth.add(nomTour); panelNorth.add(new JLabel());
-        for (int i =0; i<nbJoueur; i++) {
-        	JLabel labelnom = new JLabel (nomsJoueurs[i] + " - " );
-        	panelNorth.add(labelnom);panelNorth.add(new JLabel());
-        	if (i==1) {
-        		labelnom.setForeground(Color.red);
-        	}
-        }        
+        labelNom1 = new JLabel(nomsJoueurs[0] + "-");
+        labelNom2 = new JLabel(nomsJoueurs[1] + "-");
+        labelNom2.setForeground(Color.red);
+        panelNorth.add(labelNom1);panelNorth.add(labelNom2);
+        
+        if (nbJoueur == 3) {
+        	labelNom3 = new JLabel(nomsJoueurs[2] + "-");
+        	panelNorth.add(labelNom3);
+        } else if (nbJoueur == 4) {
+        	labelNom3 = new JLabel(nomsJoueurs[2] + "-");
+        	labelNom4 = new JLabel(nomsJoueurs[3] + "-");
+        	panelNorth.add(labelNom3);panelNorth.add(labelNom4);
+        }
+        
         
         // Initialisation Centre de page
         
@@ -173,7 +184,7 @@ public class VueJeu implements MouseListener {
         });
         indication = new JLabel("Pioche = fin de tour");
         
-        indication2 = new JLabel("Action Restantes : " + nbCoup);
+        indication2 = new JLabel("Action Restantes : 3");
         deplacer = new JButton("Deplacer");
         deplacer.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -234,11 +245,14 @@ public class VueJeu implements MouseListener {
         //Minimum deux joueur, donc init de deux joueur
         panelJ1.add(new JLabel(nomsJoueurs[0]));
         panelCartesJ1 = new PanelMain(mains.get(0));
-        //panelCartesJ1.setPreferredSize(new Dimension(panelJ1.getWidth(), panelJ1.getHeight()));
+        panelCartesJ1.setPreferredSize(new Dimension(200,75));
+        //panelCartesJ1.setPreferredSize(new Dimension((int)(fenetre.getContentPane().getWidth()/4), (int)(fenetre.getContentPane().getHeight()*0.3)));
         panelJ1.add(panelCartesJ1);
         
         panelJ2.add(new JLabel(nomsJoueurs[1]));
         panelCartesJ2 = new PanelMain(mains.get(1));
+        panelCartesJ2.setPreferredSize(new Dimension(200,75));
+        //panelCartesJ2.setPreferredSize(new Dimension((int)(fenetre.getContentPane().getWidth()/4), (int)(fenetre.getContentPane().getHeight()*0.3)));
         panelJ2.add(panelCartesJ2);
         
         panelSouth.add(panelJ1);
@@ -302,6 +316,35 @@ public class VueJeu implements MouseListener {
     public void changerEtatTuile (int tuile, String etat) {
     	panelGrille.changerEtatTuile(tuile, etat);
     	actionCourante = "";
+    }
+    
+    public void nouveauTour(int tour) {
+    	nomTour.setText("Tour "+ tour+ ":");
+    	labelNom1.setForeground(Color.black);
+    	labelNom2.setForeground(Color.black);
+    	if (nbJoueur == 3) {
+    		labelNom3.setForeground(Color.black);
+    	} else if (nbJoueur == 4) {
+    		labelNom3.setForeground(Color.black);
+        	labelNom4.setForeground(Color.black);}
+    	
+    	if ((tour % nbJoueur) == 0) {
+    		labelNom1.setForeground(Color.red);
+    		System.out.println(0);
+    	}else if ((tour % nbJoueur) == 1) {
+    		labelNom2.setForeground(Color.red);
+    		System.out.println(1);
+    	}else if ((tour % nbJoueur) == 2){
+    		labelNom3.setForeground(Color.red);
+    		System.out.println(2);
+    	}else if ((tour % nbJoueur) == 3){
+    		labelNom4.setForeground(Color.red);
+    		System.out.println(3);
+    	}
+    }
+    
+    public void nbActionsRestantes(int action) {
+    	indication2.setText("Action restantes : " + action);
     }
 
     public void actionsPossibles(ArrayList<Boolean> actionsPossibles){
