@@ -16,6 +16,7 @@ public class Controleur implements Observateur<Message> {
 
     private final IleInterdite ileInterdite;
     private final IHM ihm;
+    private int nbInondAVenir;
 
     public Controleur() {
         this.ileInterdite = new IleInterdite(this);
@@ -45,7 +46,6 @@ public class Controleur implements Observateur<Message> {
                 	aventuriers.put(this.ileInterdite.getAventuriers().get(i).toString(), this.ileInterdite.getAventuriers().get(i).getPosition());
                 }
                 
-                this.ileInterdite.nouveauTour();
                 this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille(), aventuriers);
                 for (int i = 0; i < msg.getNbJoueurs(); i++) {
                 	this.ihm.afficherMain(i,this.ileInterdite.getMain(i));
@@ -53,10 +53,15 @@ public class Controleur implements Observateur<Message> {
                 break;
             case CHOISIR_CARTE_TRESORS:
             	ihm.piocheTresors(this.ileInterdite.piocheTresor());
+                this.ileInterdite.mainPleine();
+                nbInondAVenir = this.ileInterdite.getNbInondations();
             	break;
             case CHOISIR_CARTE_INNONDE:
             	this.ileInterdite.piocheInonde();
             	ihm.piocheInnondation();
+                nbInondAVenir--;
+                if(nbInondAVenir == 0)
+                    this.nouveauTour();
             	break;
             case VOIR_DEFAUSSE:
             	ihm.afficherDefausse(ileInterdite.getDefausseTresor());
@@ -86,5 +91,9 @@ public class Controleur implements Observateur<Message> {
                     System.err.println("Action interdite : " + msg.getCommande().toString());
                 }
         }
+    }
+    
+    public void nouveauTour(){
+        this.ileInterdite.nouveauTour();
     }
 }

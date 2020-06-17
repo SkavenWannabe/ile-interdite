@@ -189,6 +189,10 @@ public class IleInterdite extends Observable<Message> {
         return getAventurierEnCours().getMain();
     }
 
+    public void mainPleine(){
+        
+    }
+    
     public int setNbInondations(){
         
         int j;
