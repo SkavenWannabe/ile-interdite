@@ -21,14 +21,15 @@ public class Utils {
         ASSECHER("Assécher une tuile"),
         DONNER("Donner une carte à un autre joueur"),
         RECUPERER_TRESOR("Récupérer le trésor de la tuile"),
-        TERMINER("Terminer son tour"),
-        RECEVOIR("Recevoir la carte donnée par un autre joueur"),
+        TERMINER("Terminer son tour"),                                          //On l'utilise pas
+        RECEVOIR("Recevoir la carte donnée par un autre joueur"),               //On l'utilise pas
         CHOISIR_CARTE_INNONDE("Utiliser une carte innondation"),
         CHOISIR_CARTE_TRESORS("Utiliser une carte trésor"),
-        CHOISIR_TUILE("Sélectionner une tuile"),
+        CHOISIR_TUILE("Sélectionner une tuile"),                                //On l'utilise pas
         DEPLACER("Déplacer un autre joueur"),
         VOIR_DEFAUSSE("Un joueur souhaite voir la défausse de cartes Tirage"),
         NOYADE("Un aventurier va sombrer dans l'abyssse"),
+        TROMAIN("Il y'a trop de carte dans ta main !"),
         VICTOIRE("La partie est gagnée"),
         DEFAITE("La partie est perdue");
 

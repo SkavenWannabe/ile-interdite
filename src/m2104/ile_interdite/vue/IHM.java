@@ -60,6 +60,8 @@ public class IHM extends Observable<Message> {
     
     //Le nombre d'actions
     
-    //Les actions possibles
+    public void actionsPossibles(ArrayList<Boolean> actionsPossibles){
+        jeu.actionsPossibles(actionsPossibles);
+    }
 
 }

@@ -304,6 +304,15 @@ public class VueJeu implements MouseListener {
     	actionCourante = "";
     }
 
+    public void actionsPossibles(ArrayList<Boolean> actionsPossibles){
+        
+        deplacer.setEnabled(actionsPossibles.get(0));
+        assecher.setEnabled(actionsPossibles.get(1));
+        donnerT.setEnabled(actionsPossibles.get(2));
+        gagnerT.setEnabled(actionsPossibles.get(3));
+        
+    }
+    
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		switch (actionCourante) {

@@ -189,7 +189,8 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public void mainPleine(){
-        
+        if(getAventurierEnCours().getMain().size() > 5)
+            notifierObservateurs(Message.tromain());
     }
     
     public int calculNbInondations(){
@@ -439,6 +440,9 @@ public class IleInterdite extends Observable<Message> {
         return clic;
     }
 
+    /*
+        INITIALISATIONS SPECIFIQUES
+    */
     public Stack<CarteTresor> initPaquetTresor (){
 
         Stack paquet = new Stack<CarteTresor>();
@@ -472,7 +476,9 @@ public class IleInterdite extends Observable<Message> {
         return roles;
     }
 
-
+    /*
+        TOSTRING
+    */
     @Override
     public String toString() {
         String ret; //String contenant le résultat de la méthode.

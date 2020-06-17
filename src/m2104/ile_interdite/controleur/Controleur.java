@@ -99,6 +99,18 @@ public class Controleur implements Observateur<Message> {
             	ileInterdite.gagneTresor(msg.getIdTuile());
                 //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
+            case NOYADE:
+                //Glou glou
+                break;
+            case TROMAIN:
+                //this.ihm.tropDeCarteEnMain();
+                break;
+            case DEFAITE:
+                //C'est perdu ...
+                break;
+            case VICTOIRE:
+                //C'est gagné !!
+                break;
             default:
                 if (Parameters.LOGS) {
                     System.err.println("Action interdite : " + msg.getCommande().toString());
@@ -109,6 +121,6 @@ public class Controleur implements Observateur<Message> {
     public void nouveauTour(){
         //this.ihm.nouveauTour(this.ileInterdite.nouveauTour());
         //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
-        //this.ihm.actionsPossibles(this.ileInterdite.clicable());
+        this.ihm.actionsPossibles(this.ileInterdite.clicable());
     }
 }
