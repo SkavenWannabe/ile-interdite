@@ -23,7 +23,7 @@ import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PannelGrille extends JPanel {
+public class PanelGrille extends JPanel {
     private ArrayList<BufferedImage> tuilles_sec = new ArrayList<>(); //contient les images des tuilles non innondé
     private ArrayList<BufferedImage> tuilles_innondes = new ArrayList<>(); //contient les images des tuilles innondé
     private HashMap<String,BufferedImage> pions = new HashMap<>(); //contient les images des pions
@@ -34,7 +34,7 @@ public class PannelGrille extends JPanel {
     private boolean[] tuilesSelectionnable;
 
 
-    PannelGrille(Tuille[] tuis, HashMap<String,Integer> aventuriers) {
+    PanelGrille(Tuille[] tuis, HashMap<String,Integer> aventuriers) {
         initImagesTuiles();
         initImagesPions();
         initTuilles(tuis);
