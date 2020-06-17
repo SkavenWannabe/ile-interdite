@@ -1,7 +1,5 @@
 package m2104.ile_interdite.vue;
 
-import m2104.ile_interdite.modele.CarteTresor;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,15 +9,16 @@ import java.util.ArrayList;
 
 public class PanelMain extends JPanel {
     private BufferedImage[] img;
-    private ArrayList<CarteTresor> main;
+    private ArrayList<String> main;
 
-    PanelMain(ArrayList<CarteTresor> main) {
+    PanelMain(ArrayList<String> main) {
         this.main = main;
         init_img();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+    	super.paintComponent(g);
 
         int width = getWidth() / (main.size() % 3 == 0 ? 3 : main.size() % 3 + 1);
         int heigh = getHeight() / (main.size()/3 + 1);
@@ -30,7 +29,7 @@ public class PanelMain extends JPanel {
             int col = i % 3;
 
             switch (main.get(i)) {
-                case HELICO:
+                case "HELICO":
                     g.drawImage(
                             img[2].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
                             col * getWidth() / 6,
@@ -38,7 +37,7 @@ public class PanelMain extends JPanel {
                             null,
                             null);
                     break;
-                case TRESOR_STATUE:
+                case "TRESOR_STATUE":
                     g.drawImage(
                             img[6].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
                             col * getWidth() / 6,
@@ -46,7 +45,7 @@ public class PanelMain extends JPanel {
                             null,
                             null);
                     break;
-                case TRESOR_CRISTAL:
+                case "TRESOR_CRISTAL":
                     g.drawImage(
                             img[1].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
                             col * getWidth() / 6,
@@ -54,7 +53,7 @@ public class PanelMain extends JPanel {
                             null,
                             null);
                     break;
-                case TRESOR_CALICE:
+                case "TRESOR_CALICE":
                     g.drawImage(
                             img[0].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
                             col * getWidth() / 6,
@@ -62,7 +61,7 @@ public class PanelMain extends JPanel {
                             null,
                             null);
                     break;
-                case TRESOR_PIERRE:
+                case "TRESOR_PIERRE":
                     g.drawImage(
                             img[4].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
                             col * getWidth() / 6,
@@ -70,7 +69,7 @@ public class PanelMain extends JPanel {
                             null,
                             null);
                     break;
-                case MONTEE_EAU:
+                case "MONTEE_EAU":
                     g.drawImage(
                             img[3].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
                             col * getWidth() / 6,
@@ -78,7 +77,7 @@ public class PanelMain extends JPanel {
                             null,
                             null);
                     break;
-                case SAC_SABLE:
+                case "SAC_SABLE":
                     g.drawImage(
                             img[5].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
                             col * getWidth() / 6,
@@ -91,7 +90,7 @@ public class PanelMain extends JPanel {
     }
 
 
-    public void setMain(ArrayList<CarteTresor> main) {
+    public void setMain(ArrayList<String> main) {
         this.main = main;
         repaint();
     }

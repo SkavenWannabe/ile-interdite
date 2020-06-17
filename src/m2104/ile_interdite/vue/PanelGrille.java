@@ -15,43 +15,49 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PanelGrille extends JPanel {
+public class PannelGrille extends JPanel {
     private ArrayList<BufferedImage> tuilles_sec = new ArrayList<>(); //contient les images des tuilles non innondé
     private ArrayList<BufferedImage> tuilles_innondes = new ArrayList<>(); //contient les images des tuilles innondé
-    private ArrayList<BufferedImage> pions = new ArrayList<>(); //contient les images des pions
+    private HashMap<String,BufferedImage> pions = new HashMap<>(); //contient les images des pions
     private BufferedImage abysse; //contient l'image de la tuile de l'abysse
-    private String[] tuilles;
+    private String[] tuiles;
     private String[] tuillesEtat;
-    private String[] aventurier;
-    private boolean[] tuillesSelectionnable;
+    private HashMap<String,Integer> aventuriers;
+    private boolean[] tuilesSelectionnable;
 
 
-    PanelGrille(Tuille[] tuis) {
+    PannelGrille(Tuille[] tuis, HashMap<String,Integer> aventuriers) {
         initImagesTuiles();
         initImagesPions();
         initTuilles(tuis);
-//        initJoueur(aventurier);
+        initAventuriers(aventuriers);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-    	// effacerComposant();
-    	// dessinerTuilles();
-    	// dessinerJoueurs();
-    	// dessinerSelection();
-    	
-        for(int i = 0; i < tuilles.length; i++) {
+    	super.paintComponent(g);
+    	// effacerComposant();  
+    	dessinerTuiles(g);
+        dessinerAventuriers(g);
+        dessinerSelection(g);
+    }
+
+    private void dessinerTuiles(Graphics g) {
+        for(int i = 0; i < tuiles.length; i++) {
             if(tuillesEtat[i] == "ABYSSE") {
                 g.drawImage(abysse.getScaledInstance(getWidth() / 6, getHeight() / 6, Image.SCALE_DEFAULT), (i % 6) * getWidth() / 6, i/6 * getHeight()/6, null, null);
             } else {
                 int nbTuilles = 0;
 
-                switch (tuilles[i]) {
+                switch (tuiles[i]) {
                     case "Heliport":
                         nbTuilles = 0;
                         break;
@@ -76,7 +82,7 @@ public class PanelGrille extends JPanel {
                     case "PorteArgent":
                         nbTuilles = 7;
                         break;
-                    case "PorteDor":
+                    case "PorteOr":
                         nbTuilles = 8;
                         break;
                     case "TourGuet":
@@ -131,18 +137,43 @@ public class PanelGrille extends JPanel {
                 } else {
                     g.drawImage(tuilles_innondes.get(nbTuilles).getScaledInstance(getWidth() / 6, getHeight() / 6, Image.SCALE_DEFAULT), (i % 6) * getWidth() / 6, i/6 * getHeight()/6, null, null);
                 }
-                
-                if(tuillesSelectionnable[i]) {
-                	g.drawRect(i%6*getWidth(), i/6*getHeight(), getWidth()/6, getHeight()/6);
-                	g.setColor(Color.green);
-                }
-                
-                
             }
-        }
+        }	
     }
-
-
+    
+    private void dessinerAventuriers(Graphics g) {
+    	aventuriers.forEach((k,v) -> {
+    		String couleur = "Gris";
+            switch (k) {
+            	case "Explorateur" : couleur = "Bleu"; break;
+            	case "Ingenieur" : couleur = "Jaune"; break;
+            	case "Messager" : couleur = "Rouge"; break;
+            	case "Navigateur" : couleur = "Violet"; break;
+            	case "Pilote" : couleur = "Noir"; break;
+            	case "Plongeur" : couleur = "Bronze"; break;
+            }
+            int sizeX = (int) ((getWidth() / 6)*0.7);
+            int sizeY = (int) ((getHeight() / 6)*0.7);
+            int posX = (v % 6) * getWidth() / 6 + sizeX / 3;
+            int posY = v / 6 * getHeight() / 6 + sizeY / 4;
+            g.drawImage(pions.get(couleur).getScaledInstance(sizeX, sizeY, Image.SCALE_DEFAULT),posX, posY, null, null);
+        } );
+    }
+    
+    private void dessinerSelection(Graphics g) {
+    	Graphics2D g2 = (Graphics2D) g;
+    	float epaisseur = 5;
+    	Stroke trait = g2.getStroke();
+    	g2.setStroke(new BasicStroke(epaisseur));
+    	
+    	for(int i = 0; i < tuiles.length; i++) {
+	        if(tuilesSelectionnable[i]) {
+	        	g.setColor(Color.green);
+	        	g.drawRect((i % 6) * getWidth() / 6, (i / 6) * getHeight() / 6, getWidth() / 6, getHeight() / 6);
+	        }
+    	}
+    	g2.setStroke(trait);
+    }
 
     private void initImagesTuiles() {
         try {
@@ -177,7 +208,7 @@ public class PanelGrille extends JPanel {
 
             res = walk.map(x -> x.toString()) //on convertie tous les Path en String
                     .filter(f -> !f.contains("_Inonde") && f.endsWith(".png")) //on filtre de manière a ne garder que les fichiers ne contenant pas _Inonde et finissant par .png
-                    .sorted()
+                    .sorted() //on met les cartes toujours dans le même ordre pour eviter les erreurs suivant les pc
                     .collect(Collectors.toList()); // on convertie le résultat en list
 
             //pour tous les éléments trouvés
@@ -196,9 +227,9 @@ public class PanelGrille extends JPanel {
     }
 
     private void initTuilles(Tuille[] tuis) {
-        tuilles = new String[tuis.length];
+        tuiles = new String[tuis.length];
         tuillesEtat = new String[tuis.length];
-        tuillesSelectionnable = new boolean[tuis.length];
+        tuilesSelectionnable = new boolean[tuis.length];
 
         boolean[] premierTrouve = new boolean[4];
         Stack nomNormal = new Stack();
@@ -218,53 +249,53 @@ public class PanelGrille extends JPanel {
 
 
 
-        for(int i = 0; i < tuilles.length; i++) {
+        for(int i = 0; i < tuiles.length; i++) {
             if(tuis[i].getEtat() == Etat.ABYSSE) {
-            	tuilles[i]="";
+            	tuiles[i]="";
                 tuillesEtat[i] = "ABYSSE";
             } else {
                 if(tuis[i].getSpecial() == "HELICO") {
-                    tuilles[i] = "Heliport";
+                    tuiles[i] = "Heliport";
                 } else if(tuis[i].getSpecial() == "TRESOR_PIERRE") {
                     if(!premierTrouve[0]) {
-                        tuilles[i] = "TempleLune";
+                        tuiles[i] = "TempleLune";
                         premierTrouve[0] = true;
                     } else {
-                        tuilles[i] = "TempleSoleil";
+                        tuiles[i] = "TempleSoleil";
                     }
                 } else if(tuis[i].getSpecial() == "TRESOR_CALICE") {
                     if(!premierTrouve[1]) {
-                        tuilles[i] = "PalaisCorail";
+                        tuiles[i] = "PalaisCorail";
                         premierTrouve[1] = true;
                     } else {
-                        tuilles[i] = "PalaisMarees";
+                        tuiles[i] = "PalaisMarees";
                     }
                 } else if(tuis[i].getSpecial() == "TRESOR_CRISTAL") {
                     if(!premierTrouve[2]) {
-                        tuilles[i] = "CaverneOmbres";
+                        tuiles[i] = "CaverneOmbres";
                         premierTrouve[2] = true;
                     } else {
-                        tuilles[i] = "CaverneBrasier";
+                        tuiles[i] = "CaverneBrasier";
                     }
                 } else if(tuis[i].getSpecial() == "TRESOR_STATUE") {
                     if(!premierTrouve[3]) {
-                        tuilles[i] = "JardinHurlments";
+                        tuiles[i] = "JardinHurlments";
                         premierTrouve[3] = true;
                     } else {
-                        tuilles[i] = "JardinMurmures";
+                        tuiles[i] = "JardinMurmures";
                     }
                 } else if(tuis[i].getSpecial() == "PLONGEUR") {
-                    tuilles[i] = "PorteFer";
+                    tuiles[i] = "PorteFer";
                 } else if(tuis[i].getSpecial() == "MESSAGER") {
-                    tuilles[i] = "PorteArgent";
+                    tuiles[i] = "PorteArgent";
                 } else if(tuis[i].getSpecial() == "EXPLORATEUR") {
-                    tuilles[i] = "PorteCuivre";
+                    tuiles[i] = "PorteCuivre";
                 } else if(tuis[i].getSpecial() == "INGENIEUR") {
-                    tuilles[i] = "PorteBronze";
+                    tuiles[i] = "PorteBronze";
                 } else if(tuis[i].getSpecial() == "NAVIGATEUR") {
-                    tuilles[i] = "PorteDor";
+                    tuiles[i] = "PorteOr";
                 } else {
-                    tuilles[i] = (String) nomNormal.pop();
+                    tuiles[i] = (String) nomNormal.pop();
                 }
 
                 if(tuis[i].getEtat() == Etat.INONDE) {
@@ -273,7 +304,7 @@ public class PanelGrille extends JPanel {
                     tuillesEtat[i] = "SEC";
                 }
             }
-            tuillesSelectionnable[i] = false;
+            tuilesSelectionnable[i] = false;
         }
     }
     
@@ -287,13 +318,14 @@ public class PanelGrille extends JPanel {
 	
 	        List<String> res = walk.map(x -> x.toString()) //on convertie tous les Path en String
 	                .filter(f -> f.endsWith(".png")) //on filtre de manière a ne garder que les fichiers finissant par .png
+                    .sorted() //on met les cartes toujours dans le même ordre pour eviter les erreurs suivant les pc
 	                .collect(Collectors.toList()); // on convertie le résultat en list
 	        
 	      //pour tous les éléments trouvés
             res.forEach(
                     x -> {
                 try {
-                    pions.add(ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
+                    pions.put(x.substring(x.lastIndexOf(File.separator)+5, x.length()-4),ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -302,37 +334,42 @@ public class PanelGrille extends JPanel {
             e.printStackTrace();
         }
     }
-    
-    
-    public void initJoueur(String[] av) {
-        this.aventurier = new String[av.length];
-        for(int i = 0; i < aventurier.length; i++) {
-        	aventurier[i] = av[i];
-        }
+
+    public void initAventuriers(HashMap<String,Integer> aventuriers) {
+        this.aventuriers = new HashMap<String, Integer>();
+        this.aventuriers.putAll(aventuriers);
     }
 
     public void changerEtatTuile(int tuile, String etat) {
+    	System.out.println("Etat : " + etat);
     	tuillesEtat[tuile] = etat;
-    	effacerSelectionnable();
+    	effacerSelection();
     	repaint();
     }
 
-    public void deplacerJoueur(int joueur, int tuile) {
-    	// MAJ joeur
-    	effacerSelectionnable();
+    public void deplacerAventurier(String role, int tuile) {
+    	aventuriers.put(role, tuile);
+    	effacerSelection();
     	repaint();
     }
     
+    public int getNumeroTuile(int x, int y) {
+    	int colonne = (int) (x / (getWidth() / 6));
+    	int ligne= (int) (y / (getHeight() / 6));
+    	return ligne * 6 + colonne;
+    }
+    
     public void selectionnerTuiles(int[] tab) {
+    	effacerSelection();
     	for (int i = 0; i < tab.length; i++) {
-    		tuillesSelectionnable[tab[i]] = true;
+    		tuilesSelectionnable[tab[i]] = true;
     	}  	
     	repaint();
     }
     
-    public void effacerSelectionnable() {
-    	for (int i = 0; i < tuillesSelectionnable.length; i++) {
-    		tuillesSelectionnable[i] = false;
+    public void effacerSelection() {
+    	for (int i = 0; i < tuilesSelectionnable.length; i++) {
+    		tuilesSelectionnable[i] = false;
     	}
     }
 }
