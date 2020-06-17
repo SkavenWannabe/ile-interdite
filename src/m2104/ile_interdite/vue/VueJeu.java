@@ -2,7 +2,6 @@ package m2104.ile_interdite.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -17,7 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import m2104.ile_interdite.modele.Aventurier;
 import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
@@ -40,7 +38,7 @@ public class VueJeu implements MouseListener {
 	private JPanel panelBtn;
 	private JPanel panelInnondation;
 	private JPanel panelNiveau;
-	private PannelGrille panelGrille;
+	private PanelGrille panelGrille;
 	
 	// Panel pour le Sud, pour faciliter l'affichage de la main 
 	//TODO: Créer la main dans une classe apart comme pour la grille (ex: PannelMain)
@@ -134,7 +132,7 @@ public class VueJeu implements MouseListener {
         
         // Initialisation Centre de page
         
-        panelGrille = new PannelGrille(grille.getTuilles(), aventuriers); // Creation d'une Grille
+        panelGrille = new PanelGrille(grille.getTuilles(), aventuriers); // Creation d'une Grille
         panelGrille.addMouseListener(this);
         panelCentre.add(panelGrille);
 
