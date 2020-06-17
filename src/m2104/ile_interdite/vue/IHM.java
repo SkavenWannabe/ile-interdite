@@ -55,5 +55,17 @@ public class IHM extends Observable<Message> {
     public void changerEtatTuile (int tuile, String etat) {
     	jeu.changerEtatTuile(tuile, etat);
     }
+    
+    public void nouveauTour(int tour) {
+    	jeu.nouveauTour(tour);
+    }
+    
+    public void nbActionsRestantes(int action) {
+    	jeu.nbActionsRestantes(action);
+    }
+    
+    public void actionsPossibles(ArrayList<Boolean> actionsPossibles){
+        jeu.actionsPossibles(actionsPossibles);
+    }
 
 }
