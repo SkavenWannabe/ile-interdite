@@ -2,6 +2,7 @@ package m2104.ile_interdite.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -243,11 +244,13 @@ public class VueJeu implements MouseListener {
         //Minimum deux joueur, donc init de deux joueur
         panelJ1.add(new JLabel(nomsJoueurs[0]));
         panelCartesJ1 = new PanelMain(mains.get(0));
-        //panelCartesJ1.setPreferredSize(new Dimension(panelJ1.getWidth(), panelJ1.getHeight()));
+        panelCartesJ1.setPreferredSize(new Dimension(200,75));
+        //panelCartesJ1.setPreferredSize(new Dimension((int)(mainPanel.getWidth()/0.6), (int)(mainPanel.getHeight()/0.6)));
         panelJ1.add(panelCartesJ1);
         
         panelJ2.add(new JLabel(nomsJoueurs[1]));
         panelCartesJ2 = new PanelMain(mains.get(1));
+        //panelCartesJ2.setPreferredSize(new Dimension(panelJ1.getWidth(), panelJ1.getHeight()));
         panelJ2.add(panelCartesJ2);
         
         panelSouth.add(panelJ1);
