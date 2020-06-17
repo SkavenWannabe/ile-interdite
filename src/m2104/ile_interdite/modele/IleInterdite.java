@@ -183,7 +183,7 @@ public class IleInterdite extends Observable<Message> {
         }
         if (eau){
            resetPiocheInonde();                                                         //- On remélange la défausse et la pioche
-           nbInondations = setNbInondations();
+           nbInondations = calculNbInondations();
         }
         
         return getAventurierEnCours().getMain();
@@ -193,7 +193,7 @@ public class IleInterdite extends Observable<Message> {
         
     }
     
-    public int setNbInondations(){
+    public int calculNbInondations(){
         
         int j;
         switch(diff){               //Défini le nombre de carte à piocher en fonction du niveau d'eau
@@ -348,9 +348,10 @@ public class IleInterdite extends Observable<Message> {
         nbActions--;                                    //Réduit le compteur d'action de 1
     }
 
-    public void nouveauTour(){
-        tour++;                             //Incrémente le compteur de tour
-        nbInondations = setNbInondations(); //Recalcule le nombre de carte Inondation qu'il va falloir piocher à la fin du tour
+    public int nouveauTour(){
+        tour++;                                 //Incrémente le compteur de tour
+        nbInondations = calculNbInondations();  //Recalcule le nombre de carte Inondation qu'il va falloir piocher à la fin du tour
+        return tour;
     }    
     
     public void helico(int ancien, int nouveau){
@@ -403,7 +404,17 @@ public class IleInterdite extends Observable<Message> {
         return caseAssechables.stream().mapToInt(i -> i).toArray();
     }
     
-    //public ArrayList<Integer> PersonnagesProches
+    public ArrayList<Integer> PersonnagesProches(){
+        
+        ArrayList<Integer> pp = new ArrayList<>();
+        
+        for(int i = 0; i < aventuriers.size(); i++){
+            if(i != tour % aventuriers.size() && aventuriers.get(i).getPosition() == getAventurierEnCours().getPosition())
+                pp.add(i);
+        }
+        
+        return pp;
+    }
     
     public ArrayList<Boolean> clicable(){
         ArrayList<Boolean> clic = new ArrayList<>();
@@ -418,7 +429,12 @@ public class IleInterdite extends Observable<Message> {
         else
             clic.add(true);
         
-        if()
+        if(PersonnagesProches().isEmpty())
+            clic.add(false);
+        else
+            clic.add(true);
+        
+        clic.add(tresorPossible());
         
         return clic;
     }
