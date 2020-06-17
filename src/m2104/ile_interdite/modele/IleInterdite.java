@@ -289,7 +289,7 @@ public class IleInterdite extends Observable<Message> {
                 return true;
             }}
             
-            else if(grille.getTuille(positionAventurier).getSpecial() == "TRESOR_CRISTAL" && !(boolean) tresors.get(CarteTresor.TRESOR_CRISTAL)){
+        else if(grille.getTuille(positionAventurier).getSpecial() == "TRESOR_CRISTAL" && !(boolean) tresors.get(CarteTresor.TRESOR_CRISTAL)){
             //Si on est sur la tuile trésor ET qu'il est toujours disponible 
             int tresorCristal = 0;
             for(CarteTresor c : getAventurierEnCours().getMain()){
@@ -301,7 +301,7 @@ public class IleInterdite extends Observable<Message> {
                 return true;
             }}
             
-            else if(grille.getTuille(positionAventurier).getSpecial() == "TRESOR_STATUE" && !(boolean) tresors.get(CarteTresor.TRESOR_STATUE)){
+        else if(grille.getTuille(positionAventurier).getSpecial() == "TRESOR_STATUE" && !(boolean) tresors.get(CarteTresor.TRESOR_STATUE)){
             //Si on est sur la tuile trésor ET qu'il est toujours disponible 
             int tresorStatue = 0;
             for(CarteTresor c : getAventurierEnCours().getMain()){
@@ -417,6 +417,8 @@ public class IleInterdite extends Observable<Message> {
             clic.add(false);
         else
             clic.add(true);
+        
+        if()
         
         return clic;
     }
