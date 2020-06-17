@@ -1,12 +1,10 @@
 package m2104.ile_interdite.vue;
 
 import java.awt.Color;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
-import m2104.ile_interdite.modele.Aventurier;
 import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
@@ -63,6 +61,8 @@ public class IHM extends Observable<Message> {
     	jeu.changerEtatTuile(tuile, etat);
     }
     
+    
+    //A supprimer en même temps que la vue aventurier, utilisation du prof, pas la notre
     public void creerVuesAventuriers(String[] nomAventuriers) {
         // - le pouvoir est disponible dans le modèle
         String[] nomsJoueurs = this.vueInscription.getNomJoueurs();

@@ -25,6 +25,7 @@ public class VueJeu implements MouseListener {
 
 	private JFrame fenetre;
 	
+	//Panel principal, pour découper la fenêtre
 	private JPanel mainPanel;
 	private JPanel panelNorth;
 	private JPanel panelSouth;
@@ -32,12 +33,15 @@ public class VueJeu implements MouseListener {
 	private JPanel panelWeast;
 	private JPanel panelCentre;
 	
+	// Panel secondaire pour faciliter l'affichage 
 	private JPanel panelMvt;
 	private JPanel panelBtn;
 	private JPanel panelInnondation;
 	private JPanel panelNiveau;
 	private PannelGrille panelGrille;
 	
+	// Panel pour le Sud, pour faciliter l'affichage de la main 
+	//TODO: Créer la main dans une classe apart comme pour la grille (ex: PannelMain)
 	private JPanel panelJ1;
 	private JPanel panelJ2;
 	private JPanel panelJ3;
@@ -46,7 +50,8 @@ public class VueJeu implements MouseListener {
 	private JPanel panelCartesJ2;
 	private JPanel panelCartesJ3;
 	private JPanel panelCartesJ4;
-
+	
+	//Pour acceder au autre vue nécessaire
 	private VueReglesDuJeu regles;
 	private VueInscriptionJoueurs init;
 	private VueNiveau niveau;
@@ -60,6 +65,7 @@ public class VueJeu implements MouseListener {
 	private int dif;
 	private Grille grille;
 	
+	//Ensemble des bouttons necessaires
 	private JButton tresors;
 	private JButton tresorsDef;
 	private JLabel indication;
@@ -120,7 +126,7 @@ public class VueJeu implements MouseListener {
         nomTour = new JLabel("Tour 1 : ");
         panelNorth.add(nomTour); panelNorth.add(new JLabel());
         for (int i =0; i<nbJoueur; i++) {
-        	JLabel labelnom = new JLabel (nomsJoueurs[i]);
+        	JLabel labelnom = new JLabel (nomsJoueurs[i] + " - ");
         	panelNorth.add(labelnom);panelNorth.add(new JLabel());
         	if (i==1) {
         		labelnom.setForeground(Color.red);
@@ -129,7 +135,7 @@ public class VueJeu implements MouseListener {
         
         // Initialisation Centre de page
         
-        panelGrille = new PannelGrille(grille.getTuilles(), aventuriers);
+        panelGrille = new PannelGrille(grille.getTuilles(), aventuriers); // Creation d'une Grille
         panelGrille.addMouseListener(this);
         panelCentre.add(panelGrille);
 
@@ -142,7 +148,7 @@ public class VueJeu implements MouseListener {
         	}
         });
         innondeDef = new JButton();
-        innondeDef.setEnabled(false);
+        innondeDef.setEnabled(false); // Pas de possibilité d'obtenir la deffaussse 
         
         panelInnondation.add(innonde);
         panelInnondation.add(innondeDef);
@@ -303,6 +309,7 @@ public class VueJeu implements MouseListener {
 			ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));	
 			break;
 		}
+		//rajouter des Case en fonction des actionCourante possible - (pour la main, donner carteTresors, action speciale)
 	}
 
 
