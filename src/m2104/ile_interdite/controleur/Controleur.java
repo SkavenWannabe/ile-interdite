@@ -50,6 +50,7 @@ public class Controleur implements Observateur<Message> {
                 for (int i = 0; i < msg.getNbJoueurs(); i++) {
                 	this.ihm.afficherMain(i,this.ileInterdite.getMain(i));
                 }
+                this.nouveauTour();
                 break;
             case CHOISIR_CARTE_TRESORS:
             	ihm.piocheTresors(this.ileInterdite.piocheTresor());
@@ -57,8 +58,8 @@ public class Controleur implements Observateur<Message> {
                 nbInondAVenir = this.ileInterdite.getNbInondations();
             	break;
             case CHOISIR_CARTE_INNONDE:
-            	this.ileInterdite.piocheInonde();
-            	ihm.piocheInnondation();
+            	int tuile = this.ileInterdite.piocheInonde();
+            	ihm.changerEtatTuile(tuile, ileInterdite.getGrille().getTuille(tuile).getEtat().toString());
                 nbInondAVenir--;
                 if(nbInondAVenir == 0)
                     this.nouveauTour();

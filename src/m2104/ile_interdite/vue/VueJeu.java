@@ -77,6 +77,7 @@ public class VueJeu implements MouseListener {
 	private JButton rdj;
 	private JButton retour;
 	
+	private JButton continuer;
 	private JButton innonde;
 	private JButton innondeDef;
 	private JLabel nom;
@@ -104,7 +105,7 @@ public class VueJeu implements MouseListener {
         
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
-        panelInnondation = new JPanel(new GridLayout(2,1));
+        panelInnondation = new JPanel(new GridLayout(3,1));
         panelNiveau = new JPanel(new BorderLayout());
         
         panelJ1 = new JPanel(new GridLayout(2,1));
@@ -126,7 +127,7 @@ public class VueJeu implements MouseListener {
         nomTour = new JLabel("Tour 1 : ");
         panelNorth.add(nomTour); panelNorth.add(new JLabel());
         for (int i =0; i<nbJoueur; i++) {
-        	JLabel labelnom = new JLabel (nomsJoueurs[i] + " - ");
+        	JLabel labelnom = new JLabel (nomsJoueurs[i] + " - " );
         	panelNorth.add(labelnom);panelNorth.add(new JLabel());
         	if (i==1) {
         		labelnom.setForeground(Color.red);
@@ -145,13 +146,23 @@ public class VueJeu implements MouseListener {
         innonde.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                 ihm.notifierObservateurs(Message.choisirCarteInnondation());
+                actionCourante = "Innonde";
         	}
         });
         innondeDef = new JButton();
         innondeDef.setEnabled(false); // Pas de possibilité d'obtenir la deffaussse 
         
+        continuer= new JButton("Continuer");
+        continuer.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                ihm.notifierObservateurs(Message.choisirCarteInnondation());
+        	}
+        });
+        
         panelInnondation.add(innonde);
         panelInnondation.add(innondeDef);
+        panelInnondation.add(continuer);
+
         niveau = new VueNiveau(dif);
         panelNiveau.add(niveau);
         
@@ -261,13 +272,8 @@ public class VueJeu implements MouseListener {
 		tresorsDef.setEnabled(true);
 	}
 	
-	public void piocheInnondation() {
-		System.out.println("MVC pioche innondation");
-	}
-	
 	public void afficherDefausse(Stack defausse) {
 		this.defausse = new VueDefausse(defausse);
-		System.out.println("MVC montrer defausse");
 	}
 	
 	public void afficherMain(int i, ArrayList<CarteTresor> carte) {
@@ -293,7 +299,8 @@ public class VueJeu implements MouseListener {
     	panelGrille.deplacerAventurier(role, tuile);
     	actionCourante = "";
     }
-
+    
+    // en fonction de l'etat permet d'assecher ou d'innonder une tuille
     public void changerEtatTuile (int tuile, String etat) {
     	panelGrille.changerEtatTuile(tuile, etat);
     	actionCourante = "";

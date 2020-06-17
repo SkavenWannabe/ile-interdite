@@ -254,12 +254,12 @@ public class IleInterdite extends Observable<Message> {
 
     public void deplace(int position){
         getAventurierEnCours().changerPosition(position,grille); //Change la position de l'aventurier en cours avec sa nouvelle position
-        nbActions--;                                      //Réduit le compteur d'action de 1
+        nbActions--;                                             //Réduit le compteur d'action de 1
     }
 
     public void donnerTresor(int receveur, int numCarte){
         aventuriers.get(receveur).ajouterCarte(getAventurierEnCours().enleverCarte(numCarte));  //Ajoute dans la main de l'aventurier receveur la carte qu'on enlève de la main de l'aventurier donneur
-        nbActions--;                                                                                                //Réduit le compteur d'action de 1
+        nbActions--;                                                                            //Réduit le compteur d'action de 1
     }
 
     public void gagneTresor(int tuille){
@@ -349,7 +349,23 @@ public class IleInterdite extends Observable<Message> {
         return caseAssechables.stream().mapToInt(i -> i).toArray();
     }
     
-    //TODO : Methode PersonnageProche à faire (VINC au boulot)
+    //public ArrayList<Integer> PersonnagesProches
+    
+    public ArrayList<Boolean> clicable(){
+        ArrayList<Boolean> clic = new ArrayList<>();
+        
+        if(deplacementPossible().length == 0)
+            clic.add(false);
+        else
+            clic.add(true);
+        
+        if(assechePossible().length == 0)
+            clic.add(false);
+        else
+            clic.add(true);
+        
+        return clic;
+    }
 
     public Stack<CarteTresor> initPaquetTresor (){
 
