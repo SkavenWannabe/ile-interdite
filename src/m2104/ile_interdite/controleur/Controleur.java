@@ -61,8 +61,9 @@ public class Controleur implements Observateur<Message> {
             	int tuile = this.ileInterdite.piocheInonde();
             	ihm.changerEtatTuile(tuile, ileInterdite.getGrille().getTuille(tuile).getEtat().toString());
                 nbInondAVenir--;
-                if(nbInondAVenir == 0)
+                if(nbInondAVenir == 0){
                     this.nouveauTour();
+                }
             	break;
             case VOIR_DEFAUSSE:
             	ihm.afficherDefausse(ileInterdite.getDefausseTresor());
@@ -95,6 +96,6 @@ public class Controleur implements Observateur<Message> {
     }
     
     public void nouveauTour(){
-        this.ileInterdite.nouveauTour();
+        //this.ihm.nouveauTour(this.ileInterdite.nouveauTour(), this.ileInterdite.clicable());
     }
 }
