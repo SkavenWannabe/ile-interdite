@@ -64,6 +64,8 @@ public class IHM extends Observable<Message> {
     	jeu.nbActionsRestantes(action);
     }
     
-    //Les actions possibles
+    public void actionsPossibles(ArrayList<Boolean> actionsPossibles){
+        jeu.actionsPossibles(actionsPossibles);
+    }
 
 }
