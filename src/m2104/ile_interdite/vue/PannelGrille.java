@@ -143,14 +143,14 @@ public class PannelGrille extends JPanel {
     
     private void dessinerAventuriers(Graphics g) {
     	aventuriers.forEach((k,v) -> {
-    		String couleur = "Gris";
+    		String couleur = "Violet";
             switch (k) {
-            	case "Explorateur" : couleur = "Bleu"; break;
-            	case "Ingenieur" : couleur = "Jaune"; break;
-            	case "Messager" : couleur = "Rouge"; break;
-            	case "Navigateur" : couleur = "Violet"; break;
-            	case "Pilote" : couleur = "Noir"; break;
-            	case "Plongeur" : couleur = "Bronze"; break;
+            	case "Explorateur" : couleur = "Vert"; break;
+            	case "Ingenieur" : couleur = "Rouge"; break;
+            	case "Messager" : couleur = "Gris"; break;
+            	case "Navigateur" : couleur = "Jaune"; break;
+            	case "Pilote" : couleur = "Bleu"; break;
+            	case "Plongeur" : couleur = "Noir"; break;
             }
             int sizeX = (int) ((getWidth() / 6)*0.7);
             int sizeY = (int) ((getHeight() / 6)*0.7);

@@ -245,7 +245,7 @@ public class VueJeu implements MouseListener {
         //Minimum deux joueur, donc init de deux joueur
         panelJ1.add(new JLabel(nomsJoueurs[0]));
         panelCartesJ1 = new PanelMain(mains.get(0));
-        //panelCartesJ1.setPreferredSize(new Dimension(width, height));
+        //panelCartesJ1.setPreferredSize(new Dimension(panelJ1.getWidth(), panelJ1.getHeight()));
         panelJ1.add(panelCartesJ1);
         
         panelJ2.add(new JLabel(nomsJoueurs[1]));
