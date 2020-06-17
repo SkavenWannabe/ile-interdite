@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author PC SALON
  */
 public class Plongeur extends Aventurier{
-    //todo cpafini
+    private boolean[] dejaVerif = new boolean[36];
+
     public Plongeur(int p) {
         super(p);
     }
@@ -20,62 +21,165 @@ public class Plongeur extends Aventurier{
     @Override
     public ArrayList<Integer> deplacementPossible(Grille grille) {
         ArrayList<Integer> deplacementPossible = new ArrayList<>();
+        resetDejaVerif();
 
         int position = super.getPosition();
 
-        boolean[] dejaVerifier = new boolean[36]; //De base les tableaux de boolean sont initialisé à false.
+        if (position - 6 >= 0 && !dejaVerif[position - 6]) {
+            //si position - 6 (au dessus de l'aventurier) est dans la grille
 
-
-        /*
-            Position au dessus de l'aventurier
-         */
-        if(position - 6 >= 0 && grille.getTuille(position-6).getEtat() != Etat.ABYSSE) {
-            //si position - 6 (au dessus de l'aventurier) est dans la grille et que la tuile à cette position n'est pas dans l'abysse
-            deplacementPossible.add(position - 6);
+            dejaVerif[position - 6] = true; //on met à jour la vérification de la tuille
+            switch (grille.getTuille(position - 6).getEtat()){
+                case SEC: //si elle est sec, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position - 6);
+                    break;
+                case INONDE: //si elle est inondée, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position - 6);
+                case ABYSSE: //si elle est inondée ou dans l'abysse, on regarde les cases à côté.
+                    deplacementPossible.addAll(deplacementPossible(grille,position - 6));
+                    break;
+            }
         }
 
-        if(position - 1 >= 0 && grille.getTuille(position - 1).getEtat() != Etat.ABYSSE)
-            //si la position - 1 (à gauche de l'aventurier) est dans la grille et que la tuile à cette position n'est pas dans l'abysse
-            deplacementPossible.add(position - 1);
+        if (position != 18 && position != 12 && position - 1 >= 0 && !dejaVerif[position - 1]) {
+            //si la positon est différente de 18 et 12 et que la position - 1 (à gauche de l'aventurier) est dans la grille
 
-        if(position + 1 < 36 && grille.getTuille(position + 1).getEtat() != Etat.ABYSSE)
-            //si la position + 1 (à droite de l'aventurier est dans la grille et que la tuille à cette position n'est pas dans l'abysse
-            deplacementPossible.add(position + 1);
+            dejaVerif[position - 1] = true;
+            switch (grille.getTuille(position - 1).getEtat()){
+                case SEC: //si elle est sec, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position - 1);
+                    break;
+                case INONDE: //si elle est inondée, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position - 1);
+                case ABYSSE: //si elle est inondée ou dans l'abysse, on regarde les cases à côté.
+                    deplacementPossible.addAll(deplacementPossible(grille,position - 1));
+                    break;
+            }
 
-        if(position + 6 < 36 && grille.getTuille(position + 6).getEtat() != Etat.ABYSSE)
-            //si la position + 6 (en dessous de l'aventurier) est dans la grille et que la tuille à cette position n'est pas dans l'abysse
-            deplacementPossible.add(position + 6);
+        }
 
-        return deplacementPossible; //on converti l'ArrayList en tableau
+        if (position != 17 && position != 12 && position + 1 < 36 && !dejaVerif[position + 1]) {
+            //si la positon est différente de 17 et 12 et que la position - 1 (à droite de l'aventurier) est dans la grille
+
+            dejaVerif[position + 1] = true;
+            switch (grille.getTuille(position + 1).getEtat()) {
+                case SEC: //si elle est sec, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position + 1);
+                    break;
+                case INONDE: //si elle est inondée, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position + 1);
+                case ABYSSE: //si elle est inondée ou dans l'abysse, on regarde les cases à côté.
+                    deplacementPossible.addAll(deplacementPossible(grille, position + 1));
+                    break;
+            }
+        }
+
+        if(position + 6 < 36 && !dejaVerif[position + 6]) {
+            //si position + 6 (en dessous de l'aventurier) est dans la grille
+
+            dejaVerif[position + 6] = true; //on met à jour la vérification de la tuille
+            switch (grille.getTuille(position + 6).getEtat()) {
+                case SEC: //si elle est sec, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position + 6);
+                    break;
+                case INONDE: //si elle est inondée, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position + 6);
+                case ABYSSE: //si elle est inondée ou dans l'abysse, on regarde les cases à côté.
+                    deplacementPossible.addAll(deplacementPossible(grille, position + 6));
+                    break;
+            }
+        }
+
+
+        return deplacementPossible;
     }
 
-    public ArrayList<Integer> deplacementPossible(Grille grille, int position, boolean[] dejaVerifier) {
+    public ArrayList<Integer> deplacementPossible(Grille grille, int position) {
         ArrayList<Integer> deplacementPossible = new ArrayList<>();
 
-        /*
-            Position au dessus de l'aventurier
-         */
-        if(position - 6 >= 0 && grille.getTuille(position-6).getEtat() != Etat.ABYSSE) {
-            //si position - 6 (au dessus de l'aventurier) est dans la grille et que la tuile à cette position n'est pas dans l'abysse
-            deplacementPossible.add(position - 6);
+        if (position - 6 >= 0 && !dejaVerif[position - 6]) {
+            //si position - 6 (au dessus de l'aventurier) est dans la grille
+
+            dejaVerif[position - 6] = true; //on met à jour la vérification de la tuille
+            switch (grille.getTuille(position - 6).getEtat()){
+                case SEC: //si elle est sec, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position - 6);
+                    break;
+                case INONDE: //si elle est inondée, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position - 6);
+                case ABYSSE: //si elle est inondée ou dans l'abysse, on regarde les cases à côté.
+                    deplacementPossible.addAll(deplacementPossible(grille,position - 6));
+                    break;
+            }
         }
 
-        if(position - 1 >= 0 && grille.getTuille(position - 1).getEtat() != Etat.ABYSSE)
-            //si la position - 1 (à gauche de l'aventurier) est dans la grille et que la tuile à cette position n'est pas dans l'abysse
-            deplacementPossible.add(position - 1);
+        if (position != 18 && position != 12 && position - 1 >= 0 && !dejaVerif[position - 1]) {
+            //si la positon est différente de 18 et 12 et que la position - 1 (à gauche de l'aventurier) est dans la grille
 
-        if(position + 1 < 36 && grille.getTuille(position + 1).getEtat() != Etat.ABYSSE)
-            //si la position + 1 (à droite de l'aventurier est dans la grille et que la tuille à cette position n'est pas dans l'abysse
-            deplacementPossible.add(position + 1);
+            dejaVerif[position - 1] = true;
+            switch (grille.getTuille(position - 1).getEtat()){
+                case SEC: //si elle est sec, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position - 1);
+                    break;
+                case INONDE: //si elle est inondée, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position - 1);
+                case ABYSSE: //si elle est inondée ou dans l'abysse, on regarde les cases à côté.
+                    deplacementPossible.addAll(deplacementPossible(grille,position - 1));
+                    break;
+            }
 
-        if(position + 6 < 36 && grille.getTuille(position + 6).getEtat() != Etat.ABYSSE)
-            //si la position + 6 (en dessous de l'aventurier) est dans la grille et que la tuille à cette position n'est pas dans l'abysse
-            deplacementPossible.add(position + 6);
+        }
 
-        return deplacementPossible; //on converti l'ArrayList en tableau
+        if (position != 17 && position != 12 && position + 1 < 36 && !dejaVerif[position + 1]) {
+            //si la positon est différente de 17 et 12 et que la position - 1 (à droite de l'aventurier) est dans la grille
+
+            dejaVerif[position + 1] = true;
+            switch (grille.getTuille(position + 1).getEtat()) {
+                case SEC: //si elle est sec, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position + 1);
+                    break;
+                case INONDE: //si elle est inondée, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position + 1);
+                case ABYSSE: //si elle est inondée ou dans l'abysse, on regarde les cases à côté.
+                    deplacementPossible.addAll(deplacementPossible(grille, position + 1));
+                    break;
+            }
+        }
+
+        if(position + 6 < 36 && !dejaVerif[position + 6]) {
+            //si position + 6 (en dessous de l'aventurier) est dans la grille
+
+            dejaVerif[position + 6] = true; //on met à jour la vérification de la tuille
+            switch (grille.getTuille(position + 6).getEtat()) {
+                case SEC: //si elle est sec, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position + 6);
+                    break;
+                case INONDE: //si elle est inondée, on l'ajoute à deplacementPossible
+                    deplacementPossible.add(position + 6);
+                case ABYSSE: //si elle est inondée ou dans l'abysse, on regarde les cases à côté.
+                    deplacementPossible.addAll(deplacementPossible(grille, position + 6));
+                    break;
+            }
+        }
+
+
+        return deplacementPossible;
     }
 
 
+    private void resetDejaVerif() {
+        for(int i =0; i<dejaVerif.length; i++){
+            switch(i) {
+                case 0: case 1: case 4: case 5: case 6: case 11:
+                case 24: case 29: case 30: case 31: case 34: case 35:
+                    dejaVerif[i] = true;
+                    break;
+                default:
+                    dejaVerif[i] = false;
+                    break;
+            }
+        }
+    }
     @Override
     public String toString(){
         return "Plongeur";

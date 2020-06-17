@@ -372,10 +372,15 @@ public class VueJeu implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		switch (actionCourante) {
 		case "Deplacer" : 
-			ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+			if (panelGrille.estSelectionnable(panelGrille.getNumeroTuile(e.getX(), e.getY()))) {
+				ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+			}
+			
 			break;
 		case "Assecher" :
-			ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));	
+			if (panelGrille.estSelectionnable(panelGrille.getNumeroTuile(e.getX(), e.getY()))) {
+				ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+			}
 			break;
 		}
 		//rajouter des Case en fonction des actionCourante possible - (pour la main, donner carteTresors, action speciale)
