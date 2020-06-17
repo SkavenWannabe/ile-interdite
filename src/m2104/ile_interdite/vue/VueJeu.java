@@ -4,10 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Stack;
 
 import javax.swing.JButton;
@@ -15,17 +12,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import m2104.ile_interdite.modele.Aventurier;
 import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
 
-public class VueJeu implements MouseListener {
+public class VueJeu {
     private final IHM ihm;
 
 	private JFrame fenetre;
 	
-	//Panel principal, pour découper la fenêtre
 	private JPanel mainPanel;
 	private JPanel panelNorth;
 	private JPanel panelSouth;
@@ -33,15 +28,12 @@ public class VueJeu implements MouseListener {
 	private JPanel panelWeast;
 	private JPanel panelCentre;
 	
-	// Panel secondaire pour faciliter l'affichage 
 	private JPanel panelMvt;
 	private JPanel panelBtn;
 	private JPanel panelInnondation;
 	private JPanel panelNiveau;
-	private PannelGrille panelGrille;
+	private PanelGrille panelGrille;
 	
-	// Panel pour le Sud, pour faciliter l'affichage de la main 
-	//TODO: Créer la main dans une classe apart comme pour la grille (ex: PannelMain)
 	private JPanel panelJ1;
 	private JPanel panelJ2;
 	private JPanel panelJ3;
@@ -50,8 +42,7 @@ public class VueJeu implements MouseListener {
 	private JPanel panelCartesJ2;
 	private JPanel panelCartesJ3;
 	private JPanel panelCartesJ4;
-	
-	//Pour acceder au autre vue nécessaire
+
 	private VueReglesDuJeu regles;
 	private VueInscriptionJoueurs init;
 	private VueNiveau niveau;
@@ -59,13 +50,11 @@ public class VueJeu implements MouseListener {
 	
 	private JLabel nomTour;
 	private int nbCoup = 3;
-	private String actionCourante = "";
 	private String [] nomsJoueurs;
 	private int nbJoueur;
 	private int dif;
 	private Grille grille;
 	
-	//Ensemble des bouttons necessaires
 	private JButton tresors;
 	private JButton tresorsDef;
 	private JLabel indication;
@@ -77,12 +66,11 @@ public class VueJeu implements MouseListener {
 	private JButton rdj;
 	private JButton retour;
 	
-	private JButton continuer;
 	private JButton innonde;
 	private JButton innondeDef;
 	private JLabel nom;
 	
-	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille, HashMap<String,Integer> aventuriers) {
+	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille) {
 		//initialisation attribut
 		this.ihm = ihm;
 		this.nomsJoueurs = nomsJoueurs;
@@ -105,7 +93,7 @@ public class VueJeu implements MouseListener {
         
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
-        panelInnondation = new JPanel(new GridLayout(3,1));
+        panelInnondation = new JPanel(new GridLayout(2,1));
         panelNiveau = new JPanel(new BorderLayout());
         
         panelJ1 = new JPanel(new GridLayout(2,1));
@@ -127,7 +115,7 @@ public class VueJeu implements MouseListener {
         nomTour = new JLabel("Tour 1 : ");
         panelNorth.add(nomTour); panelNorth.add(new JLabel());
         for (int i =0; i<nbJoueur; i++) {
-        	JLabel labelnom = new JLabel (nomsJoueurs[i] + " - " );
+        	JLabel labelnom = new JLabel (nomsJoueurs[i]);
         	panelNorth.add(labelnom);panelNorth.add(new JLabel());
         	if (i==1) {
         		labelnom.setForeground(Color.red);
@@ -136,8 +124,7 @@ public class VueJeu implements MouseListener {
         
         // Initialisation Centre de page
         
-        panelGrille = new PannelGrille(grille.getTuilles(), aventuriers); // Creation d'une Grille
-        panelGrille.addMouseListener(this);
+        panelGrille = new PanelGrille(grille.getTuilles());
         panelCentre.add(panelGrille);
 
         
@@ -146,23 +133,13 @@ public class VueJeu implements MouseListener {
         innonde.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                 ihm.notifierObservateurs(Message.choisirCarteInnondation());
-                actionCourante = "Innonde";
         	}
         });
         innondeDef = new JButton();
-        innondeDef.setEnabled(false); // Pas de possibilité d'obtenir la deffaussse 
-        
-        continuer= new JButton("Continuer");
-        continuer.addActionListener(new java.awt.event.ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-                ihm.notifierObservateurs(Message.choisirCarteInnondation());
-        	}
-        });
+        innondeDef.setEnabled(false);
         
         panelInnondation.add(innonde);
         panelInnondation.add(innondeDef);
-        panelInnondation.add(continuer);
-
         niveau = new VueNiveau(dif);
         panelNiveau.add(niveau);
         
@@ -190,14 +167,12 @@ public class VueJeu implements MouseListener {
         deplacer = new JButton("Deplacer");
         deplacer.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		actionCourante = "Deplacer";
-        		ihm.notifierObservateurs(Message.testBouger());
+        		ihm.notifierObservateurs(Message.bouger());
         	}
         });
         assecher = new JButton("Assecher");
         assecher.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		actionCourante = "Assecher";
         		ihm.notifierObservateurs(Message.testAssecher());
         	}
         });
@@ -272,8 +247,13 @@ public class VueJeu implements MouseListener {
 		tresorsDef.setEnabled(true);
 	}
 	
+	public void piocheInnondation() {
+		System.out.println("MVC pioche innondation");
+	}
+	
 	public void afficherDefausse(Stack defausse) {
 		this.defausse = new VueDefausse(defausse);
+		System.out.println("MVC montrer defausse");
 	}
 	
 	public void afficherMain(int i, ArrayList<CarteTresor> carte) {
@@ -293,58 +273,10 @@ public class VueJeu implements MouseListener {
     	panelGrille.selectionnerTuiles(tab);
     }
     
-    public void deplacerAventurier(String role, int tuile) {
+    public void deplacerAventurier(int position, int joueur) {
     	nbCoup -= 1;
     	indication2.setText(("Action Restantes : " + nbCoup));
-    	panelGrille.deplacerAventurier(role, tuile);
-    	actionCourante = "";
+    	panelGrille.deplacerJoueur(joueur, position);
     }
-    
-    // en fonction de l'etat permet d'assecher ou d'innonder une tuille
-    public void changerEtatTuile (int tuile, String etat) {
-    	panelGrille.changerEtatTuile(tuile, etat);
-    	actionCourante = "";
-    }
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		switch (actionCourante) {
-		case "Deplacer" : 
-			ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-			break;
-		case "Assecher" :
-			ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));	
-			break;
-		}
-		//rajouter des Case en fonction des actionCourante possible - (pour la main, donner carteTresors, action speciale)
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
     
 }
