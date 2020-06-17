@@ -325,7 +325,7 @@ public class PannelGrille extends JPanel {
             res.forEach(
                     x -> {
                 try {
-                    pions.put(x.substring(x.lastIndexOf("/")+5, x.length()-4),ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
+                    pions.put(x.substring(x.lastIndexOf(File.separator)+5, x.length()-4),ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
