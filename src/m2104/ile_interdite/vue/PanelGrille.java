@@ -372,4 +372,8 @@ public class PanelGrille extends JPanel {
     		tuilesSelectionnable[i] = false;
     	}
     }
+    
+    public boolean estSelectionnable(int tuile) {
+    	return(tuilesSelectionnable[tuile] == true);
+    }
 }
