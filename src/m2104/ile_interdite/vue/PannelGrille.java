@@ -208,7 +208,7 @@ public class PannelGrille extends JPanel {
 
             res = walk.map(x -> x.toString()) //on convertie tous les Path en String
                     .filter(f -> !f.contains("_Inonde") && f.endsWith(".png")) //on filtre de manière a ne garder que les fichiers ne contenant pas _Inonde et finissant par .png
-                    .sorted()
+                    .sorted() //on met les cartes toujours dans le même ordre pour eviter les erreurs suivant les pc
                     .collect(Collectors.toList()); // on convertie le résultat en list
 
             //pour tous les éléments trouvés
@@ -318,7 +318,7 @@ public class PannelGrille extends JPanel {
 	
 	        List<String> res = walk.map(x -> x.toString()) //on convertie tous les Path en String
 	                .filter(f -> f.endsWith(".png")) //on filtre de manière a ne garder que les fichiers finissant par .png
-	                .sorted()
+                    .sorted() //on met les cartes toujours dans le même ordre pour eviter les erreurs suivant les pc
 	                .collect(Collectors.toList()); // on convertie le résultat en list
 	        
 	      //pour tous les éléments trouvés
