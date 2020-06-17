@@ -80,6 +80,8 @@ public class Controleur implements Observateur<Message> {
             case BOUGER:
             	ileInterdite.deplace(msg.getIdTuile());
             	ihm.deplacerAventurier(ileInterdite.getAventurierEnCours().toString(),msg.getIdTuile());
+                //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+                //this.ihm.actionsPossibles(this.ileInterdite.clicable());
             	break;
             case TEST_ASSECHER:
                 ihm.clickPossible(this.ileInterdite.assechePossible());
@@ -87,12 +89,15 @@ public class Controleur implements Observateur<Message> {
             case ASSECHER:
             	ileInterdite.asseche(msg.getIdTuile());
             	ihm.changerEtatTuile(msg.getIdTuile(), ileInterdite.getGrille().getTuille(msg.getIdTuile()).getEtat().toString());
+                //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case DONNER:
             	ileInterdite.donnerTresor(msg.getIdAventurier(),msg.getIdCarte());
+                //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case RECUPERER_TRESOR:
             	ileInterdite.gagneTresor(msg.getIdTuile());
+                //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             default:
                 if (Parameters.LOGS) {
@@ -102,6 +107,8 @@ public class Controleur implements Observateur<Message> {
     }
     
     public void nouveauTour(){
-        //this.ihm.nouveauTour(this.ileInterdite.nouveauTour(), this.ileInterdite.clicable());
+        //this.ihm.nouveauTour(this.ileInterdite.nouveauTour());
+        //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+        //this.ihm.actionsPossibles(this.ileInterdite.clicable());
     }
 }
