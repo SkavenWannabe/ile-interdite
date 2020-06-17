@@ -261,6 +261,60 @@ public class IleInterdite extends Observable<Message> {
         aventuriers.get(receveur).ajouterCarte(getAventurierEnCours().enleverCarte(numCarte));  //Ajoute dans la main de l'aventurier receveur la carte qu'on enlève de la main de l'aventurier donneur
         nbActions--;                                                                            //Réduit le compteur d'action de 1
     }
+    
+    public boolean tresorPossible(){
+        int positionAventurier = getAventurierEnCours().getPosition();
+        
+        if(grille.getTuille(positionAventurier).getSpecial() == "TRESOR_PIERRE" && !(boolean) tresors.get(CarteTresor.TRESOR_PIERRE)){
+            //Si on est sur la tuile trésor ET qu'il est toujours disponible 
+            int tresorPierre = 0;
+            for(CarteTresor c : getAventurierEnCours().getMain()){
+                if(c == CarteTresor.TRESOR_PIERRE){
+                    tresorPierre++;
+                }
+            }
+            if(tresorPierre >= 4){
+                return true;
+            }}
+        
+        else if(grille.getTuille(positionAventurier).getSpecial() == "TRESOR_CALICE" && !(boolean) tresors.get(CarteTresor.TRESOR_CALICE)){
+            //Si on est sur la tuile trésor ET qu'il est toujours disponible 
+            int tresorCalice = 0;
+            for(CarteTresor c : getAventurierEnCours().getMain()){
+                if(c == CarteTresor.TRESOR_CALICE){
+                    tresorCalice++;
+                }
+            }
+            if(tresorCalice >= 4){
+                return true;
+            }}
+            
+            else if(grille.getTuille(positionAventurier).getSpecial() == "TRESOR_CRISTAL" && !(boolean) tresors.get(CarteTresor.TRESOR_CRISTAL)){
+            //Si on est sur la tuile trésor ET qu'il est toujours disponible 
+            int tresorCristal = 0;
+            for(CarteTresor c : getAventurierEnCours().getMain()){
+                if(c == CarteTresor.TRESOR_CRISTAL){
+                    tresorCristal++;
+                }
+            }
+            if(tresorCristal >= 4){
+                return true;
+            }}
+            
+            else if(grille.getTuille(positionAventurier).getSpecial() == "TRESOR_STATUE" && !(boolean) tresors.get(CarteTresor.TRESOR_STATUE)){
+            //Si on est sur la tuile trésor ET qu'il est toujours disponible 
+            int tresorStatue = 0;
+            for(CarteTresor c : getAventurierEnCours().getMain()){
+                if(c == CarteTresor.TRESOR_STATUE){
+                    tresorStatue++;
+                }
+            }
+            if(tresorStatue >= 4){
+                return true;
+            } }
+        return false;
+  
+    }
 
     public void gagneTresor(int tuille){
         CarteTresor tresor;
