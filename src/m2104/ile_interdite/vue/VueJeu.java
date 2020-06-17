@@ -155,6 +155,7 @@ public class VueJeu implements MouseListener {
                 actionCourante = "Innonde";
         	}
         });
+        innonde.setEnabled(false);
         innondeDef = new JButton();
         innondeDef.setEnabled(false); // Pas de possibilité d'obtenir la deffaussse 
         
@@ -173,13 +174,16 @@ public class VueJeu implements MouseListener {
         tresorsDef.setEnabled(false);
         tresorsDef.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		ihm.notifierObservateurs(Message.voirDefausse());
+                    ihm.notifierObservateurs(Message.voirDefausse());
         	}
         });
         tresors = new JButton("Carte Tresors");
         tresors.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                ihm.notifierObservateurs(Message.choisirCarteTresors());
+                    innonde.setEnabled(true);
+                    tresors.setEnabled(false);
+                    nbActionsRestantes(0);
+                    ihm.notifierObservateurs(Message.choisirCarteTresors());
         	}
         });
         indication = new JLabel("Pioche = fin de tour");
@@ -319,6 +323,8 @@ public class VueJeu implements MouseListener {
     }
     
     public void nouveauTour(int tour) {
+        innonde.setEnabled(false);
+        tresors.setEnabled(true);
     	nomTour.setText("Tour "+ tour+ ":");
     	labelNom1.setForeground(Color.black);
     	labelNom2.setForeground(Color.black);
@@ -345,6 +351,12 @@ public class VueJeu implements MouseListener {
     
     public void nbActionsRestantes(int action) {
     	indication2.setText("Action restantes : " + action);
+        if(action == 0){
+            deplacer.setEnabled(false);
+            assecher.setEnabled(false);
+            donnerT.setEnabled(false);
+            gagnerT.setEnabled(false);
+        }
     }
 
     public void actionsPossibles(ArrayList<Boolean> actionsPossibles){

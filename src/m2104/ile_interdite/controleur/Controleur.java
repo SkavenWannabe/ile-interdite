@@ -80,8 +80,8 @@ public class Controleur implements Observateur<Message> {
             case BOUGER:
             	ileInterdite.deplace(msg.getIdTuile());
             	ihm.deplacerAventurier(ileInterdite.getAventurierEnCours().toString(),msg.getIdTuile());
-                //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
-                //this.ihm.actionsPossibles(this.ileInterdite.clicable());
+                this.ihm.actionsPossibles(this.ileInterdite.clicable());
+                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case TEST_ASSECHER:
                 ihm.clickPossible(this.ileInterdite.assechePossible());
@@ -89,15 +89,16 @@ public class Controleur implements Observateur<Message> {
             case ASSECHER:
             	ileInterdite.asseche(msg.getIdTuile());
             	ihm.changerEtatTuile(msg.getIdTuile(), ileInterdite.getGrille().getTuille(msg.getIdTuile()).getEtat().toString());
-                //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+                this.ihm.actionsPossibles(this.ileInterdite.clicable());
+                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case DONNER:
             	ileInterdite.donnerTresor(msg.getIdAventurier(),msg.getIdCarte());
-                //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case RECUPERER_TRESOR:
             	ileInterdite.gagneTresor(msg.getIdTuile());
-                //this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case NOYADE:
                 //Glou glou
