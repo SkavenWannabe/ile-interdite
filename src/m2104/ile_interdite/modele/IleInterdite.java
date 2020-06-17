@@ -257,6 +257,18 @@ public class IleInterdite extends Observable<Message> {
         aventuriers.get(receveur).ajouterCarte(getAventurierEnCours().enleverCarte(numCarte));  //Ajoute dans la main de l'aventurier receveur la carte qu'on enlève de la main de l'aventurier donneur
         nbActions--;                                                                                                //Réduit le compteur d'action de 1
     }
+    
+    //public boolean tresorPossible(){
+        //int positionAventurier = getAventurierEnCours().getPosition();
+        
+        //if(grille.getTuille(positionAventurier).getSpecial() == "TRESOR_PIERRE"){
+            //if()
+                
+        //}
+  
+        
+        
+    //}
 
     public void gagneTresor(int tuille){
         CarteTresor tresor;
