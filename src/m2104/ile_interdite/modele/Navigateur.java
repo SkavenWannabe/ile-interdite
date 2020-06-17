@@ -15,8 +15,8 @@ public class Navigateur extends Aventurier{
         super(p);
     }
 
-    public void deplaceAutreJoueur(Aventurier aventurier, int position) {
-        aventurier.changerPosition(position);
+    public void deplaceAutreJoueur(Aventurier aventurier, int position, Grille grille) {
+        aventurier.changerPosition(position,grille);
     }
 
     @Override

@@ -208,7 +208,7 @@ public class IleInterdite extends Observable<Message> {
         return j;
     }
     
-    public void piocheInonde(){
+    public int piocheInonde(){
 
         if (paquetInonde.isEmpty())                                     //Si la pioche est vide, la réinitialise
             resetPiocheInonde();
@@ -240,6 +240,7 @@ public class IleInterdite extends Observable<Message> {
             defausseInonde.push(id);                                    //Si la tuille ne sombre pas dans l'abysse, on ajoute sa position dans la défausse
         
         nbInondations--;
+        return id;
     }
 
     public void asseche(int position){
@@ -248,7 +249,7 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public void deplace(int position){
-        getAventurierEnCours().changerPosition(position); //Change la position de l'aventurier en cours avec sa nouvelle position
+        getAventurierEnCours().changerPosition(position,grille); //Change la position de l'aventurier en cours avec sa nouvelle position
         nbActions--;                                      //Réduit le compteur d'action de 1
     }
 
@@ -298,7 +299,7 @@ public class IleInterdite extends Observable<Message> {
 
         for(int i = 0; i < aventuriers.size(); i++)
             if(aventuriers.get(i).getPosition() == ancien)
-                aventuriers.get(i).changerPosition(nouveau);    //Change la position de chaque aventurier se trouvant sur la case de départ de l'hélico à celle d'arrivée
+                aventuriers.get(i).changerPosition(nouveau,grille);    //Change la position de chaque aventurier se trouvant sur la case de départ de l'hélico à celle d'arrivée
     }
 
     public boolean estGagnable(){
@@ -325,16 +326,23 @@ public class IleInterdite extends Observable<Message> {
     }
     
     public int[] deplacementPossible(){
-        return getAventurierEnCours().deplacementPossible(grille);  //Renvoie la lise des tuiles que l'aventurier en cours peut atteindre
+        return getAventurierEnCours().deplacementPossible(grille).stream().mapToInt(i -> i).toArray();  //Renvoie la lise des tuiles que l'aventurier en cours peut atteindre
     }
 
     public int[] assechePossible(){
+        ArrayList<Integer> possibles;
         if (getAventurierEnCours().toString().equals("Pilote") || aventuriers.get(tour % aventuriers.size()).toString().equals("Plongeur")){
             Messager m = new Messager(getAventurierEnCours().getPosition());
-            return m.deplacementPossible(grille);
+            possibles = m.deplacementPossible(grille);
         }
         else
-            return getAventurierEnCours().deplacementPossible(grille);
+            possibles = getAventurierEnCours().deplacementPossible(grille);
+        ArrayList<Integer> caseAssechables = new ArrayList<>();
+        for(int i = 0; i < possibles.size();i++){
+            if(grille.getTuille(possibles.get(i)).getEtat() == Etat.INONDE)
+                caseAssechables.add(i);
+        }
+        return caseAssechables.stream().mapToInt(i -> i).toArray();
     }
     
     //TODO : Methode PersonnageProche à faire (VINC au boulot)

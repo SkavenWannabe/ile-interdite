@@ -24,11 +24,11 @@ public abstract class Aventurier {
         return main.remove(numCarte);
     }
 
-    public void changerPosition(int position) {
+    public void changerPosition(int position, Grille grille) {
         this.position = position;
     }
 
-    public int[] deplacementPossible(Grille grille) {
+    public ArrayList<Integer> deplacementPossible(Grille grille) {
         ArrayList<Integer> deplacementPossible = new ArrayList<>();
 
         if(position - 6 >= 0 && grille.getTuille(position-6).getEtat() != Etat.ABYSSE)
@@ -47,7 +47,7 @@ public abstract class Aventurier {
             //si la position + 6 (en dessous de l'aventurier) est dans la grille et que la tuille à cette position n'est pas dans l'abysse
             deplacementPossible.add(position + 6);
 
-        return deplacementPossible.stream().mapToInt(i -> i).toArray(); //on converti l'ArrayList en tableau
+        return deplacementPossible; //on converti l'ArrayList en tableau
     }
 
     public int getPosition() {

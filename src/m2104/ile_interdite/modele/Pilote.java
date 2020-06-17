@@ -21,20 +21,31 @@ public class Pilote extends Aventurier{
     }
 
     @Override
-    public int[] deplacementPossible(Grille grille) {
+    public ArrayList<Integer> deplacementPossible(Grille grille) {
         if(!pouvoir)
             //si il n'a pas son pouvoir son déplacement est celui de l'aventurier de base
             return super.deplacementPossible(grille);
         else {
             ArrayList<Integer> ret = new ArrayList<>();
-            for(int i = 0; i < ret.size(); i++) {
+            for(int i = 0; i < grille.getTuilles().length; i++) {
                 if (grille.getTuille(i).getEtat() != Etat.ABYSSE)
                     ret.add(i);
             }
-            return ret.stream().mapToInt(i -> i).toArray();
+            return ret;
         }
     }
 
+    @Override
+    public void changerPosition(int position, Grille grille) {
+        ArrayList<Integer> marche = super.deplacementPossible(grille);
+        int k = 0;
+        while(k < marche.size() && position != marche.get(k))
+            k++;
+        if(k == marche.size())
+            pouvoir = false;
+        super.changerPosition(position,grille);
+    }
+    
     public void setPouvoir(boolean pouvoir) {
         this.pouvoir = pouvoir;
     }

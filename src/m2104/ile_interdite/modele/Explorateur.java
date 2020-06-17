@@ -18,7 +18,7 @@ public class Explorateur extends Aventurier{
     }
 
     @Override
-    public int[] deplacementPossible(Grille grille) {
+    public ArrayList<Integer> deplacementPossible(Grille grille) {
         ArrayList<Integer> deplacementPossible = new ArrayList<>();
 
         int position = super.getPosition();
@@ -43,7 +43,7 @@ public class Explorateur extends Aventurier{
                 deplacementPossible.add(i);
         }
 
-        return deplacementPossible.stream().mapToInt(i -> i).toArray(); //on converti l'ArrayList en tableau
+        return deplacementPossible; //on converti l'ArrayList en tableau
     }
 
     @Override

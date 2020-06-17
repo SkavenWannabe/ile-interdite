@@ -18,7 +18,7 @@ public class Plongeur extends Aventurier{
     }
 
     @Override
-    public int[] deplacementPossible(Grille grille) {
+    public ArrayList<Integer> deplacementPossible(Grille grille) {
         ArrayList<Integer> deplacementPossible = new ArrayList<>();
 
         int position = super.getPosition();
@@ -46,7 +46,7 @@ public class Plongeur extends Aventurier{
             //si la position + 6 (en dessous de l'aventurier) est dans la grille et que la tuille à cette position n'est pas dans l'abysse
             deplacementPossible.add(position + 6);
 
-        return deplacementPossible.stream().mapToInt(i -> i).toArray(); //on converti l'ArrayList en tableau
+        return deplacementPossible; //on converti l'ArrayList en tableau
     }
 
     public ArrayList<Integer> deplacementPossible(Grille grille, int position, boolean[] dejaVerifier) {
