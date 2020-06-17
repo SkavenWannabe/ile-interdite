@@ -37,9 +37,6 @@ public class IHM extends Observable<Message> {
         //TODO : Faudra faire quelque chose de cette main
     	jeu.piocheTresors();
     }
-    public void piocheInnondation() {
-    	jeu.piocheInnondation();
-    }
     
     public void afficherDefausse(Stack defausse) {
     	jeu.afficherDefausse(defausse);

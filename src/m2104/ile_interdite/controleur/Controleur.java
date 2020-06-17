@@ -55,8 +55,8 @@ public class Controleur implements Observateur<Message> {
             	ihm.piocheTresors(this.ileInterdite.piocheTresor());
             	break;
             case CHOISIR_CARTE_INNONDE:
-            	this.ileInterdite.piocheInonde();
-            	ihm.piocheInnondation();
+            	int tuile = this.ileInterdite.piocheInonde();
+            	ihm.changerEtatTuile(tuile, ileInterdite.getGrille().getTuille(tuile).getEtat().toString());
             	break;
             case VOIR_DEFAUSSE:
             	ihm.afficherDefausse(ileInterdite.getDefausseTresor());

@@ -360,6 +360,7 @@ public class PannelGrille extends JPanel {
     }
     
     public void selectionnerTuiles(int[] tab) {
+    	effacerSelection();
     	for (int i = 0; i < tab.length; i++) {
     		tuilesSelectionnable[tab[i]] = true;
     	}  	
