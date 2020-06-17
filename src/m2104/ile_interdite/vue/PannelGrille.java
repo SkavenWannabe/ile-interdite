@@ -44,7 +44,7 @@ public class PannelGrille extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
     	super.paintComponent(g);
-    	// effacerComposant();    	
+    	// effacerComposant();  
     	dessinerTuiles(g);
         dessinerAventuriers(g);
         dessinerSelection(g);

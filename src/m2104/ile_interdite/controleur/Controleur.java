@@ -1,5 +1,6 @@
 package m2104.ile_interdite.controleur;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import m2104.ile_interdite.modele.IleInterdite;
@@ -46,10 +47,15 @@ public class Controleur implements Observateur<Message> {
                 	aventuriers.put(this.ileInterdite.getAventuriers().get(i).toString(), this.ileInterdite.getAventuriers().get(i).getPosition());
                 }
                 
-                this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille(), aventuriers);
+                HashMap<Integer, ArrayList> mains = new HashMap<Integer, ArrayList>();
                 for (int i = 0; i < msg.getNbJoueurs(); i++) {
-                	this.ihm.afficherMain(i,this.ileInterdite.getMain(i));
+                	ArrayList<String> cartes = new ArrayList<String>();
+                	ileInterdite.getMain(i).forEach(x -> cartes.add(x.toString()));
+                	mains.put(i, cartes);
                 }
+                
+                this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille(), aventuriers, mains);
+
                 this.nouveauTour();
                 break;
             case CHOISIR_CARTE_TRESORS:

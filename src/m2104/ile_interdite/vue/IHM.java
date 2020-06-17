@@ -26,9 +26,9 @@ public class IHM extends Observable<Message> {
         this.vueInscription = new VueInscriptionJoueurs(this);
     }
     
-    public void creerVuesJeu(IHM this, String[] nomAventurier, int difficulte, Grille grille, HashMap<String,Integer> aventuriers) {
+    public void creerVuesJeu(IHM this, String[] nomAventurier, int difficulte, Grille grille, HashMap<String,Integer> aventuriers, HashMap<Integer, ArrayList> mains) {
     	String[] nomsJoueurs = this.vueInscription.getNomJoueurs();
-    	jeu = new VueJeu(this, nomsJoueurs,nomsJoueurs.length,difficulte, grille, aventuriers);
+    	jeu = new VueJeu(this, nomsJoueurs,nomsJoueurs.length,difficulte, grille, aventuriers, mains);
     }
     
     public void piocheTresors(ArrayList<CarteTresor> main) {

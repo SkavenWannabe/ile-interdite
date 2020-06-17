@@ -418,8 +418,6 @@ public class IleInterdite extends Observable<Message> {
         else
             clic.add(true);
         
-        if()
-        
         return clic;
     }
 

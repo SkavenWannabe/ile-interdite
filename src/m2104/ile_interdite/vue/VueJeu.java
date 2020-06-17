@@ -2,6 +2,8 @@ package m2104.ile_interdite.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -46,10 +48,10 @@ public class VueJeu implements MouseListener {
 	private JPanel panelJ2;
 	private JPanel panelJ3;
 	private JPanel panelJ4;
-	private JPanel panelCartesJ1;
-	private JPanel panelCartesJ2;
-	private JPanel panelCartesJ3;
-	private JPanel panelCartesJ4;
+	private PanelMain panelCartesJ1;
+	private PanelMain panelCartesJ2;
+	private PanelMain panelCartesJ3;
+	private PanelMain panelCartesJ4;
 	
 	//Pour acceder au autre vue nécessaire
 	private VueReglesDuJeu regles;
@@ -82,7 +84,7 @@ public class VueJeu implements MouseListener {
 	private JButton innondeDef;
 	private JLabel nom;
 	
-	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille, HashMap<String,Integer> aventuriers) {
+	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille, HashMap<String,Integer> aventuriers, HashMap<Integer, ArrayList> mains) {
 		//initialisation attribut
 		this.ihm = ihm;
 		this.nomsJoueurs = nomsJoueurs;
@@ -98,7 +100,7 @@ public class VueJeu implements MouseListener {
         
         mainPanel = new JPanel(new BorderLayout());
         panelNorth = new JPanel(new GridLayout(1,nbJoueur+4));
-        panelSouth = new JPanel();
+        panelSouth = new JPanel(new FlowLayout(FlowLayout.LEADING));
         panelEast = new JPanel(new GridLayout(2,1));
         panelWeast = new JPanel(new GridLayout(4,1));
         panelCentre = new JPanel(new BorderLayout());
@@ -112,10 +114,6 @@ public class VueJeu implements MouseListener {
         panelJ2 = new JPanel(new GridLayout(2,1));
         panelJ3 = new JPanel(new GridLayout(2,1));
         panelJ4 = new JPanel(new GridLayout(2,1));
-        panelCartesJ1 = new JPanel(new BorderLayout());
-        panelCartesJ2 = new JPanel(new BorderLayout());
-        panelCartesJ3 = new JPanel(new BorderLayout());
-        panelCartesJ4 = new JPanel(new BorderLayout());
 
         mainPanel.add(panelNorth, BorderLayout.NORTH);
         mainPanel.add(panelSouth, BorderLayout.SOUTH);
@@ -244,24 +242,37 @@ public class VueJeu implements MouseListener {
         panelWeast.add(panelBtn);
         
         // Initialisation Bas de page    
+        //Minimum deux joueur, donc init de deux joueur
         panelJ1.add(new JLabel(nomsJoueurs[0]));
+        panelCartesJ1 = new PanelMain(mains.get(0));
+        //panelCartesJ1.setPreferredSize(new Dimension(width, height));
         panelJ1.add(panelCartesJ1);
+        
         panelJ2.add(new JLabel(nomsJoueurs[1]));
+        panelCartesJ2 = new PanelMain(mains.get(1));
         panelJ2.add(panelCartesJ2);
+        
+        panelSouth.add(panelJ1);
+        panelSouth.add(panelJ2);
         
         if (nbJoueur == 4) {
             panelJ3.add(new JLabel(nomsJoueurs[2]));
+            panelCartesJ3 = new PanelMain(mains.get(2));
             panelJ3.add(panelCartesJ3);
+            
             panelJ4.add(new JLabel(nomsJoueurs[3]));
+            panelCartesJ4 = new PanelMain(mains.get(3));
             panelJ4.add(panelCartesJ4);
+            
+            panelSouth.add(panelJ3);
+            panelSouth.add(panelJ4);
         }else if (nbJoueur == 3) {
             panelJ3.add(new JLabel(nomsJoueurs[2]));
+            panelCartesJ3 = new PanelMain(mains.get(2));
             panelJ3.add(panelCartesJ3);
+            
+            panelSouth.add(panelJ3);
         }
-        panelSouth.add(panelJ1);
-        panelSouth.add(panelJ2);
-        panelSouth.add(panelJ3);
-        panelSouth.add(panelJ4);
         
         fenetre.add(mainPanel);
         fenetre.setVisible(true);
@@ -277,15 +288,15 @@ public class VueJeu implements MouseListener {
 	}
 	
 	public void afficherMain(int i, ArrayList<CarteTresor> carte) {
-		if(i == 0) {
-			//modifier panelCartesJ1
-		}else if(i == 1) {
-			//modifier panelCartesJ2
-		}else if(i == 2) {
-			//modifier panelCartesJ3
-		}else if(i == 3) {
-			//modifier panelCartesJ4
-		}
+//		if(i == 0) {
+//			panelCartesJ1.changerMain(ArrayList<CarteTresor> carte);
+//		}else if(i == 1) {
+//			panelCartesJ2.changerMain(ArrayList<CarteTresor> carte);
+//		}else if(i == 2) {
+//			panelCartesJ3.changerMain(ArrayList<CarteTresor> carte);
+//		}else if(i == 3) {
+//			panelCartesJ4.changerMain(ArrayList<CarteTresor> carte);
+//		}
 		
 	}
 	
