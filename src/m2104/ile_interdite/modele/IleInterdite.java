@@ -147,7 +147,6 @@ public class IleInterdite extends Observable<Message> {
         System.out.println("ROLES INITIALISES");
         System.out.println("MAINS DE DEPART INITIALISEES");
         resetPiocheTresor();
-        nbActions = 3;
         System.out.println("INITIALISATION TERMINEE !");
     }
 
@@ -171,7 +170,7 @@ public class IleInterdite extends Observable<Message> {
                 resetPiocheTresor();
             if (paquetTresor.peek() == CarteTresor.MONTEE_EAU){                         //Si c'est une carte 'Montée des Eaux', on :
                 diff ++;                                                                //- Augmente le cran du niveau d'eau de 1
-                //notifierObservateurs();
+                //notifierObservateurs(Message.niveau());
                 if (diff == 10)                                                         //  (Et s'il atteind 10, on met fin à la partie)
                     notifierObservateurs(Message.defaite());
                 defausseTresor.push(paquetTresor.pop());                                //- On met la carte dans la défausse du paquet Trésor
@@ -351,6 +350,7 @@ public class IleInterdite extends Observable<Message> {
     public int nouveauTour(){
         tour++;                                 //Incrémente le compteur de tour
         nbInondations = calculNbInondations();  //Recalcule le nombre de carte Inondation qu'il va falloir piocher à la fin du tour
+        nbActions = 3;
         return tour;
     }    
     

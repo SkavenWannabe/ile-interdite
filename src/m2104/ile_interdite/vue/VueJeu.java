@@ -77,7 +77,6 @@ public class VueJeu implements MouseListener {
 	private JButton rdj;
 	private JButton retour;
 	
-	private JButton continuer;
 	private JButton innonde;
 	private JButton innondeDef;
 	private JLabel nom;
@@ -105,7 +104,7 @@ public class VueJeu implements MouseListener {
         
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
-        panelInnondation = new JPanel(new GridLayout(3,1));
+        panelInnondation = new JPanel(new GridLayout(2,1));
         panelNiveau = new JPanel(new BorderLayout());
         
         panelJ1 = new JPanel(new GridLayout(2,1));
@@ -148,16 +147,8 @@ public class VueJeu implements MouseListener {
         innondeDef = new JButton();
         innondeDef.setEnabled(false); // Pas de possibilité d'obtenir la deffaussse 
         
-        continuer= new JButton("Continuer");
-        continuer.addActionListener(new java.awt.event.ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-                ihm.notifierObservateurs(Message.choisirCarteInnondation());
-        	}
-        });
-        
         panelInnondation.add(innonde);
         panelInnondation.add(innondeDef);
-        panelInnondation.add(continuer);
 
         niveau = new VueNiveau(dif);
         panelNiveau.add(niveau);
@@ -303,9 +294,7 @@ public class VueJeu implements MouseListener {
     }
     
     public void deplacerAventurier(String role, int tuile) {
-    	nbCoup -= 1;
-    	indication2.setText(("Action Restantes : " + nbCoup));
-    	panelGrille.deplacerAventurier(role, tuile);
+        panelGrille.deplacerAventurier(role, tuile);
     	actionCourante = "";
     }
     
