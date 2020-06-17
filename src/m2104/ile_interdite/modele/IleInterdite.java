@@ -340,7 +340,7 @@ public class IleInterdite extends Observable<Message> {
         ArrayList<Integer> caseAssechables = new ArrayList<>();
         for(int i = 0; i < possibles.size();i++){
             if(grille.getTuille(possibles.get(i)).getEtat() == Etat.INONDE)
-                caseAssechables.add(i);
+                caseAssechables.add(possibles.get(i));
         }
         return caseAssechables.stream().mapToInt(i -> i).toArray();
     }
