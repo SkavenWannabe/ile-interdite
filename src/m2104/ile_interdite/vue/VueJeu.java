@@ -39,7 +39,6 @@ public class VueJeu implements MouseListener {
 	private JPanel panelMvt;
 	private JPanel panelBtn;
 	private JPanel panelInnondation;
-	private JPanel panelNiveau;
 	private PanelGrille panelGrille;
 	
 	// Panel pour le Sud, pour faciliter l'affichage de la main
@@ -114,7 +113,6 @@ public class VueJeu implements MouseListener {
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
         panelInnondation = new JPanel(new GridLayout(2,1));
-        panelNiveau = new JPanel(new BorderLayout());
         
         panelJ1 = new JPanel(new BorderLayout());
         panelJ2 = new JPanel(new BorderLayout());
@@ -189,7 +187,6 @@ public class VueJeu implements MouseListener {
         panelInnondation.add(innondeDef);
 
         niveau = new VueNiveau(dif);
-        //panelNiveau.add(niveau);
         
         panelEast.add(panelInnondation);
         panelEast.add(niveau);
@@ -486,7 +483,7 @@ public class VueJeu implements MouseListener {
     	}
     }
     
-    public void nouveauTour(int tour) {
+    public void nouveauTour(int tour, int difficulte) {
         innonde.setEnabled(false);
         tresors.setEnabled(true);
     	nomTour.setText("Tour "+ tour+ ":");
@@ -511,6 +508,7 @@ public class VueJeu implements MouseListener {
     		labelNom4.setForeground(Color.red);
     		System.out.println(3);
     	}
+    	niveau.setNiveau(difficulte);
     }
     
     public void nbActionsRestantes(int action) {

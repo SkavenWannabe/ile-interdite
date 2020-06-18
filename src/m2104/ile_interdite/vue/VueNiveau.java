@@ -14,20 +14,23 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.MatteBorder;
 import m2104.ile_interdite.util.Parameters;
 
 public class VueNiveau extends JPanel{
 
     private Integer niveau ;
-    private final HashMap<Integer, JPanel> panelsGauches ;
-    private final Integer cellWidth = 50 ;
-    private final Integer cellHeight = (Parameters.HAUTEUR_AUTRES_VUES - 25 - (Parameters.UNDECORATED ? 0 : Parameters.DECORATION_HEIGHT)) / 10 ;
-    private final JPanel mainPanel;
+    private Integer cellWidth = 50 ;
+    private Integer cellHeight = 50;
+    private JPanel mainPanel;
+    private HashMap<Integer, JPanel> panelsGauches;
+    private HashMap<Integer, JPanel> panelsDroits;
 
     public VueNiveau(Integer niveauInitial) {
         this.niveau = niveauInitial;
         panelsGauches = new HashMap<>();
+        panelsDroits = new HashMap<>();
 
 
         this.mainPanel = new JPanel() ;
@@ -109,9 +112,21 @@ public class VueNiveau extends JPanel{
             labelDroit.setFont(new Font("Copperplate Gothic Bold", Font.BOLD, 40));
             GridBagConstraints gbc = new GridBagConstraints();
             panelDroit.add(labelDroit, gbc);
+            panelsDroits.put(iPanel, panelDroit);
         }
         panelsGauches.get(niveauInitial).setBackground(Color.YELLOW);
-        this.mainPanel.setVisible(true);
+        //this.mainPanel.setVisible(true);
+        this.add(mainPanel);
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+    	Dimension rootSize = SwingUtilities.getRoot(this).getSize();
+    	Dimension panelSize = new Dimension((int)(rootSize.width*0.1),(int)(rootSize.height*0.6));
+    	Dimension cell = new Dimension((int)(rootSize.width*0.1) / 2,(int)(rootSize.height*0.38) / 10);
+        panelsGauches.forEach( (k,v) -> {v.setPreferredSize(cell); v.getComponent(0).setPreferredSize(cell); });
+        panelsDroits.forEach( (k,v) -> {v.setPreferredSize(cell); v.getComponent(0).setPreferredSize(cell); });
+    	return panelSize;
     }
 
     public void setNiveau(Integer niveau) {
@@ -164,17 +179,4 @@ public class VueNiveau extends JPanel{
         }
     }
 
-//    public static void main(String[] args) {
-//        VueNiveau vueNiveau = new VueNiveau(1);
-//
-//        Scanner scanner = new Scanner(System.in);
-//
-//        System.out.println("Pour passer au niveau 5, appuyer sur entrée");
-//        scanner.nextLine();
-//        vueNiveau.setNiveau(5);
-//
-//        System.out.println("Pour passer au niveau 5, appuyer sur entrée");
-//        scanner.nextLine();
-//        vueNiveau.setNiveau(10);
-//    }
 }

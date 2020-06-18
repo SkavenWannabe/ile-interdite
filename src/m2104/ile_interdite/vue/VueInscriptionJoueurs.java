@@ -185,7 +185,7 @@ public class VueInscriptionJoueurs {
                     if (difficulte[i].isSelected()){
                         dif = i;
                     }
-                }   
+                }
                 ihm.notifierObservateurs(Message.validerJoueurs(nbJoueurs,dif));
                 fenetre.dispose();
             }

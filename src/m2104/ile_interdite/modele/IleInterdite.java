@@ -216,21 +216,22 @@ public class IleInterdite extends Observable<Message> {
     
     public int calculNbInondations(){
         
-        int j;
-        switch(diff){               //Défini le nombre de carte à piocher en fonction du niveau d'eau
-            case 1: case 2:
-                j = 2; break;
-            case 3: case 4: case 5: 
-                j = 3; break;
-            case 6: case 7:
-                j = 4; break;
-            case 8: case 9:
-                j = 5; break;
-            default:
-                j = 0; break;
-        }
-        
-        return j;
+//        int j;
+//        switch(diff){               //Défini le nombre de carte à piocher en fonction du niveau d'eau
+//            case 1: case 2:
+//                j = 2; break;
+//            case 3: case 4: case 5: 
+//                j = 3; break;
+//            case 6: case 7:
+//                j = 4; break;
+//            case 8: case 9:
+//                j = 5; break;
+//            default:
+//                j = 0; break;
+//        }
+//        
+//        return j;
+    	return diff;
     }
     
     public int piocheInonde(){

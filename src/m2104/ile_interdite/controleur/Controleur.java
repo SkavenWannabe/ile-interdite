@@ -185,7 +185,7 @@ public class Controleur implements Observateur<Message> {
     }
     
     public void nouveauTour(){
-        this.ihm.nouveauTour(this.ileInterdite.nouveauTour());
+        this.ihm.nouveauTour(this.ileInterdite.nouveauTour(), ileInterdite.getDiff());
         this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
         this.ihm.actionsPossibles(this.ileInterdite.clicable());
     }

@@ -22,7 +22,6 @@ public class PanelMain extends JPanel {
     @Override
     public Dimension getPreferredSize() {
     	Dimension rootSize = SwingUtilities.getRoot(this).getSize();
-    	SwingUtilities.getRoot(this).getSize();
     	return new Dimension((int)(rootSize.width/4),(int)(rootSize.height*0.1));
     }
     
@@ -46,52 +45,22 @@ public class PanelMain extends JPanel {
                     g.drawImage(img[2].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
                     break;
                 case "TRESOR_STATUE":
-                    g.drawImage(
-                            img[6].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
-                            null,
-                            null);
+                    g.drawImage(img[6].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
                     break;
                 case "TRESOR_CRISTAL":
-                    g.drawImage(
-                            img[1].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
-                            null,
-                            null);
+                    g.drawImage(img[1].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
                     break;
                 case "TRESOR_CALICE":
-                    g.drawImage(
-                            img[0].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
-                            null,
-                            null);
+                    g.drawImage(img[0].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
                     break;
                 case "TRESOR_PIERRE":
-                    g.drawImage(
-                            img[4].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
-                            null,
-                            null);
+                    g.drawImage(img[4].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
                     break;
                 case "MONTEE_EAU":
-                    g.drawImage(
-                            img[3].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
-                            null,
-                            null);
+                    g.drawImage(img[3].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
                     break;
                 case "SAC_SABLE":
-                    g.drawImage(
-                            img[5].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
-                            null,
-                            null);
+                    g.drawImage(img[5].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
                     break;
             }
         }

@@ -408,7 +408,6 @@ public class PanelGrille extends JPanel {
     
     
     public void changerEtatTresor(HashMap tresor){
-        
         tresor.forEach( (k,v) -> { 
             traizor.put((String) k,(Boolean) v);
         });
