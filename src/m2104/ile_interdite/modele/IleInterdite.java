@@ -51,7 +51,14 @@ public class IleInterdite extends Observable<Message> {
         return tour;
     }
     public HashMap getTresors() {
-        return tresors;
+        HashMap<String,Boolean> traizor = new HashMap<>();
+        
+        traizor.put("CALICE", (boolean) tresors.get(CarteTresor.TRESOR_CALICE));
+        traizor.put("PIERRE", (boolean) tresors.get(CarteTresor.TRESOR_PIERRE));
+        traizor.put("STATUE", (boolean) tresors.get(CarteTresor.TRESOR_STATUE));
+        traizor.put("CRISTAL", (boolean) tresors.get(CarteTresor.TRESOR_CRISTAL));
+        
+        return traizor;
     }
     public Stack getPaquetTresor() {
         return paquetTresor;
@@ -261,8 +268,12 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public void donnerTresor(int receveur, int numCarte){
+        
+        System.out.println("ILE : entrée dans méthode (receveur = " + receveur + ")");
         aventuriers.get(receveur).ajouterCarte(getAventurierEnCours().enleverCarte(numCarte));  //Ajoute dans la main de l'aventurier receveur la carte qu'on enlève de la main de l'aventurier donneur
+        System.out.println("ILE : méthode réussie");
         nbActions--;                                                                            //Réduit le compteur d'action de 1
+
     }
     
     public boolean tresorPossible(){
@@ -413,7 +424,7 @@ public class IleInterdite extends Observable<Message> {
         ArrayList<Integer> pp = new ArrayList<>();
         
         for(int i = 0; i < aventuriers.size(); i++){
-            if(i != tour % aventuriers.size() && aventuriers.get(i).getPosition() == getAventurierEnCours().getPosition())
+            if(i != tour % aventuriers.size() && (aventuriers.get(i).getPosition() == getAventurierEnCours().getPosition() || getAventurierEnCours().toString().equals("Messager")) )
                 pp.add(i);
         }
         

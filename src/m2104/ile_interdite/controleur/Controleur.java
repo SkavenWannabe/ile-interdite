@@ -96,13 +96,39 @@ public class Controleur implements Observateur<Message> {
                 this.ihm.actionsPossibles(this.ileInterdite.clicable());
                 this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
+            case TEST_DONNER:
+                System.out.println("IHM : Echange voulu");
+            	ihm.mainSelectionnable(ileInterdite.getNumeroAventurierEnCours());
+                ihm.autreMains(ileInterdite.PersonnagesProches());
+            	break;
             case DONNER:
+                System.out.println("IHM : Echange choisie");
+                System.out.println("CON : aventurier = " + msg.getIdAventurier() + " / carte = " + msg.getIdCarte());
             	ileInterdite.donnerTresor(msg.getIdAventurier(),msg.getIdCarte());
-                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+                System.out.println("ILE : Carte donnée");
+                
+            	
+            	//Afficher Main du receveur
+            	ArrayList<String> cartesReceveur = new ArrayList<String>();
+                System.out.println("CON : création nouvelle main (receveur)");
+            	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> cartesReceveur.add(x.toString()));
+                System.out.println("ILE : calcul nouvelle main (receveur)");
+            	ihm.afficherMain(msg.getIdAventurier(), cartesReceveur);
+                System.out.println("IHM : affichage nouvelle main (receveur)");
+            	
+            	//Afficher Main du donner
+            	ArrayList<String> cartesDonneur = new ArrayList<String>();
+            	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartesDonneur.add(x.toString()));
+            	ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartesDonneur);
+                System.out.println("Nouvelle main : donneur");
+            	
+                ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+                System.out.println("Action terminée");
             	break;
             case RECUPERER_TRESOR:
             	ileInterdite.gagneTresor(msg.getIdTuile());
-                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+                ihm.afficherTresors(ileInterdite.getTresors());
+                ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case NOYADE:
                 //Glou glou
