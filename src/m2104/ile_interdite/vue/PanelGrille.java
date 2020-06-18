@@ -385,7 +385,7 @@ public class PanelGrille extends JPanel {
                 case "cristal":
                 case "pierre" :
                 case "zephyr" :
-                    traizor.put(list, Boolean.TRUE); 
+                    traizor.put(list, Boolean.FALSE); 
                 break; 
             }
         }
