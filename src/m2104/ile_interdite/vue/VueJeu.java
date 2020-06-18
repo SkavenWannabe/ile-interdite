@@ -43,6 +43,10 @@ public class VueJeu implements MouseListener {
 	
 	// Panel pour le Sud, pour faciliter l'affichage de la main 
 	//TODO: Créer la main dans une classe apart comme pour la grille (ex: PannelMain)
+	private JButton btnJ1;
+	private JButton btnJ2;
+	private JButton btnJ3;
+	private JButton btnJ4;
 	private JPanel panelJ1;
 	private JPanel panelJ2;
 	private JPanel panelJ3;
@@ -64,6 +68,7 @@ public class VueJeu implements MouseListener {
 	private int nbJoueur;
 	private int dif;
 	private Grille grille;
+	private int carteADonner = -1;
 	
 	//Ensemble des bouttons necessaires
 	private JButton tresors;
@@ -141,7 +146,6 @@ public class VueJeu implements MouseListener {
         
         
         // Initialisation Centre de page
-        
         panelGrille = new PanelGrille(grille.getTuilles(), aventuriers); // Creation d'une Grille
         panelGrille.addMouseListener(this);
         panelCentre.add(panelGrille);
@@ -212,7 +216,8 @@ public class VueJeu implements MouseListener {
         donnerT = new JButton("Donner Tresors");
         donnerT.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		//ihm.notifierObservateurs(Message.donner());
+        		actionCourante = "Donner";
+        		ihm.notifierObservateurs(Message.testDonner());
         	}
         });
         
@@ -247,31 +252,91 @@ public class VueJeu implements MouseListener {
         
         // Initialisation Bas de page    
         //Minimum deux joueur, donc init de deux joueur
-        panelJ1.add(new JLabel(nomsJoueurs[0]), BorderLayout.NORTH);
+        btnJ1 = new JButton(nomsJoueurs[0]);
+        btnJ1.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if(carteADonner !=-1) {
+        			ihm.notifierObservateurs(Message.donner(0, carteADonner));
+        			carteADonner = -1;
+        			desactiverBoutonJoueur();
+        		}
+        	}
+        });
+        btnJ1.setEnabled(false);
+        panelJ1.add(btnJ1, BorderLayout.NORTH);
         panelCartesJ1 = new PanelMain(mains.get(0));
+        panelCartesJ1.addMouseListener(this);
         panelJ1.add(panelCartesJ1);
         
-        panelJ2.add(new JLabel(nomsJoueurs[1]), BorderLayout.NORTH);
+        btnJ2 = new JButton(nomsJoueurs[1]);
+        btnJ2.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if(carteADonner !=-1) {
+        			ihm.notifierObservateurs(Message.donner(1, carteADonner));
+        			carteADonner = -1;
+        			desactiverBoutonJoueur();
+        		}
+        	}
+        });
+        btnJ2.setEnabled(false);
+        panelJ2.add(btnJ2, BorderLayout.NORTH);
         panelCartesJ2 = new PanelMain(mains.get(1));
+        panelCartesJ2.addMouseListener(this);
         panelJ2.add(panelCartesJ2);
         
         panelSouth.add(panelJ1);
         panelSouth.add(panelJ2);
         
         if (nbJoueur == 4) {
-            panelJ3.add(new JLabel(nomsJoueurs[2]), BorderLayout.NORTH);
+        	btnJ3 = new JButton(nomsJoueurs[2]);
+        	btnJ3.addActionListener(new java.awt.event.ActionListener() {
+            	public void actionPerformed(ActionEvent e) {
+            		if(carteADonner !=-1) {
+            			ihm.notifierObservateurs(Message.donner(2, carteADonner));
+            			carteADonner = -1;
+            			desactiverBoutonJoueur();
+            		}
+            	}
+            });
+            btnJ3.setEnabled(false);
+            panelJ3.add(btnJ3, BorderLayout.NORTH);
             panelCartesJ3 = new PanelMain(mains.get(2));
+            panelCartesJ3.addMouseListener(this);
             panelJ3.add(panelCartesJ3);
             
-            panelJ4.add(new JLabel(nomsJoueurs[3]), BorderLayout.NORTH);
+            btnJ4 = new JButton(nomsJoueurs[3]);
+            btnJ4.addActionListener(new java.awt.event.ActionListener() {
+            	public void actionPerformed(ActionEvent e) {
+            		if(carteADonner !=-1) {
+            			ihm.notifierObservateurs(Message.donner(3, carteADonner));
+            			carteADonner = -1;
+            			desactiverBoutonJoueur();
+            		}
+            	}
+            });
+            btnJ4.setEnabled(false);
+            panelJ4.add(btnJ4, BorderLayout.NORTH);
             panelCartesJ4 = new PanelMain(mains.get(3));
+            panelCartesJ4.addMouseListener(this);
             panelJ4.add(panelCartesJ4);
             
             panelSouth.add(panelJ3);
             panelSouth.add(panelJ4);
         }else if (nbJoueur == 3) {
-            panelJ3.add(new JLabel(nomsJoueurs[2]), BorderLayout.NORTH);
+        	btnJ3 = new JButton(nomsJoueurs[2]);
+        	btnJ3.addActionListener(new java.awt.event.ActionListener() {
+            	public void actionPerformed(ActionEvent e) {
+            		if(carteADonner !=-1) {
+            			ihm.notifierObservateurs(Message.donner(2, carteADonner));
+            			carteADonner = -1;
+            			desactiverBoutonJoueur();
+            		}
+            	}
+            });
+            btnJ3.setEnabled(false);
+            panelJ3.add(btnJ3, BorderLayout.NORTH);
             panelCartesJ3 = new PanelMain(mains.get(2));
+            panelCartesJ3.addMouseListener(this);
             panelJ3.add(panelCartesJ3);
             
             panelSouth.add(panelJ3);
@@ -279,6 +344,7 @@ public class VueJeu implements MouseListener {
         
         fenetre.add(mainPanel);
         fenetre.setVisible(true);
+
 	}
 	
 	
@@ -316,6 +382,19 @@ public class VueJeu implements MouseListener {
     public void changerEtatTuile (int tuile, String etat) {
     	panelGrille.changerEtatTuile(tuile, etat);
     	actionCourante = "";
+    }
+    
+    //rend les tuilles selectionnable
+    public void mainSelectionnable(int numero) {
+    	if (numero==0) {
+    		panelCartesJ1.toutSelectionnable();
+    	} else if (numero ==1) {
+    		panelCartesJ2.toutSelectionnable();
+    	} else if (numero ==2) {
+    		panelCartesJ3.toutSelectionnable();
+    	}else if (numero ==3) {
+    		panelCartesJ4.toutSelectionnable();
+    	}
     }
     
     public void nouveauTour(int tour) {
@@ -363,23 +442,68 @@ public class VueJeu implements MouseListener {
         gagnerT.setEnabled(actionsPossibles.get(3));
         
     }
+    public void desactiverBoutonJoueur() {
+    	btnJ1.setEnabled(false);
+    	btnJ2.setEnabled(false);
+    	if (nbJoueur == 3) {
+    		btnJ3.setEnabled(false);
+    	}else if (nbJoueur == 4) {
+    		btnJ3.setEnabled(false);
+    		btnJ4.setEnabled(false);
+    	}
+    }
     
+    public void traiterCartes(PanelMain panel, int x, int y, int joueur) {
+    	int numCarte = panel.getNumeroCarte(x, y);
+    	if (panel.helicoSelectionner(numCarte)) {
+			System.out.println("carte helico selectionner");
+		} else if (panel.sacSelectionner(numCarte)) {
+			System.out.println(("carte sac de sable selectionner"));
+		} else if (actionCourante == "Donner") {
+			if (panel.estSelectionnables(numCarte)) {
+				if (carteADonner == -1) {
+					carteADonner = numCarte;
+					if (joueur != 0) {
+						btnJ1.setEnabled(true);
+					} else if(joueur!=1) {
+						btnJ2.setEnabled(true);
+					}else if (nbJoueur == 3 && joueur !=2) {
+						btnJ3.setEnabled(true);
+					} else if (nbJoueur == 4) {
+						if (joueur != 2) {
+							btnJ3.setEnabled(true);
+						} else if (joueur != 3) {
+							btnJ4.setEnabled(true);
+						}
+					}
+				}
+				
+			}
+		}
+    }
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		switch (actionCourante) {
-		case "Deplacer" : 
+		if (e.getSource() == panelGrille) {
 			if (panelGrille.estSelectionnable(panelGrille.getNumeroTuile(e.getX(), e.getY()))) {
-				ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+				switch (actionCourante) {
+					case "Deplacer" : 
+						ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+						break;
+					case "Assecher" :
+						ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+						break;
+				}
 			}
-			
-			break;
-		case "Assecher" :
-			if (panelGrille.estSelectionnable(panelGrille.getNumeroTuile(e.getX(), e.getY()))) {
-				ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-			}
-			break;
+		} else if(e.getSource() == panelCartesJ1) {
+			traiterCartes(panelCartesJ1, e.getX(), e.getY(), 0);
+		} else if (e.getSource() == panelCartesJ2){
+			traiterCartes(panelCartesJ2, e.getX(), e.getY(), 1);
+		} else if (e.getSource() == panelCartesJ3){
+			traiterCartes(panelCartesJ3, e.getX(), e.getY(), 2);
+		} else if (e.getSource() == panelCartesJ4){
+			traiterCartes(panelCartesJ4, e.getX(), e.getY(), 3);
 		}
-		//rajouter des Case en fonction des actionCourante possible - (pour la main, donner carteTresors, action speciale)
 	}
 
 

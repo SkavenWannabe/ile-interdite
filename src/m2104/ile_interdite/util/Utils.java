@@ -19,6 +19,7 @@ public class Utils {
         BOUGER("Déplacer son pion"),
         TEST_ASSECHER("Verifie si il peu assecher une tuille"),
         ASSECHER("Assécher une tuile"),
+        TEST_DONNER("Donner une carte à un autre joueur"),
         DONNER("Donner une carte à un autre joueur"),
         RECUPERER_TRESOR("Récupérer le trésor de la tuile"),
         TERMINER("Terminer son tour"),                                          //On l'utilise pas

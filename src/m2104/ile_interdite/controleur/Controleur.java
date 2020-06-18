@@ -96,9 +96,23 @@ public class Controleur implements Observateur<Message> {
                 this.ihm.actionsPossibles(this.ileInterdite.clicable());
                 this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
+            case TEST_DONNER:
+            	ihm.mainSelectionnable(ileInterdite.getNumeroAventurierEnCours());
+            	break;
             case DONNER:
             	ileInterdite.donnerTresor(msg.getIdAventurier(),msg.getIdCarte());
-                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+            	
+            	//Afficher Main du receveur
+            	ArrayList<String> cartesReceveur = new ArrayList<String>();
+            	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> cartesReceveur.add(x.toString()));
+            	ihm.afficherMain(msg.getIdAventurier(), cartesReceveur);
+            	
+            	//Afficher Main du donner
+            	ArrayList<String> cartesDonneur = new ArrayList<String>();
+            	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartesDonneur.add(x.toString()));
+            	ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartesDonneur);         
+            	
+                ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case RECUPERER_TRESOR:
             	ileInterdite.gagneTresor(msg.getIdTuile());

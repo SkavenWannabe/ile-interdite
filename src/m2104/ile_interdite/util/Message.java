@@ -66,8 +66,11 @@ public class Message implements Serializable {
      * @param idAventurier
      * @return un nouveau {@link #Message} pour la commande {@link m2104.ile_interdite.util.Utils.Commandes#DONNER}
      */
-    public static Message donner(int idAventurier) {
-        return new Message(Utils.Commandes.DONNER, idAventurier, null, null, null, null, null);
+    public static Message testDonner() {
+        return new Message(Utils.Commandes.TEST_DONNER, null, null, null, null, null, null);
+    }
+    public static Message donner(int idAventurier, int idTuille) {
+        return new Message(Utils.Commandes.DONNER, idAventurier, null, null, idTuille, null, null);
     }
 
     /**

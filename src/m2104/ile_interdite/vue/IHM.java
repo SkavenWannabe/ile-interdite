@@ -44,6 +44,10 @@ public class IHM extends Observable<Message> {
     	jeu.afficherMain(i,carte);
     }
     
+    public void mainSelectionnable(int numero) {
+    	jeu.mainSelectionnable(numero);
+    }
+    
     public void clickPossible(int[] tab) {
     	jeu.clickPossible(tab);
     }
