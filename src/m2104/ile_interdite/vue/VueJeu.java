@@ -106,7 +106,7 @@ public class VueJeu implements MouseListener {
         
         mainPanel = new JPanel(new BorderLayout());
         panelNorth = new JPanel(new GridLayout(1,nbJoueur+4));
-        panelSouth = new JPanel(new FlowLayout(FlowLayout.LEADING));
+        panelSouth = new JPanel(new GridLayout(1,4));
         panelEast = new JPanel(new GridLayout(2,1));
         panelWeast = new JPanel(new GridLayout(4,1));
         panelCentre = new JPanel(new BorderLayout());
@@ -232,7 +232,7 @@ public class VueJeu implements MouseListener {
         gagnerT = new JButton("Gagner Tresors");
         gagnerT.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		//ihm.notifierObservateurs(Message.recupererTresor());
+        		ihm.notifierObservateurs(Message.recupererTresor());
         	}
         });
         donnerT = new JButton("Donner Tresors");
@@ -309,9 +309,7 @@ public class VueJeu implements MouseListener {
         panelCartesJ2.addMouseListener(this);
         panelJ2.add(panelCartesJ2);
         
-        panelSouth.add(panelJ1);
-        panelSouth.add(panelJ2);
-        
+
         if (nbJoueur == 4) {
         	btnJ3 = new JButton(labelNom3.getText());
         	btnJ3.addActionListener(new java.awt.event.ActionListener() {
@@ -346,9 +344,7 @@ public class VueJeu implements MouseListener {
             panelCartesJ4 = new PanelMain(mains.get(3));
             panelCartesJ4.addMouseListener(this);
             panelJ4.add(panelCartesJ4);
-            
-            panelSouth.add(panelJ3);
-            panelSouth.add(panelJ4);
+           
         }else if (nbJoueur == 3) {
         	btnJ3 = new JButton(labelNom3.getText());
         	btnJ3.addActionListener(new java.awt.event.ActionListener() {
@@ -367,8 +363,25 @@ public class VueJeu implements MouseListener {
             panelCartesJ3.addMouseListener(this);
             panelJ3.add(panelCartesJ3);
             
-            panelSouth.add(panelJ3);
         }
+        
+        if(nbJoueur == 2){
+            panelSouth.add(new JPanel());
+            panelSouth.add(panelJ1);
+            panelSouth.add(panelJ2);
+            panelSouth.add(new JPanel());
+        } else if(nbJoueur == 3){
+            panelSouth.add(panelJ1);
+            panelSouth.add(panelJ2);
+            panelSouth.add(panelJ3);
+            panelSouth.add(new JPanel());
+        } else {
+            panelSouth.add(panelJ1);
+            panelSouth.add(panelJ2);
+            panelSouth.add(panelJ3);
+            panelSouth.add(panelJ4);
+        }
+        
         
         fenetre.add(mainPanel);
         fenetre.setVisible(true);
@@ -387,12 +400,16 @@ public class VueJeu implements MouseListener {
 	public void afficherMain(int i, ArrayList<String> carte) {
 		if(i == 0) {
 			panelCartesJ1.setMain(carte);
+                        panelCartesJ1.initCarteSelectionnable();
 		}else if(i == 1) {
 			panelCartesJ2.setMain(carte);
+                        panelCartesJ2.initCarteSelectionnable();
 		}else if(i == 2) {
 			panelCartesJ3.setMain(carte);
+                        panelCartesJ3.initCarteSelectionnable();
 		}else if(i == 3) {
 			panelCartesJ4.setMain(carte);
+                        panelCartesJ4.initCarteSelectionnable();
 		}
 		
 	}

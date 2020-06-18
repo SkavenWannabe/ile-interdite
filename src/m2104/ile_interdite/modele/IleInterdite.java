@@ -54,10 +54,10 @@ public class IleInterdite extends Observable<Message> {
     public HashMap getTresors() {
         HashMap<String,Boolean> traizor = new HashMap<>();
         
-        traizor.put("CALICE", (boolean) tresors.get(CarteTresor.TRESOR_CALICE));
-        traizor.put("PIERRE", (boolean) tresors.get(CarteTresor.TRESOR_PIERRE));
-        traizor.put("STATUE", (boolean) tresors.get(CarteTresor.TRESOR_STATUE));
-        traizor.put("CRISTAL", (boolean) tresors.get(CarteTresor.TRESOR_CRISTAL));
+        traizor.put("calice", (Boolean) tresors.get(CarteTresor.TRESOR_CALICE));
+        traizor.put("pierre", (Boolean) tresors.get(CarteTresor.TRESOR_PIERRE));
+        traizor.put("statue", (Boolean) tresors.get(CarteTresor.TRESOR_STATUE));
+        traizor.put("cristal", (Boolean) tresors.get(CarteTresor.TRESOR_CRISTAL));
         
         return traizor;
     }
@@ -124,8 +124,12 @@ public class IleInterdite extends Observable<Message> {
         int p;
         for(int i = 0; i<nbJoueurs; i++){
             p = 0;
-            while(!(grille.getTuille(p).getSpecial().equals(roles.peek())))
-                p++;
+            if(roles.peek().equals("PILOTE"))
+                while(!(grille.getTuille(p).getSpecial().equals("HELICO")))
+                    p++;
+            else
+                while(!(grille.getTuille(p).getSpecial().equals(roles.peek())))
+                    p++;
             switch((String) roles.pop()) {
                 case "MESSAGER":
                     aventuriers.add(new Messager(p));
@@ -334,9 +338,16 @@ public class IleInterdite extends Observable<Message> {
   
     }
 
-    public void gagneTresor(int tuille){
+    public void tricheTresor(){
+        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
+        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
+        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
+        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
+    }
+    
+    public void gagneTresor(){
         CarteTresor tresor;
-        switch(grille.getTuille(tuille).getSpecial()){  //A partir de la caractéristique Spécial de la tuille, détermine le trésor à obtenir
+        switch(grille.getTuille(getAventurierEnCours().getPosition()).getSpecial()){  //A partir de la caractéristique Spécial de la tuille, détermine le trésor à obtenir
             case "TRESOR_PIERRE":
                 tresor = CarteTresor.TRESOR_PIERRE;
                 break;
@@ -358,7 +369,7 @@ public class IleInterdite extends Observable<Message> {
         int k;
         for(int i = 0; i < 4; i++){
             k = 0;
-            while(getAventurierEnCours().getMain().get(k) == tresor)
+            while(getAventurierEnCours().getMain().get(k) != tresor)
                 k++;
             getAventurierEnCours().enleverCarte(k);
         }
