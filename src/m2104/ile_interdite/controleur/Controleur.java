@@ -59,7 +59,7 @@ public class Controleur implements Observateur<Message> {
                 this.nouveauTour();
                 break;
             case CHOISIR_CARTE_TRESORS:
-            	ihm.piocheTresors(this.ileInterdite.piocheTresor());
+                ihm.piocheTresors(this.ileInterdite.piocheTresor());
                 this.ileInterdite.mainPleine();
                 nbInondAVenir = this.ileInterdite.getNbInondations();
                 
@@ -68,12 +68,16 @@ public class Controleur implements Observateur<Message> {
                 ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartes);
             	break;
             case CHOISIR_CARTE_INNONDE:
-            	int tuile = this.ileInterdite.piocheInonde();
+                System.out.println("CON : CHOISIR_CARTE_INNONDE");
+                int tuile = this.ileInterdite.piocheInonde();
+                System.out.println("Tuiles piochées : " + tuile);
             	ihm.changerEtatTuile(tuile, ileInterdite.getGrille().getTuille(tuile).getEtat().toString());
                 nbInondAVenir--;
+                System.out.println("Nb inonde à venir : " + nbInondAVenir);
                 if(nbInondAVenir == 0){
                     this.nouveauTour();
                 }
+
             	break;
             case VOIR_DEFAUSSE:
             	ihm.afficherDefausse(ileInterdite.getDefausseTresor());

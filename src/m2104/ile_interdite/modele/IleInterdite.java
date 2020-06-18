@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
 import m2104.ile_interdite.util.Message;
+import m2104.ile_interdite.util.Parameters;
 import patterns.observateur.Observable;
 import patterns.observateur.Observateur;
 
@@ -161,13 +162,13 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public void resetPiocheTresor(){
-        while(defausseTresor.size() < 0)                //Replace toutes les cartes de la défausse dans la pioche
+        while(defausseTresor.size() > 0)                //Replace toutes les cartes de la défausse dans la pioche
             paquetTresor.push(defausseTresor.pop());
         Collections.shuffle(paquetTresor);              //Melange la nouvelle pioche ainsi formée
     }
 
     public void resetPiocheInonde(){
-        while(defausseInonde.size() < 0)                //Replace toutes les cartes de la défausse dans la pioche
+        while(defausseInonde.size() > 0)                //Replace toutes les cartes de la défausse dans la pioche
             paquetInonde.push(defausseInonde.pop());    
         Collections.shuffle(paquetInonde);              //Melange la nouvelle pioche ainsi formée
     }
@@ -228,6 +229,9 @@ public class IleInterdite extends Observable<Message> {
             resetPiocheInonde();
 
         int id = (int) paquetInonde.pop();                              //Pioche la position de la tuile a inonder
+        if(Parameters.LOGS)
+            System.out.println("ILE : PiocheInonde : id : " + id);
+
         grille.changeEtat(id, -1);                                      //Change l'état de la tuile à inonder
 
         

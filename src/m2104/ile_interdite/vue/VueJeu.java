@@ -42,8 +42,7 @@ public class VueJeu implements MouseListener {
 	private JPanel panelNiveau;
 	private PanelGrille panelGrille;
 	
-	// Panel pour le Sud, pour faciliter l'affichage de la main 
-	//TODO: Créer la main dans une classe apart comme pour la grille (ex: PannelMain)
+	// Panel pour le Sud, pour faciliter l'affichage de la main
 	private JButton btnJ1;
 	private JButton btnJ2;
 	private JButton btnJ3;
@@ -177,13 +176,14 @@ public class VueJeu implements MouseListener {
         innonde = new JButton("Carte Innondation");
         innonde.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                System.out.println("J\'INNONDE SON PERE");
                 ihm.notifierObservateurs(Message.choisirCarteInnondation());
                 actionCourante = "Innonde";
         	}
         });
         innonde.setEnabled(false);
         innondeDef = new JButton();
-        innondeDef.setEnabled(false); // Pas de possibilité d'obtenir la deffaussse 
+        innondeDef.setEnabled(false); // Pas de possibilité d'obtenir la defaussse
         
         panelInnondation.add(innonde);
         panelInnondation.add(innondeDef);
