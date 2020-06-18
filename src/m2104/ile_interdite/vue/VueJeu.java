@@ -483,7 +483,11 @@ public class VueJeu implements MouseListener {
     	}
     }
     
-    public void nouveauTour(int tour, int difficulte) {
+    public void augmentNiveau(int eau){
+        niveau.setNiveau(eau);
+    }
+    
+    public void nouveauTour(int tour) {
         innonde.setEnabled(false);
         tresors.setEnabled(true);
     	nomTour.setText("Tour "+ tour+ ":");
@@ -508,7 +512,6 @@ public class VueJeu implements MouseListener {
     		labelNom4.setForeground(Color.red);
     		System.out.println(3);
     	}
-    	niveau.setNiveau(difficulte);
     }
     
     public void nbActionsRestantes(int action) {

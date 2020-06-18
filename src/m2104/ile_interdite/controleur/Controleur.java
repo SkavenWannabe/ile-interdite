@@ -62,6 +62,7 @@ public class Controleur implements Observateur<Message> {
                 this.nouveauTour();
                 break;
             case CHOISIR_CARTE_TRESORS:
+                joueurSac = -1; carteSac = -1;
                 //ileInterdite.tricheTresor();
                 ihm.piocheTresors(this.ileInterdite.piocheTresor());
                 //this.ileInterdite.mainPleine();
@@ -70,6 +71,7 @@ public class Controleur implements Observateur<Message> {
                 ArrayList<String> cartes = new ArrayList<>();
             	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartes.add(x.toString()));
                 ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartes);
+                ihm.augmentNiveau(ileInterdite.getNiveau());
             	break;
             case CHOISIR_CARTE_INNONDE:
                 System.out.println("CON : CHOISIR_CARTE_INNONDE");
@@ -112,10 +114,9 @@ public class Controleur implements Observateur<Message> {
                 	ihm.afficherMain(joueurSac, cartesJoueurSac);
                 	
             		joueurSac = -1; carteSac = -1;
-            	} else {
-	                this.ihm.actionsPossibles(this.ileInterdite.clicable());
-	                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	}
+	        this.ihm.actionsPossibles(this.ileInterdite.clicable());
+	        this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case TEST_DONNER:
             	joueurSac = -1; carteSac = -1;
@@ -184,8 +185,8 @@ public class Controleur implements Observateur<Message> {
         }
     }
     
-    public void nouveauTour(){
-        this.ihm.nouveauTour(this.ileInterdite.nouveauTour(), ileInterdite.getDiff());
+    private void nouveauTour(){
+        this.ihm.nouveauTour(this.ileInterdite.nouveauTour());
         this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
         this.ihm.actionsPossibles(this.ileInterdite.clicable());
     }

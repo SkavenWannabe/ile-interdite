@@ -16,7 +16,7 @@ import patterns.observateur.Observateur;
  */
 public class IleInterdite extends Observable<Message> {
     
-    private int diff;
+    private int niveau;
     private int tour = 0;
     private HashMap tresors;
     private Stack paquetTresor = new Stack<CarteTresor>();
@@ -45,8 +45,8 @@ public class IleInterdite extends Observable<Message> {
     public Aventurier getAventurierEnCours(){
         return aventuriers.get(tour % aventuriers.size());
     }
-    public int getDiff() {
-        return diff;
+    public int getNiveau() {
+        return niveau;
     }
     public int getTour() {
         return tour;
@@ -100,7 +100,7 @@ public class IleInterdite extends Observable<Message> {
     public void initialisation(int nbJoueurs, int difficulte){
 
         System.out.println("INITIALISATION ...");
-        diff = difficulte;
+        niveau = difficulte;
         System.out.println("DIFFICULTE INITIALISEE");
         tresors = new HashMap(4);
         tresors.put(CarteTresor.TRESOR_PIERRE,false);
@@ -179,7 +179,7 @@ public class IleInterdite extends Observable<Message> {
 
     public void resetPiocheInonde(){
         while(defausseInonde.size() > 0)                //Replace toutes les cartes de la défausse dans la pioche
-            paquetInonde.push(defausseInonde.pop());    
+            paquetInonde.push(defausseInonde.pop());
         Collections.shuffle(paquetInonde);              //Melange la nouvelle pioche ainsi formée
     }
 
@@ -190,9 +190,8 @@ public class IleInterdite extends Observable<Message> {
             if (paquetTresor.isEmpty())                                                 //Si la pioche est vide, on la reset avant de piocher
                 resetPiocheTresor();
             if (paquetTresor.peek() == CarteTresor.MONTEE_EAU){                         //Si c'est une carte 'Montée des Eaux', on :
-                diff ++;                                                                //- Augmente le cran du niveau d'eau de 1
-                //notifierObservateurs(Message.niveau());
-                if (diff == 10)                                                         //  (Et s'il atteind 10, on met fin à la partie)
+                niveau ++;                                                               //- Augmente le cran du niveau d'eau de 1
+                if (niveau == 10)                                                        //  (Et s'il atteind 10, on met fin à la partie)
                     notifierObservateurs(Message.defaite());
                 defausseTresor.push(paquetTresor.pop());                                //- On met la carte dans la défausse du paquet Trésor
                 eau = true;
@@ -216,22 +215,20 @@ public class IleInterdite extends Observable<Message> {
     
     public int calculNbInondations(){
         
-//        int j;
-//        switch(diff){               //Défini le nombre de carte à piocher en fonction du niveau d'eau
-//            case 1: case 2:
-//                j = 2; break;
-//            case 3: case 4: case 5: 
-//                j = 3; break;
-//            case 6: case 7:
-//                j = 4; break;
-//            case 8: case 9:
-//                j = 5; break;
-//            default:
-//                j = 0; break;
-//        }
-//        
-//        return j;
-    	return diff;
+        int j;
+        switch(niveau){               //Défini le nombre de carte à piocher en fonction du niveau d'eau
+            case 1: case 2:
+                j = 2; break;
+            case 3: case 4: case 5: 
+                j = 3; break;
+            case 6: case 7:
+                j = 4; break;
+            case 8: case 9:
+                j = 5; break;
+            default:
+                j = 0; break;
+        }
+        return j;
     }
     
     public int piocheInonde(){
@@ -375,7 +372,7 @@ public class IleInterdite extends Observable<Message> {
         tresors.replace(tresor, true);                  //Place la valeur boolean associé au tresor à true
         
         int k;
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 4; i++){                     //Supprime 4 cartes du trésor obtenu de la main du joueur
             k = 0;
             while(getAventurierEnCours().getMain().get(k) != tresor)
                 k++;
@@ -457,7 +454,8 @@ public class IleInterdite extends Observable<Message> {
     }
     
     public void sacDeSable(int joueur, int carte) {
-    	aventuriers.get(joueur).enleverCarte(carte);
+        nbActions++;
+        defausseTresor.push(aventuriers.get(joueur).enleverCarte(carte));
     }
     
     public ArrayList<Integer> PersonnagesProches(){
@@ -537,7 +535,7 @@ public class IleInterdite extends Observable<Message> {
     @Override
     public String toString() {
         String ret; //String contenant le résultat de la méthode.
-        ret = "Ile interdite, tour(s) n° " + tour + ", difficulté " + diff + "\n"; //récupération du nombre de tours et la difficulté
+        ret = "Ile interdite, tour(s) n° " + tour + ", difficulté " + niveau + "\n"; //récupération du nombre de tours et la difficulté
 
         //création de la partie Grille de ret
         for(int i = 0; i < grille.getTuilles().length; i++) {
