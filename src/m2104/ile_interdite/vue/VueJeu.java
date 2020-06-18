@@ -578,17 +578,36 @@ public class VueJeu implements MouseListener {
         }
     }
     
+    public void noyadeEnCours(){
+        actionCourante = "Noyade";
+        innonde.setEnabled(false);
+    }
+    
+    public void noyadeFinie(){
+        actionCourante = "";
+        innonde.setEnabled(true);
+    }
+    
+    public String getActionEnCours(){
+        return actionCourante;
+    }
+    
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == panelGrille) {
 			if (panelGrille.estSelectionnable(panelGrille.getNumeroTuile(e.getX(), e.getY()))) {
+                            System.out.println("Case valide");
 				switch (actionCourante) {
 					case "Deplacer" : 
-						ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-						break;
+                                            ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                                            break;
 					case "Assecher" :
-						ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-						break;
+                                            ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                                            break;
+                                        case "Noyade" :
+                                            System.out.println("Nage valide");
+                                            ihm.notifierObservateurs(Message.nage(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                                            break;
 				}
 			}
 		} else if(e.getSource() == panelCartesJ1) {

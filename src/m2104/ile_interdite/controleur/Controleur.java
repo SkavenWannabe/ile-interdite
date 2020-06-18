@@ -49,7 +49,7 @@ public class Controleur implements Observateur<Message> {
                 
                 HashMap<Integer, ArrayList> mains = new HashMap<Integer, ArrayList>();
                 for (int i = 0; i < msg.getNbJoueurs(); i++) {
-                	ArrayList<String> cartes = new ArrayList<String>();
+                	ArrayList<String> cartes = new ArrayList<>();
                 	ileInterdite.getMain(i).forEach(x -> cartes.add(x.toString()));
                 	mains.put(i, cartes);
                 }
@@ -59,12 +59,12 @@ public class Controleur implements Observateur<Message> {
                 this.nouveauTour();
                 break;
             case CHOISIR_CARTE_TRESORS:
-                ileInterdite.tricheTresor();
+                //ileInterdite.tricheTresor();
                 ihm.piocheTresors(this.ileInterdite.piocheTresor());
                 //this.ileInterdite.mainPleine();
                 nbInondAVenir = this.ileInterdite.getNbInondations();
                 
-                ArrayList<String> cartes = new ArrayList<String>();
+                ArrayList<String> cartes = new ArrayList<>();
             	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartes.add(x.toString()));
                 ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartes);
             	break;
@@ -73,12 +73,12 @@ public class Controleur implements Observateur<Message> {
                 int tuile = this.ileInterdite.piocheInonde();
                 System.out.println("Tuiles piochées : " + tuile);
             	ihm.changerEtatTuile(tuile, ileInterdite.getGrille().getTuille(tuile).getEtat().toString());
-                nbInondAVenir--;
+                if(!(ihm.getActionEnCours().equals("Noyade")))
+                    nbInondAVenir--;
                 System.out.println("Nb inonde à venir : " + nbInondAVenir);
                 if(nbInondAVenir == 0){
                     this.nouveauTour();
                 }
-
             	break;
             case VOIR_DEFAUSSE:
             	ihm.afficherDefausse(ileInterdite.getDefausseTresor());
@@ -109,28 +109,41 @@ public class Controleur implements Observateur<Message> {
             	ileInterdite.donnerTresor(msg.getIdAventurier(),msg.getIdCarte());
             	
             	//Afficher Main du receveur
-            	ArrayList<String> cartesReceveur = new ArrayList<String>();
+            	ArrayList<String> cartesReceveur = new ArrayList<>();
             	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> cartesReceveur.add(x.toString()));
             	ihm.afficherMain(msg.getIdAventurier(), cartesReceveur);
             	
             	//Afficher Main du donner
-            	ArrayList<String> cartesDonneur = new ArrayList<String>();
+            	ArrayList<String> cartesDonneur = new ArrayList<>();
             	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartesDonneur.add(x.toString()));
             	ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartesDonneur);         
-            	
+            	this.ihm.actionsPossibles(this.ileInterdite.clicable());
                 ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case RECUPERER_TRESOR:
             	ileInterdite.gagneTresor();
                 ihm.afficherTresors(ileInterdite.getTresors());
-                ArrayList<String> main = new ArrayList<String>();
+                ArrayList<String> main = new ArrayList<>();
             	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> main.add(x.toString()));
                 ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(),main);
                 this.ihm.actionsPossibles(this.ileInterdite.clicable());
                 this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case NOYADE:
-                //Glou glou
+                if(this.ileInterdite.nagePossible(msg.getIdAventurier()).length == 0)
+                    traiterMessage(Message.defaite());
+                else
+                    ihm.clickPossible(this.ileInterdite.nagePossible(msg.getIdAventurier()));
+                ihm.noyadeEnCours();
+                break;
+            case NAGE:
+                ileInterdite.deplace(msg.getIdTuile());
+                ihm.deplacerAventurier(ileInterdite.getAventurierEnCours().toString(),msg.getIdTuile());
+                ihm.noyadeTerminée();
+                nbInondAVenir--;
+                if(nbInondAVenir == 0){
+                    this.nouveauTour();
+                }
                 break;
             case TROMAIN:
                 //this.ihm.tropDeCarteEnMain();

@@ -80,4 +80,15 @@ public class IHM extends Observable<Message> {
         jeu.actionsPossibles(actionsPossibles);
     }
 
+    public void noyadeEnCours(){
+        jeu.noyadeEnCours();
+    }
+    public void noyadeTerminée(){
+        jeu.noyadeFinie();
+    }
+    
+    public String getActionEnCours(){
+        return jeu.getActionEnCours();
+    }
+    
 }
