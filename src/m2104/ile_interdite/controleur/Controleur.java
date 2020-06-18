@@ -99,6 +99,7 @@ public class Controleur implements Observateur<Message> {
             case TEST_DONNER:
                 System.out.println("IHM : Echange voulu");
             	ihm.mainSelectionnable(ileInterdite.getNumeroAventurierEnCours());
+                ihm.autreMains(ileInterdite.PersonnagesProches());
             	break;
             case DONNER:
                 System.out.println("IHM : Echange choisie");
@@ -126,7 +127,8 @@ public class Controleur implements Observateur<Message> {
             	break;
             case RECUPERER_TRESOR:
             	ileInterdite.gagneTresor(msg.getIdTuile());
-                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+                ihm.afficherTresors(ileInterdite.getTresors());
+                ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case NOYADE:
                 //Glou glou

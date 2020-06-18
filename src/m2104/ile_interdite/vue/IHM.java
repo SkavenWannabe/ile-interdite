@@ -44,8 +44,16 @@ public class IHM extends Observable<Message> {
     	jeu.afficherMain(i,carte);
     }
     
+    public void afficherTresors(HashMap traizor){
+        //jeu.afficherTresors(traizor);
+    }
+    
     public void mainSelectionnable(int numero) {
     	jeu.mainSelectionnable(numero);
+    }
+    
+    public void autreMains(ArrayList persoProches){
+        jeu.autreMains(persoProches);
     }
     
     public void clickPossible(int[] tab) {

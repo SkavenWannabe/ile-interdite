@@ -525,37 +525,38 @@ public class VueJeu implements MouseListener {
     	int numCarte = panel.getNumeroCarte(x, y);
         System.out.println("IHM : numCarte = " + numCarte);
     	if (panel.helicoSelectionner(numCarte)) {
-			System.out.println("carte helico selectionner");
-		} else if (panel.sacSelectionner(numCarte)) {
-			System.out.println(("carte sac de sable selectionner"));
-		} else if (actionCourante == "Donner") {
-			if (panel.estSelectionnables(numCarte)) {
-				if (carteADonner == -1) {
-					carteADonner = numCarte;
-                                        System.out.println("Carte proposée : " + carteADonner);
-					if (joueur != 0) {
-						btnJ1.setEnabled(true);
-					}
-                                        if(joueur != 1) {
-						btnJ2.setEnabled(true);
-					}
-                                        if (nbJoueur == 3 && joueur !=2) {
-						btnJ3.setEnabled(true);
-					}
-                                        if (nbJoueur == 4) {
-						if (joueur != 2) {
-							btnJ3.setEnabled(true);
-						}
-                                                if (joueur != 3) {
-							btnJ4.setEnabled(true);
-						}
-					}
-				}
-				
-			}
-		}
+            System.out.println("carte helico selectionner");
+	} else if (panel.sacSelectionner(numCarte)) {
+            System.out.println(("carte sac de sable selectionner"));
+	} else if (actionCourante == "Donner") {
+            if (panel.estSelectionnables(numCarte)) {
+		if (carteADonner == -1) {
+                    carteADonner = numCarte;
+                    System.out.println("Carte proposée : " + carteADonner);
+		}	
+            }
+	}
     }
 
+    public void autreMains(ArrayList<Integer> persoProches){
+        for(int i = 0; i < persoProches.size(); i++){
+            switch(persoProches.get(i)){
+                case 0:
+                    btnJ1.setEnabled(true);
+                    break;
+                case 1:
+                    btnJ2.setEnabled(true);
+                    break;
+                case 2:
+                    btnJ3.setEnabled(true);
+                    break;
+                case 3:
+                    btnJ4.setEnabled(true);
+                    break;
+            }
+        }
+    }
+    
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == panelGrille) {

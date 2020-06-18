@@ -51,7 +51,14 @@ public class IleInterdite extends Observable<Message> {
         return tour;
     }
     public HashMap getTresors() {
-        return tresors;
+        HashMap<String,Boolean> traizor = new HashMap<>();
+        
+        traizor.put("CALICE", (boolean) tresors.get(CarteTresor.TRESOR_CALICE));
+        traizor.put("PIERRE", (boolean) tresors.get(CarteTresor.TRESOR_PIERRE));
+        traizor.put("STATUE", (boolean) tresors.get(CarteTresor.TRESOR_STATUE));
+        traizor.put("CRISTAL", (boolean) tresors.get(CarteTresor.TRESOR_CRISTAL));
+        
+        return traizor;
     }
     public Stack getPaquetTresor() {
         return paquetTresor;
