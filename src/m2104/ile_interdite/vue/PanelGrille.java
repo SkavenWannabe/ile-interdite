@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,11 +33,15 @@ public class PanelGrille extends JPanel {
     private String[] tuillesEtat;
     private HashMap<String,Integer> aventuriers;
     private boolean[] tuilesSelectionnable;
-
+    private HashMap<String,BufferedImage> tresors = new HashMap<>();
+    private boolean[] tresorsGagne = new boolean[4];
+    private HashMap<String,Boolean> traizor = new HashMap<>();
 
     PanelGrille(Tuille[] tuis, HashMap<String,Integer> aventuriers) {
         initImagesTuiles();
         initImagesPions();
+        System.out.println("LA ?");
+        initImageTresor();
         initTuilles(tuis);
         initAventuriers(aventuriers);
     }
@@ -48,6 +53,7 @@ public class PanelGrille extends JPanel {
     	dessinerTuiles(g);
         dessinerAventuriers(g);
         dessinerSelection(g);
+        dessinerTresor(g); //AH oui aussi elles sont quelles numéro les tuiles sur les bords ?
     }
 
     private void dessinerTuiles(Graphics g) {
@@ -321,7 +327,7 @@ public class PanelGrille extends JPanel {
                     .sorted() //on met les cartes toujours dans le même ordre pour eviter les erreurs suivant les pc
 	                .collect(Collectors.toList()); // on convertie le résultat en list
 	        
-	      //pour tous les éléments trouvés
+	      //pour tous les éléments trouvés 
             res.forEach(
                     x -> {
                 try {
@@ -339,6 +345,73 @@ public class PanelGrille extends JPanel {
         this.aventuriers = new HashMap<String, Integer>();
         this.aventuriers.putAll(aventuriers);
     }
+    
+    public void initImageTresor(){ 
+        System.out.println("On est rentré youhou");
+       try {
+    		//récupération des images des pions
+	
+	        //on récupére les Path vers tous les fichiers dans src/assets/tuiles   
+	        Stream<Path> walk = Files.walk(Paths.get("src/assets/tresor"));
+                System.out.println("Walk finiii");
+	
+	
+	        List<String> res = walk.map(x -> x.toString()) //on convertie tous les Path en String
+	                .filter(f -> f.endsWith(".png")) //on filtre de manière a ne garder que les fichiers finissant par .png
+                    .sorted() //on met les cartes toujours dans le même ordre pour eviter les erreurs suivant les pc
+	                .collect(Collectors.toList()); // on convertie le résultat en list
+	        System.out.println("On a les images,normalement");
+	      //pour tous les éléments trouvés
+            res.forEach(
+                    x -> { 
+                        System.out.println("On est pas dans le 2eme try");
+                try {
+                    System.out.println(x.substring(x.lastIndexOf(File.separator), x.length()-4));
+                    System.out.println(ImageIO.read(new File(x)));
+                    tresors.put(x.substring(x.lastIndexOf(File.separator), x.length()-4),ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+    	}catch (Exception e) {
+            e.printStackTrace(); 
+        } 
+    }
+    
+    public void initTresor(){
+        for(String list : tresors.keySet()){
+            switch(list){ 
+                case "calice": 
+                case "cristal":
+                case "pierre" :
+                case "zephyr" :
+                    traizor.put(list, Boolean.TRUE); 
+                break; 
+            }
+        }
+    }
+    
+    public void dessinerTresor(Graphics g){
+        traizor.forEach( (k,v) -> { 
+           int i = 0;
+           if(v){ 
+               g.drawImage(tresors.get(k).getScaledInstance(getWidth()/6, getHeight()/6, Image.SCALE_DEFAULT),(i%6)*getWidth()/6, i/6*getHeight()/6, null, null);
+               if(i == 0){
+                   i = 5;
+               }else if(i == 5){
+                   i = 30;
+               }else if(i == 30){
+                   i = 35;
+               }
+           }
+        });
+    }
+    
+    public void changerEtatTresor(String tresor){
+        traizor.put(tresor, Boolean.TRUE);
+    }
+    
+    
 
     public void changerEtatTuile(int tuile, String etat) {
     	System.out.println("Etat : " + etat);
