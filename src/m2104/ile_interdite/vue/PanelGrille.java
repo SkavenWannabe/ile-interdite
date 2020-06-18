@@ -28,22 +28,24 @@ public class PanelGrille extends JPanel {
     private ArrayList<BufferedImage> tuilles_sec = new ArrayList<>(); //contient les images des tuilles non innondé
     private ArrayList<BufferedImage> tuilles_innondes = new ArrayList<>(); //contient les images des tuilles innondé
     private HashMap<String,BufferedImage> pions = new HashMap<>(); //contient les images des pions
+    private HashMap<String,BufferedImage> tresors = new HashMap<>(); //contient les images des cartes tresors
+    
     private BufferedImage abysse; //contient l'image de la tuile de l'abysse
     private String[] tuiles;
     private String[] tuillesEtat;
     private HashMap<String,Integer> aventuriers;
-    private boolean[] tuilesSelectionnable;
-    private HashMap<String,BufferedImage> tresors = new HashMap<>();
-    private boolean[] tresorsGagne = new boolean[4];
     private HashMap<String,Boolean> traizor = new HashMap<>();
+    private boolean[] tuilesSelectionnable;
+    private boolean[] tresorsGagne = new boolean[4];
 
     PanelGrille(Tuille[] tuis, HashMap<String,Integer> aventuriers) {
         initImagesTuiles();
         initImagesPions();
-        System.out.println("LA ?");
         initImageTresor();
+        
         initTuilles(tuis);
         initAventuriers(aventuriers);
+        initTresor();
     }
 
     @Override
@@ -53,7 +55,7 @@ public class PanelGrille extends JPanel {
     	dessinerTuiles(g);
         dessinerAventuriers(g);
         dessinerSelection(g);
-        dessinerTresor(g); //AH oui aussi elles sont quelles numéro les tuiles sur les bords ?
+        dessinerTresor(g); 
     }
 
     private void dessinerTuiles(Graphics g) {
@@ -180,7 +182,23 @@ public class PanelGrille extends JPanel {
     	}
     	g2.setStroke(trait);
     }
-
+    
+    public void dessinerTresor(Graphics g){
+        
+    	traizor.forEach( (k,v) -> { 
+    		int i = 0;
+    		switch (k) {
+	        	case "calice" : i = 0; break;
+	        	case "zephyr" : i = 5; break;
+	        	case "pierre" : i = 30; break;
+	        	case "cristal" : i = 35; break;
+    		}
+           
+           if(v){ 
+        	   g.drawImage(tresors.get(k).getScaledInstance(getWidth()/6, getHeight()/6, Image.SCALE_DEFAULT),(i%6)*getWidth()/6, i/6*getHeight()/6, null, null);   
+           }
+        });
+    }
     private void initImagesTuiles() {
         try {
             //récupération de l'image de l'abysse
@@ -347,28 +365,22 @@ public class PanelGrille extends JPanel {
     }
     
     public void initImageTresor(){ 
-        System.out.println("On est rentré youhou");
        try {
-    		//récupération des images des pions
+    		//récupération des images des cartes tresors
 	
 	        //on récupére les Path vers tous les fichiers dans src/assets/tuiles   
-	        Stream<Path> walk = Files.walk(Paths.get("src/assets/tresor"));
-                System.out.println("Walk finiii");
+	        Stream<Path> walk = Files.walk(Paths.get("src/assets/tresors/"));
 	
 	
 	        List<String> res = walk.map(x -> x.toString()) //on convertie tous les Path en String
 	                .filter(f -> f.endsWith(".png")) //on filtre de manière a ne garder que les fichiers finissant par .png
                     .sorted() //on met les cartes toujours dans le même ordre pour eviter les erreurs suivant les pc
 	                .collect(Collectors.toList()); // on convertie le résultat en list
-	        System.out.println("On a les images,normalement");
 	      //pour tous les éléments trouvés
             res.forEach(
                     x -> { 
-                        System.out.println("On est pas dans le 2eme try");
                 try {
-                    System.out.println(x.substring(x.lastIndexOf(File.separator), x.length()-4));
-                    System.out.println(ImageIO.read(new File(x)));
-                    tresors.put(x.substring(x.lastIndexOf(File.separator), x.length()-4),ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
+                    tresors.put(x.substring(x.lastIndexOf(File.separator)+1, x.length()-4),ImageIO.read(new File(x))); //on les ajoutes dans l'ArrayList correspondant
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -391,24 +403,9 @@ public class PanelGrille extends JPanel {
         }
     }
     
-    public void dessinerTresor(Graphics g){
-        traizor.forEach( (k,v) -> { 
-           int i = 0;
-           if(v){ 
-               g.drawImage(tresors.get(k).getScaledInstance(getWidth()/6, getHeight()/6, Image.SCALE_DEFAULT),(i%6)*getWidth()/6, i/6*getHeight()/6, null, null);
-               if(i == 0){
-                   i = 5;
-               }else if(i == 5){
-                   i = 30;
-               }else if(i == 30){
-                   i = 35;
-               }
-           }
-        });
-    }
     
-    public void changerEtatTresor(String tresor){
-        traizor.put(tresor, Boolean.TRUE);
+    public void changerEtatTresor(HashMap tresors){
+        traizor = tresors;
     }
     
     
