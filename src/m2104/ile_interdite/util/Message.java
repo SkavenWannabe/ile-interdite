@@ -69,8 +69,8 @@ public class Message implements Serializable {
     public static Message testDonner() {
         return new Message(Utils.Commandes.TEST_DONNER, null, null, null, null, null, null);
     }
-    public static Message donner(int idAventurier, int idTuille) {
-        return new Message(Utils.Commandes.DONNER, idAventurier, null, null, idTuille, null, null);
+    public static Message donner(int idAventurier, int idCarte) {
+        return new Message(Utils.Commandes.DONNER, idAventurier, idCarte, null, null, null, null);
     }
 
     /**

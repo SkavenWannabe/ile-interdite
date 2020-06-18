@@ -274,10 +274,12 @@ public class VueJeu implements MouseListener {
         
         // Initialisation Bas de page    
         //Minimum deux joueur, donc init de deux joueur
-        btnJ1 = new JButton(nomsJoueurs[0]);
+        btnJ1 = new JButton(labelNom1.getText());
         btnJ1.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		if(carteADonner !=-1) {
+        		if(carteADonner != -1) {
+                                System.out.println("IHM : Receveur choisi : 0");
+                                System.out.println("IHM : Carte choisie : " + carteADonner);
         			ihm.notifierObservateurs(Message.donner(0, carteADonner));
         			carteADonner = -1;
         			desactiverBoutonJoueur();
@@ -290,10 +292,11 @@ public class VueJeu implements MouseListener {
         panelCartesJ1.addMouseListener(this);
         panelJ1.add(panelCartesJ1);
         
-        btnJ2 = new JButton(nomsJoueurs[1]);
+        btnJ2 = new JButton(labelNom2.getText());
         btnJ2.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		if(carteADonner !=-1) {
+                                System.out.println("IHM : Receveur choisi : 1");
         			ihm.notifierObservateurs(Message.donner(1, carteADonner));
         			carteADonner = -1;
         			desactiverBoutonJoueur();
@@ -310,10 +313,11 @@ public class VueJeu implements MouseListener {
         panelSouth.add(panelJ2);
         
         if (nbJoueur == 4) {
-        	btnJ3 = new JButton(nomsJoueurs[2]);
+        	btnJ3 = new JButton(labelNom3.getText());
         	btnJ3.addActionListener(new java.awt.event.ActionListener() {
             	public void actionPerformed(ActionEvent e) {
             		if(carteADonner !=-1) {
+                                System.out.println("IHM : Receveur choisi : 2");
             			ihm.notifierObservateurs(Message.donner(2, carteADonner));
             			carteADonner = -1;
             			desactiverBoutonJoueur();
@@ -326,10 +330,11 @@ public class VueJeu implements MouseListener {
             panelCartesJ3.addMouseListener(this);
             panelJ3.add(panelCartesJ3);
             
-            btnJ4 = new JButton(nomsJoueurs[3]);
+            btnJ4 = new JButton(labelNom4.getText());
             btnJ4.addActionListener(new java.awt.event.ActionListener() {
             	public void actionPerformed(ActionEvent e) {
             		if(carteADonner !=-1) {
+                                System.out.println("IHM : Receveur choisi : 3");
             			ihm.notifierObservateurs(Message.donner(3, carteADonner));
             			carteADonner = -1;
             			desactiverBoutonJoueur();
@@ -345,10 +350,11 @@ public class VueJeu implements MouseListener {
             panelSouth.add(panelJ3);
             panelSouth.add(panelJ4);
         }else if (nbJoueur == 3) {
-        	btnJ3 = new JButton(nomsJoueurs[2]);
+        	btnJ3 = new JButton(labelNom3.getText());
         	btnJ3.addActionListener(new java.awt.event.ActionListener() {
             	public void actionPerformed(ActionEvent e) {
             		if(carteADonner !=-1) {
+                                System.out.println("Receveur choisi : 1");
             			ihm.notifierObservateurs(Message.donner(2, carteADonner));
             			carteADonner = -1;
             			desactiverBoutonJoueur();
@@ -408,6 +414,24 @@ public class VueJeu implements MouseListener {
         noms.add("Camille");
         noms.add("Tom");
         noms.add("Zoé");
+        noms.add("Félix");
+        noms.add("Philippe");
+        noms.add("Gilbert");
+        noms.add("Achille");
+        noms.add("Maurice");
+        noms.add("Etienne");
+        noms.add("Victoria");
+        noms.add("Catherine");
+        noms.add("Cécile");
+        noms.add("Marianne");
+        noms.add("Véronique");
+        noms.add("Thomas");
+        noms.add("Maxime");
+        noms.add("Stéphane");
+        noms.add("Bernadette");
+        noms.add("Mireille");
+        noms.add("Anita");
+        noms.add("Karine");
         
         Collections.shuffle(noms);
         return noms;
@@ -499,6 +523,7 @@ public class VueJeu implements MouseListener {
     
     public void traiterCartes(PanelMain panel, int x, int y, int joueur) {
     	int numCarte = panel.getNumeroCarte(x, y);
+        System.out.println("IHM : numCarte = " + numCarte);
     	if (panel.helicoSelectionner(numCarte)) {
 			System.out.println("carte helico selectionner");
 		} else if (panel.sacSelectionner(numCarte)) {
@@ -507,16 +532,21 @@ public class VueJeu implements MouseListener {
 			if (panel.estSelectionnables(numCarte)) {
 				if (carteADonner == -1) {
 					carteADonner = numCarte;
+                                        System.out.println("Carte proposée : " + carteADonner);
 					if (joueur != 0) {
 						btnJ1.setEnabled(true);
-					} else if(joueur!=1) {
+					}
+                                        if(joueur != 1) {
 						btnJ2.setEnabled(true);
-					}else if (nbJoueur == 3 && joueur !=2) {
+					}
+                                        if (nbJoueur == 3 && joueur !=2) {
 						btnJ3.setEnabled(true);
-					} else if (nbJoueur == 4) {
+					}
+                                        if (nbJoueur == 4) {
 						if (joueur != 2) {
 							btnJ3.setEnabled(true);
-						} else if (joueur != 3) {
+						}
+                                                if (joueur != 3) {
 							btnJ4.setEnabled(true);
 						}
 					}

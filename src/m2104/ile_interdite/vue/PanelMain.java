@@ -33,7 +33,7 @@ public class PanelMain extends JPanel {
     	
     	int nbCartes = main.size();
 
-        int width = getWidth() / (nbCartes < 4 ? nbCartes % 4 : 4);
+        int width = getWidth() / (nbCartes < 4 ? (nbCartes == 0 ? 1 : nbCartes % 4) : 4);
         int heigh = getHeight() / (nbCartes/5 + 1);
 
         for(int i = 0; i < nbCartes; i++) {
@@ -152,7 +152,7 @@ public class PanelMain extends JPanel {
     }
     
     public boolean estSelectionnables(int carte) {
-    	return(cartesSelectionnables[carte] == true);
+    	return (cartesSelectionnables[carte]);
     }
     
     public void toutSelectionnable() {
