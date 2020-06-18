@@ -45,7 +45,7 @@ public class IHM extends Observable<Message> {
     }
     
     public void afficherTresors(HashMap traizor){
-        //jeu.afficherTresors(traizor);
+        jeu.afficherTresors(traizor);
     }
     
     public void mainSelectionnable(int numero) {

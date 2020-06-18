@@ -102,7 +102,7 @@ public class VueJeu implements MouseListener {
 		fenetre = new JFrame("Ile interdite");
         fenetre.setLayout(new BorderLayout());
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.setSize(1480,1480);
+        fenetre.setSize(1380,1480);
         
         mainPanel = new JPanel(new BorderLayout());
         panelNorth = new JPanel(new GridLayout(1,nbJoueur+4));
@@ -395,6 +395,10 @@ public class VueJeu implements MouseListener {
 			panelCartesJ4.setMain(carte);
 		}
 		
+	}
+	
+	public void afficherTresors(HashMap tresors) {
+		panelGrille.changerEtatTresor(tresors);
 	}
 	
     private ArrayList<String> initNomsPif(){
