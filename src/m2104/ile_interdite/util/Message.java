@@ -143,6 +143,10 @@ public class Message implements Serializable {
         return new Message(Utils.Commandes.NAGE, null, null, null, tuile, null, null);
     }
     
+    public static Message sacDeSable(){
+        return new Message(Utils.Commandes.SAC_DE_SABLE, null, null, null, null, null, null);
+    }
+    
     public static Message tromain(){
         return new Message(Utils.Commandes.TROMAIN, null, null, null, null, null, null);
     }

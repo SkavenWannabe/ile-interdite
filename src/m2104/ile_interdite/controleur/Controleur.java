@@ -129,6 +129,9 @@ public class Controleur implements Observateur<Message> {
                 this.ihm.actionsPossibles(this.ileInterdite.clicable());
                 this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
+            case SAC_DE_SABLE:
+            	ihm.clickPossible(ileInterdite.assechePossibleSacDeSable());
+            	break;
             case NOYADE:
                 if(this.ileInterdite.nagePossible(msg.getIdAventurier()).length == 0)
                     traiterMessage(Message.defaite());
