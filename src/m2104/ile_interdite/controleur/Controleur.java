@@ -141,7 +141,7 @@ public class Controleur implements Observateur<Message> {
                 //this.ihm.tropDeCarteEnMain();
                 break;
             case DEFAITE:
-                //C'est perdu ...
+                if(Parameters.LOGS){System.out.println("CON : OH ! Perdu !");}
                 break;
             case VICTOIRE:
                 //C'est gagné !!

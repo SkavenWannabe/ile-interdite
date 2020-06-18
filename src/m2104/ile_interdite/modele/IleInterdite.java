@@ -106,10 +106,10 @@ public class IleInterdite extends Observable<Message> {
         tresors.put(CarteTresor.TRESOR_CALICE,false);
         tresors.put(CarteTresor.TRESOR_CRISTAL,false);
         tresors.put(CarteTresor.TRESOR_STATUE,false);
-        specialAbysse.put(CarteTresor.TRESOR_PIERRE,0);
-        specialAbysse.put(CarteTresor.TRESOR_CALICE,0);
-        specialAbysse.put(CarteTresor.TRESOR_CRISTAL,0);
-        specialAbysse.put(CarteTresor.TRESOR_STATUE,0);
+        specialAbysse.put("TRESOR_PIERRE",0);
+        specialAbysse.put("TRESOR_CALICE",0);
+        specialAbysse.put("TRESOR_CRISTAL",0);
+        specialAbysse.put("TRESOR_STATUE",0);
         System.out.println("TRESORS INITIALISES");
         paquetTresor = initPaquetTresor();
         paquetInonde = grille.tuillesValide();
@@ -229,20 +229,19 @@ public class IleInterdite extends Observable<Message> {
             resetPiocheInonde();
 
         int id = (int) paquetInonde.pop();                              //Pioche la position de la tuile a inonder
-        if(Parameters.LOGS)
-            System.out.println("ILE : PiocheInonde : id : " + id);
-
+        
         grille.changeEtat(id, -1);                                      //Change l'état de la tuile à inonder
-
         
         if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
             String spec = grille.getTuille(id).getSpecial();
-            if(spec.equals("HELICO"))                                   //Si la tuile sombre dans l'abysse et était l'héliport, la partie est perdue
+            
+            if(spec.equals("HELICO")){                                   //Si la tuile sombre dans l'abysse et était l'héliport, la partie est perdue
                 notifierObservateurs(Message.defaite());
+            }
             else{
                 if(spec.equals("TRESOR_PIERRE") || spec.equals("TRESOR_CALICE") || spec.equals("TRESOR_STATUE") || spec.equals("TRESOR_CRISTAL")){
                         int a = (int) specialAbysse.get(spec)+1;
-                        if (a == 2 && !((boolean) tresors.get(spec)))   //Si les deux tuille d'un trésor non encore possédé sombre dans l'abysse, la partie est perdue
+                        if (a == 2 && !((boolean) tresors.get(CarteTresor.valueOf(spec))))   //Si les deux tuille d'un trésor non encore possédé sombre dans l'abysse, la partie est perdue
                             notifierObservateurs(Message.defaite());
                         else
                             specialAbysse.replace(spec,a);
@@ -254,8 +253,9 @@ public class IleInterdite extends Observable<Message> {
                 }
             }
         }
-        else
+        else{
             defausseInonde.push(id);                                    //Si la tuille ne sombre pas dans l'abysse, on ajoute sa position dans la défausse
+        }
         
         nbInondations--;
         return id;
