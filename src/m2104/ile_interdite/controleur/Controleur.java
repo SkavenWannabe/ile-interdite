@@ -59,8 +59,9 @@ public class Controleur implements Observateur<Message> {
                 this.nouveauTour();
                 break;
             case CHOISIR_CARTE_TRESORS:
+                ileInterdite.tricheTresor();
                 ihm.piocheTresors(this.ileInterdite.piocheTresor());
-                this.ileInterdite.mainPleine();
+                //this.ileInterdite.mainPleine();
                 nbInondAVenir = this.ileInterdite.getNbInondations();
                 
                 ArrayList<String> cartes = new ArrayList<String>();
@@ -102,6 +103,7 @@ public class Controleur implements Observateur<Message> {
             	break;
             case TEST_DONNER:
             	ihm.mainSelectionnable(ileInterdite.getNumeroAventurierEnCours());
+                ihm.autreMains(ileInterdite.PersonnagesProches());
             	break;
             case DONNER:
             	ileInterdite.donnerTresor(msg.getIdAventurier(),msg.getIdCarte());
@@ -119,7 +121,12 @@ public class Controleur implements Observateur<Message> {
                 ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case RECUPERER_TRESOR:
-            	ileInterdite.gagneTresor(msg.getIdTuile());
+            	ileInterdite.gagneTresor();
+                ihm.afficherTresors(ileInterdite.getTresors());
+                ArrayList<String> main = new ArrayList<String>();
+            	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> main.add(x.toString()));
+                ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(),main);
+                this.ihm.actionsPossibles(this.ileInterdite.clicable());
                 this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case SAC_DE_SABLE:
@@ -132,7 +139,7 @@ public class Controleur implements Observateur<Message> {
                 //this.ihm.tropDeCarteEnMain();
                 break;
             case DEFAITE:
-                //C'est perdu ...
+                if(Parameters.LOGS){System.out.println("CON : OH ! Perdu !");}
                 break;
             case VICTOIRE:
                 //C'est gagné !!

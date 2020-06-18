@@ -78,8 +78,8 @@ public class Message implements Serializable {
      * @param idAventurier
      * @return un nouveau {@link #Message} pour la commande {@link m2104.ile_interdite.util.Utils.Commandes#RECUPERER_TRESOR}
      */
-    public static Message recupererTresor(int idAventurier) {
-        return new Message(Utils.Commandes.RECUPERER_TRESOR, idAventurier, null, null, null, null, null);
+    public static Message recupererTresor() {
+        return new Message(Utils.Commandes.RECUPERER_TRESOR, null, null, null, null, null, null);
     }
 
     /**

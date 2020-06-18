@@ -195,7 +195,10 @@ public class PanelGrille extends JPanel {
     		}
            
            if(v){ 
-        	   g.drawImage(tresors.get(k).getScaledInstance(getWidth()/6, getHeight()/6, Image.SCALE_DEFAULT),(i%6)*getWidth()/6, i/6*getHeight()/6, null, null);   
+               System.out.println("k = " + k);
+               System.out.println("tresors.get(k) = " + tresors.get(k));
+               System.out.println("tresors.get(CALICE) = " + tresors.get("CALICE"));
+               g.drawImage(tresors.get(k).getScaledInstance(getWidth()/6, getHeight()/6, Image.SCALE_DEFAULT),(i%6)*getWidth()/6, i/6*getHeight()/6, null, null);   
            }
         });
     }
@@ -404,8 +407,12 @@ public class PanelGrille extends JPanel {
     }
     
     
-    public void changerEtatTresor(HashMap tresors){
-        traizor = tresors;
+    public void changerEtatTresor(HashMap tresor){
+        
+        tresor.forEach( (k,v) -> { 
+            traizor.put((String) k,(Boolean) v);
+        });
+        repaint();
     }
     
     
