@@ -62,6 +62,10 @@ public class Controleur implements Observateur<Message> {
             	ihm.piocheTresors(this.ileInterdite.piocheTresor());
                 this.ileInterdite.mainPleine();
                 nbInondAVenir = this.ileInterdite.getNbInondations();
+                
+                ArrayList<String> cartes = new ArrayList<String>();
+            	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartes.add(x.toString()));
+                ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartes);
             	break;
             case CHOISIR_CARTE_INNONDE:
             	int tuile = this.ileInterdite.piocheInonde();
