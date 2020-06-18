@@ -40,7 +40,7 @@ public class IHM extends Observable<Message> {
     	jeu.afficherDefausse(defausse);
     }
     
-    public void afficherMain(int i, ArrayList<String> carte) {
+    public void afficherMain(int i, ArrayList<CarteTresor> carte) {
     	jeu.afficherMain(i,carte);
     }
     

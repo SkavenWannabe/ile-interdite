@@ -38,9 +38,6 @@ public class IleInterdite extends Observable<Message> {
     public ArrayList<Aventurier> getAventuriers(){
         return aventuriers;
     }
-    public int getNumeroAventurierEnCours() {
-    	return tour % aventuriers.size();
-    }
     public Aventurier getAventurierEnCours(){
         return aventuriers.get(tour % aventuriers.size());
     }

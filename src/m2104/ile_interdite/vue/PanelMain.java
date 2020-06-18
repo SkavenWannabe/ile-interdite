@@ -17,81 +17,71 @@ public class PanelMain extends JPanel {
     }
 
     @Override
-    public Dimension getPreferredSize() {
-    	Dimension rootSize = SwingUtilities.getRoot(this).getSize();
-    	SwingUtilities.getRoot(this).getSize();
-    	return new Dimension((int)(rootSize.width/4),(int)(rootSize.height*0.1));
-    }
-    
-    @Override
     protected void paintComponent(Graphics g) {
-    	revalidate();
     	super.paintComponent(g);
-    	
-    	int nbCartes = main.size();
 
-        int width = getWidth() / (nbCartes < 4 ? nbCartes % 4 : 4);
-        int heigh = getHeight() / (nbCartes/5 + 1);
+        int width = getWidth() / (main.size() % 3 == 0 ? 3 : main.size() % 3 + 1);
+        int heigh = getHeight() / (main.size()/3 + 1);
 
-        for(int i = 0; i < nbCartes; i++) {
+        for(int i = 0; i < main.size(); i++) {
 
-            int ligne = i / 4;
-            int col = i % 4;
+            int ligne = i / 3;
+            int col = i % 3;
 
             switch (main.get(i)) {
                 case "HELICO":
                     g.drawImage(
                             img[2].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
+                            col * getWidth() / 6,
+                            ligne * getHeight() / 4,
                             null,
                             null);
                     break;
                 case "TRESOR_STATUE":
                     g.drawImage(
                             img[6].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
+                            col * getWidth() / 6,
+                            ligne * getHeight() / 4,
                             null,
                             null);
                     break;
                 case "TRESOR_CRISTAL":
                     g.drawImage(
                             img[1].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
+                            col * getWidth() / 6,
+                            ligne * getHeight() / 4,
                             null,
                             null);
                     break;
                 case "TRESOR_CALICE":
                     g.drawImage(
                             img[0].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
+                            col * getWidth() / 6,
+                            ligne * getHeight() / 4,
                             null,
                             null);
                     break;
                 case "TRESOR_PIERRE":
                     g.drawImage(
                             img[4].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
+                            col * getWidth() / 6,
+                            ligne * getHeight() / 4,
                             null,
                             null);
                     break;
                 case "MONTEE_EAU":
                     g.drawImage(
                             img[3].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
+                            col * getWidth() / 6,
+                            ligne * getHeight() / 4,
                             null,
                             null);
                     break;
                 case "SAC_SABLE":
                     g.drawImage(
                             img[5].getScaledInstance(width, heigh, Image.SCALE_DEFAULT),
-                            col * width,
-                            ligne * heigh,
+                            col * getWidth() / 6,
+                            ligne * getHeight() / 4,
                             null,
                             null);
                     break;
