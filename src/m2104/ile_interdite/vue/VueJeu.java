@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -129,21 +130,42 @@ public class VueJeu implements MouseListener {
         
         // Initialisation Haut de page
         nomTour = new JLabel("Tour 1 : ");
+        ArrayList<String> nomsPif = initNomsPif();
         panelNorth.add(nomTour); panelNorth.add(new JLabel());
-        labelNom1 = new JLabel(nomsJoueurs[0] + "-");
-        labelNom2 = new JLabel(nomsJoueurs[1] + "-");
+        labelNom1 = new JLabel();
+        if (nomsJoueurs[0].equals(""))
+            labelNom1.setText(nomsPif.get(0));
+        else
+            labelNom1.setText(nomsJoueurs[0]);
+        labelNom2 = new JLabel();
+        if (nomsJoueurs[1].equals(""))
+            labelNom2.setText(nomsPif.get(1));
+        else
+            labelNom2.setText(nomsJoueurs[0]);
         labelNom2.setForeground(Color.red);
         panelNorth.add(labelNom1);panelNorth.add(labelNom2);
         
         if (nbJoueur == 3) {
-        	labelNom3 = new JLabel(nomsJoueurs[2] + "-");
+        	labelNom3 = new JLabel();
+                if (nomsJoueurs[2].equals(""))
+                    labelNom3.setText(nomsPif.get(2));
+                else
+                    labelNom3.setText(nomsJoueurs[2]);
         	panelNorth.add(labelNom3);
         } else if (nbJoueur == 4) {
-        	labelNom3 = new JLabel(nomsJoueurs[2] + "-");
-        	labelNom4 = new JLabel(nomsJoueurs[3] + "-");
+        	labelNom3 = new JLabel();
+                if (nomsJoueurs[2].equals(""))
+                    labelNom3.setText(nomsPif.get(2));
+                else
+                    labelNom3.setText(nomsJoueurs[2]);
+        	labelNom4 = new JLabel();
+                if (nomsJoueurs[3].equals(""))
+                    labelNom4.setText(nomsPif.get(3));
+                else
+                    labelNom4.setText(nomsJoueurs[3]);
         	panelNorth.add(labelNom3);panelNorth.add(labelNom4);
         }
-        
+        panelNorth.add(new JLabel());
         
         // Initialisation Centre de page
         panelGrille = new PanelGrille(grille.getTuilles(), aventuriers); // Creation d'une Grille
@@ -369,6 +391,28 @@ public class VueJeu implements MouseListener {
 		
 	}
 	
+    private ArrayList<String> initNomsPif(){
+        ArrayList<String> noms = new ArrayList<>();
+        
+        noms.add("Vincenzo");
+        noms.add("Anne");
+        noms.add("Marion");
+        noms.add("Lucas");
+        noms.add("Gaston");
+        noms.add("Sophie");
+        noms.add("George");
+        noms.add("Michelle");
+        noms.add("Robert");
+        noms.add("Samantha");
+        noms.add("Hector");
+        noms.add("Camille");
+        noms.add("Tom");
+        noms.add("Zoé");
+        
+        Collections.shuffle(noms);
+        return noms;
+    }
+        
     public void clickPossible(int[] tab) {
     	panelGrille.selectionnerTuiles(tab);
     }
