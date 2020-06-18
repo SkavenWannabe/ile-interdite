@@ -550,7 +550,7 @@ public class VueJeu implements MouseListener {
     		
     	} else if (panel.sacSelectionner(numCarte)) {
     		actionCourante = "Assecher";
-    		ihm.notifierObservateurs(Message.sacDeSable());
+    		ihm.notifierObservateurs(Message.sacDeSable(joueur, numCarte));
     		
     	} else if (actionCourante == "Donner") {
             if (panel.estSelectionnables(numCarte)) {

@@ -339,12 +339,12 @@ public class IleInterdite extends Observable<Message> {
   
     }
 
-    public void tricheTresor(){
-        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
-        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
-        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
-        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
-    }
+//    public void tricheTresor(){
+//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
+//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
+//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
+//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
+//    }
     
     public void gagneTresor(){
         CarteTresor tresor;
@@ -391,6 +391,7 @@ public class IleInterdite extends Observable<Message> {
             if(aventuriers.get(i).getPosition() == ancien)
                 aventuriers.get(i).changerPosition(nouveau,grille);    //Change la position de chaque aventurier se trouvant sur la case de départ de l'hélico à celle d'arrivée
     }
+    
 
     public boolean estGagnable(){
         
@@ -442,6 +443,10 @@ public class IleInterdite extends Observable<Message> {
                 caseAssechables.add(i);
         }
         return caseAssechables.stream().mapToInt(i -> i).toArray();
+    }
+    
+    public void sacDeSable(int joueur, int carte) {
+    	aventuriers.get(joueur).enleverCarte(carte);
     }
     
     public ArrayList<Integer> PersonnagesProches(){

@@ -18,7 +18,10 @@ public class Controleur implements Observateur<Message> {
     private final IleInterdite ileInterdite;
     private final IHM ihm;
     private int nbInondAVenir;
-
+    
+    private int joueurSac = -1;
+    private int carteSac = -1;
+    
     public Controleur() {
         this.ileInterdite = new IleInterdite(this);
         this.ihm = new IHM(this);
@@ -59,7 +62,7 @@ public class Controleur implements Observateur<Message> {
                 this.nouveauTour();
                 break;
             case CHOISIR_CARTE_TRESORS:
-                ileInterdite.tricheTresor();
+                //ileInterdite.tricheTresor();
                 ihm.piocheTresors(this.ileInterdite.piocheTresor());
                 //this.ileInterdite.mainPleine();
                 nbInondAVenir = this.ileInterdite.getNbInondations();
@@ -84,6 +87,7 @@ public class Controleur implements Observateur<Message> {
             	ihm.afficherDefausse(ileInterdite.getDefausseTresor());
             	break;
             case TEST_BOUGER:
+            	joueurSac = -1; carteSac = -1;
             	ihm.clickPossible(this.ileInterdite.deplacementPossible());
             	break;
             case BOUGER:
@@ -93,15 +97,28 @@ public class Controleur implements Observateur<Message> {
                 this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case TEST_ASSECHER:
+            	joueurSac = -1; carteSac = -1;
                 ihm.clickPossible(this.ileInterdite.assechePossible());
             	break;
             case ASSECHER:
             	ileInterdite.asseche(msg.getIdTuile());
             	ihm.changerEtatTuile(msg.getIdTuile(), ileInterdite.getGrille().getTuille(msg.getIdTuile()).getEtat().toString());
-                this.ihm.actionsPossibles(this.ileInterdite.clicable());
-                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+
+            	if (joueurSac != -1 && carteSac != -1) {
+            		ileInterdite.sacDeSable(joueurSac, carteSac);
+            		
+                	ArrayList<String> cartesJoueurSac = new ArrayList<String>();
+                	ileInterdite.getMain(joueurSac).forEach(x -> cartesJoueurSac.add(x.toString()));
+                	ihm.afficherMain(joueurSac, cartesJoueurSac);
+                	
+            		joueurSac = -1; carteSac = -1;
+            	} else {
+	                this.ihm.actionsPossibles(this.ileInterdite.clicable());
+	                this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
+            	}
             	break;
             case TEST_DONNER:
+            	joueurSac = -1; carteSac = -1;
             	ihm.mainSelectionnable(ileInterdite.getNumeroAventurierEnCours());
                 ihm.autreMains(ileInterdite.PersonnagesProches());
             	break;
@@ -113,7 +130,7 @@ public class Controleur implements Observateur<Message> {
             	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> cartesReceveur.add(x.toString()));
             	ihm.afficherMain(msg.getIdAventurier(), cartesReceveur);
             	
-            	//Afficher Main du donner
+            	//Afficher Main du donneur
             	ArrayList<String> cartesDonneur = new ArrayList<String>();
             	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartesDonneur.add(x.toString()));
             	ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartesDonneur);         
@@ -121,6 +138,7 @@ public class Controleur implements Observateur<Message> {
                 ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case RECUPERER_TRESOR:
+            	joueurSac = -1; carteSac = -1;
             	ileInterdite.gagneTresor();
                 ihm.afficherTresors(ileInterdite.getTresors());
                 ArrayList<String> main = new ArrayList<String>();
@@ -130,6 +148,8 @@ public class Controleur implements Observateur<Message> {
                 this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
             case SAC_DE_SABLE:
+            	joueurSac = msg.getIdAventurier(); 
+            	carteSac = msg.getIdCarte();
             	ihm.clickPossible(ileInterdite.assechePossibleSacDeSable());
             	break;
             case NOYADE:

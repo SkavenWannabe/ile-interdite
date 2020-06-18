@@ -135,8 +135,8 @@ public class Message implements Serializable {
         return new Message(Utils.Commandes.VOIR_DEFAUSSE, null, null, null, null, null, null);
     }
     
-    public static Message sacDeSable(){
-        return new Message(Utils.Commandes.SAC_DE_SABLE, null, null, null, null, null, null);
+    public static Message sacDeSable(int idAventurier, int idCarte){
+        return new Message(Utils.Commandes.SAC_DE_SABLE, idAventurier, idCarte, null, null, null, null);
     }
     
     public static Message noyade(int idTuile){
