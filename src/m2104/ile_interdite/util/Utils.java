@@ -29,6 +29,7 @@ public class Utils {
         CHOISIR_TUILE("Sélectionner une tuile"),                                //On l'utilise pas
         DEPLACER("Déplacer un autre joueur"),
         VOIR_DEFAUSSE("Un joueur souhaite voir la défausse de cartes Tirage"),
+        SAC_DE_SABLE("Un joueur utilise la carte specile sac de sable"),
         NOYADE("Un aventurier va sombrer dans l'abyssse"),
         TROMAIN("Il y'a trop de carte dans ta main !"),
         VICTOIRE("La partie est gagnée"),

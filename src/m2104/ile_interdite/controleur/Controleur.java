@@ -122,6 +122,9 @@ public class Controleur implements Observateur<Message> {
             	ileInterdite.gagneTresor(msg.getIdTuile());
                 this.ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
+            case SAC_DE_SABLE:
+            	ihm.clickPossible(ileInterdite.assechePossibleSacDeSable());
+            	break;
             case NOYADE:
                 //Glou glou
                 break;

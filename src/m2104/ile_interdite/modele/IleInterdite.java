@@ -266,6 +266,7 @@ public class IleInterdite extends Observable<Message> {
         nbActions--;                    //Réduit le compteur d'action de 1
     }
 
+    
     public void deplace(int position){
         getAventurierEnCours().changerPosition(position,grille); //Change la position de l'aventurier en cours avec sa nouvelle position
         nbActions--;                                             //Réduit le compteur d'action de 1
@@ -419,6 +420,15 @@ public class IleInterdite extends Observable<Message> {
         for(int i = 0; i < possibles.size();i++){
             if(grille.getTuille(possibles.get(i)).getEtat() == Etat.INONDE)
                 caseAssechables.add(possibles.get(i));
+        }
+        return caseAssechables.stream().mapToInt(i -> i).toArray();
+    }
+    
+    public int[] assechePossibleSacDeSable() {
+    	ArrayList<Integer> caseAssechables = new ArrayList<>();
+        for(int i = 0; i < grille.getTuilles().length;i++){
+            if(grille.getTuille(i).getEtat() == Etat.INONDE)
+                caseAssechables.add(i);
         }
         return caseAssechables.stream().mapToInt(i -> i).toArray();
     }

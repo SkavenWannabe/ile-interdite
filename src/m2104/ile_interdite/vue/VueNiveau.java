@@ -20,7 +20,6 @@ import m2104.ile_interdite.util.Parameters;
 public class VueNiveau extends JPanel{
 
     private Integer niveau ;
-    private final JPanel window ;
     private final HashMap<Integer, JPanel> panelsGauches ;
     private final Integer cellWidth = 50 ;
     private final Integer cellHeight = (Parameters.HAUTEUR_AUTRES_VUES - 25 - (Parameters.UNDECORATED ? 0 : Parameters.DECORATION_HEIGHT)) / 10 ;
@@ -30,10 +29,8 @@ public class VueNiveau extends JPanel{
         this.niveau = niveauInitial;
         panelsGauches = new HashMap<>();
 
-        window = new JPanel();
 
         this.mainPanel = new JPanel() ;
-        this.window.add(mainPanel);
         this.mainPanel.setLayout(new BorderLayout());
         this.mainPanel.setBackground(Color.WHITE);
         this.mainPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, false));
@@ -114,7 +111,7 @@ public class VueNiveau extends JPanel{
             panelDroit.add(labelDroit, gbc);
         }
         panelsGauches.get(niveauInitial).setBackground(Color.YELLOW);
-        this.window.setVisible(true);
+        this.mainPanel.setVisible(true);
     }
 
     public void setNiveau(Integer niveau) {
@@ -167,17 +164,17 @@ public class VueNiveau extends JPanel{
         }
     }
 
-    public static void main(String[] args) {
-        VueNiveau vueNiveau = new VueNiveau(1);
-
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Pour passer au niveau 5, appuyer sur entrée");
-        scanner.nextLine();
-        vueNiveau.setNiveau(5);
-
-        System.out.println("Pour passer au niveau 5, appuyer sur entrée");
-        scanner.nextLine();
-        vueNiveau.setNiveau(10);
-    }
+//    public static void main(String[] args) {
+//        VueNiveau vueNiveau = new VueNiveau(1);
+//
+//        Scanner scanner = new Scanner(System.in);
+//
+//        System.out.println("Pour passer au niveau 5, appuyer sur entrée");
+//        scanner.nextLine();
+//        vueNiveau.setNiveau(5);
+//
+//        System.out.println("Pour passer au niveau 5, appuyer sur entrée");
+//        scanner.nextLine();
+//        vueNiveau.setNiveau(10);
+//    }
 }

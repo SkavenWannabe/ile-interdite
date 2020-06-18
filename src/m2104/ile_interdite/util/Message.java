@@ -134,7 +134,11 @@ public class Message implements Serializable {
     public static Message voirDefausse() {
         return new Message(Utils.Commandes.VOIR_DEFAUSSE, null, null, null, null, null, null);
     }
-
+    
+    public static Message sacDeSable(){
+        return new Message(Utils.Commandes.SAC_DE_SABLE, null, null, null, null, null, null);
+    }
+    
     public static Message noyade(int idTuile){
         return new Message(Utils.Commandes.NOYADE, null, null, null, idTuile, null, null);
     }

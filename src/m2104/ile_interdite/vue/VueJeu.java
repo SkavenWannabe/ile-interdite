@@ -189,10 +189,10 @@ public class VueJeu implements MouseListener {
         panelInnondation.add(innondeDef);
 
         niveau = new VueNiveau(dif);
-        panelNiveau.add(niveau);
+        //panelNiveau.add(niveau);
         
         panelEast.add(panelInnondation);
-        panelEast.add(panelNiveau);
+        panelEast.add(niveau);
         
         
         // Initialisation partie Weast
@@ -529,17 +529,19 @@ public class VueJeu implements MouseListener {
     	int numCarte = panel.getNumeroCarte(x, y);
         System.out.println("IHM : numCarte = " + numCarte);
     	if (panel.helicoSelectionner(numCarte)) {
-            System.out.println("carte helico selectionner");
-	} else if (panel.sacSelectionner(numCarte)) {
-            System.out.println(("carte sac de sable selectionner"));
-	} else if (actionCourante == "Donner") {
+    		actionCourante = "Deplacer";
+    		
+    	} else if (panel.sacSelectionner(numCarte)) {
+    		actionCourante = "Assecher";
+    		ihm.notifierObservateurs(Message.sacDeSable());
+    		
+    	} else if (actionCourante == "Donner") {
             if (panel.estSelectionnables(numCarte)) {
-		if (carteADonner == -1) {
+            	if (carteADonner == -1) {
                     carteADonner = numCarte;
-                    System.out.println("Carte proposée : " + carteADonner);
-		}	
+            	}	
             }
-	}
+    	}
     }
 
     public void autreMains(ArrayList<Integer> persoProches){
