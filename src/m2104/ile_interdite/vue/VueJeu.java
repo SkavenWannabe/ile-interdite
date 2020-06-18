@@ -249,7 +249,7 @@ public class VueJeu implements MouseListener {
         retour = new JButton("Retour");
         retour.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		init = new VueInscriptionJoueurs(null);
+        		init = new VueInscriptionJoueurs(ihm);
         		fenetre.dispose();
         	}
         });
