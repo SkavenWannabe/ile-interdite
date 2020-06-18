@@ -18,16 +18,16 @@ public class IleInterdite extends Observable<Message> {
     
     private int diff;
     private int tour = 0;
-    private HashMap tresors = new HashMap(4);
+    private HashMap tresors;
     private Stack paquetTresor = new Stack<CarteTresor>();
     private Stack defausseTresor = new Stack<CarteTresor>();
-    private Stack paquetInonde = new Stack();
-    private Stack defausseInonde = new Stack();
-    private Grille grille = new Grille();
-    private ArrayList<Aventurier> aventuriers = new ArrayList<>();
+    private Stack paquetInonde;
+    private Stack defausseInonde;
+    private Grille grille;
+    private ArrayList<Aventurier> aventuriers;
     private int nbActions;
     private int nbInondations;
-    private HashMap specialAbysse = new HashMap(4);
+    private HashMap specialAbysse;
     
     public IleInterdite(Observateur<Message> observateur) {
         this.addObservateur(observateur);
@@ -102,17 +102,22 @@ public class IleInterdite extends Observable<Message> {
         System.out.println("INITIALISATION ...");
         diff = difficulte;
         System.out.println("DIFFICULTE INITIALISEE");
+        tresors = new HashMap(4);
         tresors.put(CarteTresor.TRESOR_PIERRE,false);
         tresors.put(CarteTresor.TRESOR_CALICE,false);
         tresors.put(CarteTresor.TRESOR_CRISTAL,false);
         tresors.put(CarteTresor.TRESOR_STATUE,false);
+        specialAbysse = new HashMap(4);
         specialAbysse.put("TRESOR_PIERRE",0);
         specialAbysse.put("TRESOR_CALICE",0);
         specialAbysse.put("TRESOR_CRISTAL",0);
         specialAbysse.put("TRESOR_STATUE",0);
         System.out.println("TRESORS INITIALISES");
+        grille = new Grille();
         paquetTresor = initPaquetTresor();
+        defausseTresor = new Stack();
         paquetInonde = grille.tuillesValide();
+        defausseInonde = new Stack();
         Collections.shuffle(paquetInonde);
         System.out.println("PAQUETS INITIALISES");
         for(int i = 0; i<6; i++){
@@ -121,6 +126,7 @@ public class IleInterdite extends Observable<Message> {
         }
         System.out.println("GRILLE INITIALISEE");
         Stack roles = initRoles();
+        aventuriers = new ArrayList<>();
         int p;
         for(int i = 0; i<nbJoueurs; i++){
             p = 0;
@@ -229,12 +235,12 @@ public class IleInterdite extends Observable<Message> {
     
     public int piocheInonde(){
 
-        if (paquetInonde.isEmpty())                                     //Si la pioche est vide, la réinitialise
+        if (paquetInonde.isEmpty())                                      //Si la pioche est vide, la réinitialise
             resetPiocheInonde();
 
-        int id = (int) paquetInonde.pop();                              //Pioche la position de la tuile a inonder
-        
-        grille.changeEtat(id, -1);                                      //Change l'état de la tuile à inonder
+        int id = (int) paquetInonde.pop();                               //Pioche la position de la tuile a inonder
+            
+        grille.changeEtat(id, -1);                                       //Change l'état de la tuile à inonder
         
         if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
             String spec = grille.getTuille(id).getSpecial();
@@ -245,14 +251,14 @@ public class IleInterdite extends Observable<Message> {
             else{
                 if(spec.equals("TRESOR_PIERRE") || spec.equals("TRESOR_CALICE") || spec.equals("TRESOR_STATUE") || spec.equals("TRESOR_CRISTAL")){
                         int a = (int) specialAbysse.get(spec)+1;
-                        if (a == 2 && !((boolean) tresors.get(CarteTresor.valueOf(spec))))   //Si les deux tuille d'un trésor non encore possédé sombre dans l'abysse, la partie est perdue
-                            notifierObservateurs(Message.defaite());
+                        if (a == 2 && !((boolean) tresors.get(CarteTresor.valueOf(spec))))
+                            notifierObservateurs(Message.defaite());    //Si les deux tuille d'un trésor non encore possédé sombre dans l'abysse, la partie est perdue
                         else
                             specialAbysse.replace(spec,a);
                 }
                 for(int k = 0; k < aventuriers.size(); k++){
                     if(aventuriers.get(k).getPosition() == id){         //Si un aventurier est sur la tuille qui tombe dans l'abysse ...
-                        notifierObservateurs(Message.noyade(id));       //On prévient le contrôleur d'une potentiel noyade
+                        notifierObservateurs(Message.noyade(k));        //On prévient le contrôleur d'une potentiel noyade
                     }
                 }
             }
@@ -418,6 +424,10 @@ public class IleInterdite extends Observable<Message> {
     
     public int[] deplacementPossible(){
         return getAventurierEnCours().deplacementPossible(grille).stream().mapToInt(i -> i).toArray();  //Renvoie la lise des tuiles que l'aventurier en cours peut atteindre
+    }
+    
+    public int[] nagePossible(int numAv){
+        return aventuriers.get(numAv).deplacementPossible(grille).stream().mapToInt(i -> i).toArray();
     }
 
     public int[] assechePossible(){

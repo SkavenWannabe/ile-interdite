@@ -134,13 +134,17 @@ public class Message implements Serializable {
     public static Message voirDefausse() {
         return new Message(Utils.Commandes.VOIR_DEFAUSSE, null, null, null, null, null, null);
     }
+
+    public static Message noyade(int idAventurier){
+        return new Message(Utils.Commandes.NOYADE, idAventurier, null, null, null, null, null);
+    }
     
     public static Message sacDeSable(int idAventurier, int idCarte){
         return new Message(Utils.Commandes.SAC_DE_SABLE, idAventurier, idCarte, null, null, null, null);
     }
-    
-    public static Message noyade(int idTuile){
-        return new Message(Utils.Commandes.NOYADE, null, null, null, idTuile, null, null);
+
+    public static Message nage(int tuile) {
+        return new Message(Utils.Commandes.NAGE, null, null, null, tuile, null, null);
     }
     
     public static Message tromain(){

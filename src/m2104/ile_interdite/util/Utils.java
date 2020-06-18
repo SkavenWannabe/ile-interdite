@@ -31,6 +31,7 @@ public class Utils {
         VOIR_DEFAUSSE("Un joueur souhaite voir la défausse de cartes Tirage"),
         SAC_DE_SABLE("Un joueur utilise la carte speciale sac de sable"),
         NOYADE("Un aventurier va sombrer dans l'abyssse"),
+        NAGE("Un aventurier sur le point de se noyer nage à terre"),
         TROMAIN("Il y'a trop de carte dans ta main !"),
         VICTOIRE("La partie est gagnée"),
         DEFAITE("La partie est perdue");
