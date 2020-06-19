@@ -27,75 +27,7 @@ public class PanelCartes extends JPanel{
         initImg();
         initCartesSelectionner();
     }
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-    	System.out.println("PAN : paintComponent");
 
-    	super.paintComponent(g);
-    	
-    	dessinerCartes(g);
-    	dessinerSelection(g);
-
-    }
-    
-    private void dessinerCartes(Graphics g) {
-    	System.out.println("PAN : dessiner Carte");
-
-    	int nbCartes = main.size();
-
-        int width = getWidth() / 3;
-        int heigh = getHeight() / 3;
-
-        for(int i = 0; i < nbCartes; i++) {
-
-            int ligne = i / 3;
-            int col = i % 3;
-
-            switch (main.get(i)) {
-                case "HELICO":
-                    g.drawImage(img[2].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
-                    break;
-                case "TRESOR_STATUE":
-                    g.drawImage(img[6].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
-                    break;
-                case "TRESOR_CRISTAL":
-                    g.drawImage(img[1].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
-                    break;
-                case "TRESOR_CALICE":
-                    g.drawImage(img[0].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
-                    break;
-                case "TRESOR_PIERRE":
-                    g.drawImage(img[4].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
-                    break;
-                case "MONTEE_EAU":
-                    g.drawImage(img[3].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
-                    break;
-                case "SAC_SABLE":
-                    g.drawImage(img[5].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
-                    break;
-            }
-        }
-    }
-    
-    private void dessinerSelection(Graphics g) {
-    	System.out.println("PAN : dessiner Selection");
-
-    	Graphics2D g2 = (Graphics2D) g;
-    	float epaisseur = 5;
-    	Stroke trait = g2.getStroke();
-    	g2.setStroke(new BasicStroke(epaisseur));
-    	
-    	for(int i = 0; i < main.size(); i++) {
-	        if(cartesSelectionner[i]) {
-	        	g.setColor(Color.green);
-	        	g.drawRect((i % 3) * getWidth() / 3, (i / 3) * getHeight() / 3, getWidth() / 3, getHeight() / 3);
-	        }
-    	}
-    	g2.setStroke(trait);
-    }
-    
-    
     private void initImg() {
     	System.out.println("PAN: init image");
         img = new BufferedImage[7];
@@ -169,4 +101,71 @@ public class PanelCartes extends JPanel{
 	public boolean dejaCliquer(int idCartes) {
 		return cartesSelectionner[idCartes];
 	}
+	
+    @Override
+    protected void paintComponent(Graphics g) {
+    	System.out.println("PAN : paintComponent");
+
+    	super.paintComponent(g);
+    	
+    	dessinerCartes(g);
+    	dessinerSelection(g);
+
+    }
+    
+    private void dessinerCartes(Graphics g) {
+    	System.out.println("PAN : dessiner Carte");
+
+    	int nbCartes = main.size();
+
+        int width = getWidth() / 3;
+        int heigh = getHeight() / 3;
+
+        for(int i = 0; i < nbCartes; i++) {
+
+            int ligne = i / 3;
+            int col = i % 3;
+
+            switch (main.get(i)) {
+                case "HELICO":
+                    g.drawImage(img[2].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
+                    break;
+                case "TRESOR_STATUE":
+                    g.drawImage(img[6].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
+                    break;
+                case "TRESOR_CRISTAL":
+                    g.drawImage(img[1].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
+                    break;
+                case "TRESOR_CALICE":
+                    g.drawImage(img[0].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
+                    break;
+                case "TRESOR_PIERRE":
+                    g.drawImage(img[4].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
+                    break;
+                case "MONTEE_EAU":
+                    g.drawImage(img[3].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
+                    break;
+                case "SAC_SABLE":
+                    g.drawImage(img[5].getScaledInstance(width, heigh, Image.SCALE_DEFAULT), col * width, ligne * heigh, null, null);
+                    break;
+            }
+        }
+    }
+    
+    private void dessinerSelection(Graphics g) {
+    	System.out.println("PAN : dessiner Selection");
+
+    	Graphics2D g2 = (Graphics2D) g;
+    	float epaisseur = 5;
+    	Stroke trait = g2.getStroke();
+    	g2.setStroke(new BasicStroke(epaisseur));
+    	
+    	for(int i = 0; i < main.size(); i++) {
+	        if(cartesSelectionner[i]) {
+	        	g.setColor(Color.green);
+	        	g.drawRect((i % 3) * getWidth() / 3, (i / 3) * getHeight() / 3, getWidth() / 3, getHeight() / 3);
+	        }
+    	}
+    	g2.setStroke(trait);
+    }
 }

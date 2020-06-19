@@ -19,6 +19,69 @@ public class PanelMain extends JPanel {
         initCarteSelectionnable();
     }
 
+    private void init_img() {
+        img = new BufferedImage[7];
+
+        try {
+            img[0] = ImageIO.read(new File("src/assets/cartes/Calice.png"));
+            img[1] = ImageIO.read(new File("src/assets/cartes/Cristal.png"));
+            img[2] = ImageIO.read(new File("src/assets/cartes/Helicoptere.png"));
+            img[3] = ImageIO.read(new File("src/assets/cartes/MonteeDesEaux.png"));
+            img[4] = ImageIO.read(new File("src/assets/cartes/Pierre.png"));
+            img[5] = ImageIO.read(new File("src/assets/cartes/SacsDeSable.png"));
+            img[6] = ImageIO.read(new File("src/assets/cartes/Zephyr.png"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void initCarteSelectionnable() {
+    	cartesSelectionnables = new boolean[main.size()];
+    	for(int i = 0; i < main.size(); i++) {
+    		if (main.get(i) == "HELICO") {
+    			cartesSelectionnables[i] = true;
+    		} else if (main.get(i) == "SAC_SABLE") {
+    			cartesSelectionnables[i] = true;
+    		} else {
+    			cartesSelectionnables[i] = false;
+    		}
+    	}
+    }
+    
+    public void setMain(ArrayList<String> main) {
+        this.main = main;
+        repaint();
+    }
+    
+    public int getNumeroCarte(int x, int y) {
+    	int nbCartes = main.size();
+        int width = getWidth() / (nbCartes < 4 ? nbCartes % 4 : 4);
+        int heigh = getHeight() / (nbCartes/5 + 1);
+        
+    	int colonne = (int) (x / width);
+    	int ligne= (int) (y / heigh);
+    	return ligne * 4 + colonne;
+    }
+    
+    
+    public boolean helicoSelectionner(int carte) {
+    	return (main.get(carte) == "HELICO");
+    }
+    
+    public boolean sacSelectionner(int carte) {
+    	return (main.get(carte) == "SAC_SABLE");
+    }
+    
+    public boolean estSelectionnables(int carte) {
+    	return (cartesSelectionnables[carte]);
+    }
+    
+    public void toutSelectionnable() {
+    	System.out.println("rendre selectionnabe" + this);
+    	for (int i = 0; i < cartesSelectionnables.length; i++) {
+    		cartesSelectionnables[i] = true;
+    	}
+    }
     @Override
     public Dimension getPreferredSize() {
     	Dimension rootSize = SwingUtilities.getRoot(this).getSize();
@@ -65,70 +128,4 @@ public class PanelMain extends JPanel {
             }
         }
     }
-
-
-    public void setMain(ArrayList<String> main) {
-        this.main = main;
-        repaint();
-    }
-
-    private void init_img() {
-        img = new BufferedImage[7];
-
-        try {
-            img[0] = ImageIO.read(new File("src/assets/cartes/Calice.png"));
-            img[1] = ImageIO.read(new File("src/assets/cartes/Cristal.png"));
-            img[2] = ImageIO.read(new File("src/assets/cartes/Helicoptere.png"));
-            img[3] = ImageIO.read(new File("src/assets/cartes/MonteeDesEaux.png"));
-            img[4] = ImageIO.read(new File("src/assets/cartes/Pierre.png"));
-            img[5] = ImageIO.read(new File("src/assets/cartes/SacsDeSable.png"));
-            img[6] = ImageIO.read(new File("src/assets/cartes/Zephyr.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void initCarteSelectionnable() {
-    	cartesSelectionnables = new boolean[main.size()];
-    	for(int i = 0; i < main.size(); i++) {
-    		if (main.get(i) == "HELICO") {
-    			cartesSelectionnables[i] = true;
-    		} else if (main.get(i) == "SAC_SABLE") {
-    			cartesSelectionnables[i] = true;
-    		} else {
-    			cartesSelectionnables[i] = false;
-    		}
-    	}
-    }
-    
-    public int getNumeroCarte(int x, int y) {
-    	int nbCartes = main.size();
-        int width = getWidth() / (nbCartes < 4 ? nbCartes % 4 : 4);
-        int heigh = getHeight() / (nbCartes/5 + 1);
-        
-    	int colonne = (int) (x / width);
-    	int ligne= (int) (y / heigh);
-    	return ligne * 4 + colonne;
-    }
-    
-    
-    public boolean helicoSelectionner(int carte) {
-    	return (main.get(carte) == "HELICO");
-    }
-    
-    public boolean sacSelectionner(int carte) {
-    	return (main.get(carte) == "SAC_SABLE");
-    }
-    
-    public boolean estSelectionnables(int carte) {
-    	return (cartesSelectionnables[carte]);
-    }
-    
-    public void toutSelectionnable() {
-    	System.out.println("rendre selectionnabe" + this);
-    	for (int i = 0; i < cartesSelectionnables.length; i++) {
-    		cartesSelectionnables[i] = true;
-    	}
-    }
-    
 }

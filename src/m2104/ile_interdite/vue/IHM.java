@@ -8,6 +8,7 @@ import java.util.Stack;
 import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
+import m2104.ile_interdite.util.Parameters;
 import patterns.observateur.Observable;
 import patterns.observateur.Observateur;
 

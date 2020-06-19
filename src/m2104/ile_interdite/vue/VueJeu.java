@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
@@ -106,12 +107,12 @@ public class VueJeu implements MouseListener {
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetre.setSize(1380,1480);
         
-        mainPanel = new JPanel(new BorderLayout()); mainPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
-        panelNorth = new JPanel(new GridLayout(1,nbJoueur+4)); panelNorth.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
-        panelSouth = new JPanel(new GridLayout(1,4)); panelSouth.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
-        panelEast = new JPanel(new GridLayout(2,1)); panelEast.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
-        panelWeast = new JPanel(new GridLayout(4,1)); panelWeast.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
-        panelCentre = new JPanel(new BorderLayout()); panelCentre.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
+        mainPanel = new JPanel(new BorderLayout()); mainPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background"), 5, false));
+        panelNorth = new JPanel(new GridLayout(1,nbJoueur+4)); panelNorth.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background"), 5, false));
+        panelSouth = new JPanel(new GridLayout(1,4)); panelSouth.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background"), 5, false));
+        panelEast = new JPanel(new GridLayout(2,1)); panelEast.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background"), 5, false));
+        panelWeast = new JPanel(new GridLayout(4,1)); panelWeast.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background"), 5, false));
+        panelCentre = new JPanel(new BorderLayout()); panelCentre.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Panel.background"), 5, false));
         
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
@@ -418,111 +419,92 @@ public class VueJeu implements MouseListener {
         fenetre.setVisible(true); 
 
 	}
-	
-	
-	public void piocheTresors() {
-		tresorsDef.setEnabled(true);
-	}
-	
-	public void afficherDefausse(Stack defausse) {
-		this.defausse = new VueDefausse(defausse);
-	}
-	
-	public void afficherMain(int i, ArrayList<String> carte) {
-		if(i == 0) {
-			panelCartesJ1.setMain(carte);
-                        panelCartesJ1.initCarteSelectionnable();
-		}else if(i == 1) {
-			panelCartesJ2.setMain(carte);
-                        panelCartesJ2.initCarteSelectionnable();
-		}else if(i == 2) {
-			panelCartesJ3.setMain(carte);
-                        panelCartesJ3.initCarteSelectionnable();
-		}else if(i == 3) {
-			panelCartesJ4.setMain(carte);
-                        panelCartesJ4.initCarteSelectionnable();
-		}
-		
-	}
-	
-	public void afficherTresors(HashMap tresors) {
-		panelGrille.changerEtatTresor(tresors);
-	}
-	
-    private ArrayList<String> initNomsPif(){
-        ArrayList<String> noms = new ArrayList<>();
+
+    public void traiterCartes(PanelMain panel, int x, int y, int joueur) {
+    	int numCarte = panel.getNumeroCarte(x, y);
+        System.out.println("IHM : numCarte = " + numCarte);
         
-        noms.add("Vincenzo");
-        noms.add("Anne");
-        noms.add("Marion");
-        noms.add("Lucas");
-        noms.add("Gaston");
-        noms.add("Sophie");
-        noms.add("George");
-        noms.add("Michelle");
-        noms.add("Robert");
-        noms.add("Samantha");
-        noms.add("Hector");
-        noms.add("Camille");
-        noms.add("Tom");
-        noms.add("Zoé");
-        noms.add("Félix");
-        noms.add("Philippe");
-        noms.add("Gilbert");
-        noms.add("Achille");
-        noms.add("Maurice");
-        noms.add("Etienne");
-        noms.add("Victoria");
-        noms.add("Catherine");
-        noms.add("Cécile");
-        noms.add("Marianne");
-        noms.add("Véronique");
-        noms.add("Thomas");
-        noms.add("Maxime");
-        noms.add("Stéphane");
-        noms.add("Bernadette");
-        noms.add("Mireille");
-        noms.add("Anita");
-        noms.add("Karine");
-        
-        Collections.shuffle(noms);
-        return noms;
-    }
-        
-    public void clickPossible(int[] tab) {
-    	System.out.println("vue jeu : click possible");
-    	panelGrille.selectionnerTuiles(tab);
-    }
-    
-    public void deplacerAventurier(String role, int tuile) {
-    	System.out.println("VUE : role - " + role + " tuile : "+tuile);
-        panelGrille.deplacerAventurier(role, tuile);
-    	actionCourante = "";
-    }
-    
-    // en fonction de l'etat permet d'assecher ou d'innonder une tuille
-    public void changerEtatTuile (int tuile, String etat) {
-    	panelGrille.changerEtatTuile(tuile, etat);
-    	actionCourante = "";
-    }
-    
-    //rend les tuilles selectionnable
-    public void mainSelectionnable(int numero) {
-    	if (numero==0) {
-    		panelCartesJ1.toutSelectionnable();
-    	} else if (numero ==1) {
-    		panelCartesJ2.toutSelectionnable();
-    	} else if (numero ==2) {
-    		panelCartesJ3.toutSelectionnable();
-    	}else if (numero ==3) {
-    		panelCartesJ4.toutSelectionnable();
+    	if (panel.helicoSelectionner(numCarte)) {
+    		actionCourante = "Decolage";
+    		indication.setText("choix joueur deplacer");
+            ihm.notifierObservateurs(Message.setDepart(joueur));
+            
+    	} else if (panel.sacSelectionner(numCarte)) {
+    		actionCourante = "Assecher";
+    		indication.setText("choix tuile assecher");
+    		ihm.notifierObservateurs(Message.sacDeSable(joueur, numCarte));
+    		
+    	} else if (actionCourante == "Donner") {
+            if (panel.estSelectionnables(numCarte)) {
+        		indication.setText("choix joueur a donner");
+            	if (carteADonner == -1) {
+                    carteADonner = numCarte;
+            	}	
+            }
     	}
     }
     
-    public void augmentNiveau(int eau){
-        niveau.setNiveau(eau);
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		System.out.println("IHM : action courante : " + actionCourante);
+		if (e.getSource() == panelGrille) {
+			if (panelGrille.estSelectionnable(panelGrille.getNumeroTuile(e.getX(), e.getY()))) {
+                            System.out.println("Case valide");
+				switch (actionCourante) {
+					case "Deplacer" : 
+                        ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
+					case "Assecher" :
+                        ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
+                   case "Noyade" :
+                        ihm.notifierObservateurs(Message.nage(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
+                   case "Decolage" :
+                        actionCourante = "Aterrisage";
+                        indication.setText("choix aterrisage");
+                        ihm.notifierObservateurs(Message.setArrivee(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
+                   case "Aterrisage" :
+                	    indication.setText("pioche = fin tour");
+                        actionCourante = ""; System.out.println("numero tuile : " + panelGrille.getNumeroTuile(e.getX(), e.getY()));
+                        ihm.notifierObservateurs(Message.helico(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
+				}
+			}
+		} else if(e.getSource() == panelCartesJ1) {
+			traiterCartes(panelCartesJ1, e.getX(), e.getY(), 0);
+		} else if (e.getSource() == panelCartesJ2){
+			traiterCartes(panelCartesJ2, e.getX(), e.getY(), 1);
+		} else if (e.getSource() == panelCartesJ3){
+			traiterCartes(panelCartesJ3, e.getX(), e.getY(), 2);
+		} else if (e.getSource() == panelCartesJ4){
+			traiterCartes(panelCartesJ4, e.getX(), e.getY(), 3);
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {		
+	}
+
+    private ArrayList<String> initNomsPif(){
+        ArrayList<String> noms = new ArrayList<>(Arrays.asList("Vincenzo", "Anne", "Marion", "Lucas", "Gaston", "Sophie", 
+        														"George", "Michelle", "Robert", "Samantha", "Hector", "Camille", 
+        														"Tom", "Zoé", "Félix", "Philippe", "Gilbert", "Achille", 
+        														"Maurice", "Anita"));
+        Collections.shuffle(noms);
+        return noms;
     }
-    
+
     public void nouveauTour(int tour) {
     	actionCourante = "";
     	innonde.setEnabled(false);
@@ -592,6 +574,10 @@ public class VueJeu implements MouseListener {
     	}
     }
     
+    public void augmentNiveau(int eau){
+        niveau.setNiveau(eau);
+    }
+    
     public void nbActionsRestantes(int action) {
     	indication2.setText("Action restantes : " + action);
         if(action == 0){
@@ -610,6 +596,66 @@ public class VueJeu implements MouseListener {
         gagnerT.setEnabled(actionsPossibles.get(3));
         
     }
+    
+    public void clickPossible(int[] tab) {
+    	System.out.println("vue jeu : click possible");
+    	panelGrille.selectionnerTuiles(tab);
+    }
+    
+	public void piocheTresors() {
+		tresorsDef.setEnabled(true);
+	}
+	
+	public void afficherDefausse(Stack defausse) {
+		this.defausse = new VueDefausse(defausse);
+	}
+	
+	public void afficherMain(int i, ArrayList<String> carte) {
+		if(i == 0) {
+			panelCartesJ1.setMain(carte);
+                        panelCartesJ1.initCarteSelectionnable();
+		}else if(i == 1) {
+			panelCartesJ2.setMain(carte);
+                        panelCartesJ2.initCarteSelectionnable();
+		}else if(i == 2) {
+			panelCartesJ3.setMain(carte);
+                        panelCartesJ3.initCarteSelectionnable();
+		}else if(i == 3) {
+			panelCartesJ4.setMain(carte);
+                        panelCartesJ4.initCarteSelectionnable();
+		}
+		
+	}
+	
+	public void afficherTresors(HashMap tresors) {
+		panelGrille.changerEtatTresor(tresors);
+	}
+	
+    public void deplacerAventurier(String role, int tuile) {
+    	System.out.println("VUE : role - " + role + " tuile : "+tuile);
+        panelGrille.deplacerAventurier(role, tuile);
+    	actionCourante = "";
+    }
+    
+    // en fonction de l'etat permet d'assecher ou d'innonder une tuille
+    public void changerEtatTuile (int tuile, String etat) {
+    	panelGrille.changerEtatTuile(tuile, etat);
+    	actionCourante = "";
+    }
+    
+    //rend les tuilles selectionnable
+    public void mainSelectionnable(int numero) {
+    	if (numero==0) {
+    		panelCartesJ1.toutSelectionnable();
+    	} else if (numero ==1) {
+    		panelCartesJ2.toutSelectionnable();
+    	} else if (numero ==2) {
+    		panelCartesJ3.toutSelectionnable();
+    	}else if (numero ==3) {
+    		panelCartesJ4.toutSelectionnable();
+    	}
+    }
+
     public void desactiverBoutonJoueur() {
     	btnJ1.setEnabled(false);
     	btnJ2.setEnabled(false);
@@ -618,30 +664,6 @@ public class VueJeu implements MouseListener {
     	}else if (nbJoueur == 4) {
     		btnJ3.setEnabled(false);
     		btnJ4.setEnabled(false);
-    	}
-    }
-    
-    public void traiterCartes(PanelMain panel, int x, int y, int joueur) {
-    	int numCarte = panel.getNumeroCarte(x, y);
-        System.out.println("IHM : numCarte = " + numCarte);
-        
-    	if (panel.helicoSelectionner(numCarte)) {
-    		actionCourante = "Decolage";
-    		indication.setText("choix joueur deplacer");
-            ihm.notifierObservateurs(Message.setDepart(joueur));
-            
-    	} else if (panel.sacSelectionner(numCarte)) {
-    		actionCourante = "Assecher";
-    		indication.setText("choix tuile assecher");
-    		ihm.notifierObservateurs(Message.sacDeSable(joueur, numCarte));
-    		
-    	} else if (actionCourante == "Donner") {
-            if (panel.estSelectionnables(numCarte)) {
-        		indication.setText("choix joueur a donner");
-            	if (carteADonner == -1) {
-                    carteADonner = numCarte;
-            	}	
-            }
     	}
     }
 
@@ -696,73 +718,5 @@ public class VueJeu implements MouseListener {
     // A la fin d'une partie (gagner/perdue) pour pouvoir supprimer la fenetre et en rouvrir une
     public void detruire(){
         fenetre.dispose();
-    }
-    
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		System.out.println("IHM : action courante : " + actionCourante);
-		if (e.getSource() == panelGrille) {
-			if (panelGrille.estSelectionnable(panelGrille.getNumeroTuile(e.getX(), e.getY()))) {
-                            System.out.println("Case valide");
-				switch (actionCourante) {
-					case "Deplacer" : 
-                        ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                        break;
-					case "Assecher" :
-                        ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                        break;
-                   case "Noyade" :
-                        ihm.notifierObservateurs(Message.nage(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                        break;
-                   case "Decolage" :
-                        actionCourante = "Aterrisage";
-                        indication.setText("choix aterrisage");
-                        ihm.notifierObservateurs(Message.setArrivee(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                        break;
-                   case "Aterrisage" :
-                	    indication.setText("pioche = fin tour");
-                        actionCourante = ""; System.out.println("numero tuile : " + panelGrille.getNumeroTuile(e.getX(), e.getY()));
-                        ihm.notifierObservateurs(Message.helico(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                        break;
-				}
-			}
-		} else if(e.getSource() == panelCartesJ1) {
-			traiterCartes(panelCartesJ1, e.getX(), e.getY(), 0);
-		} else if (e.getSource() == panelCartesJ2){
-			traiterCartes(panelCartesJ2, e.getX(), e.getY(), 1);
-		} else if (e.getSource() == panelCartesJ3){
-			traiterCartes(panelCartesJ3, e.getX(), e.getY(), 2);
-		} else if (e.getSource() == panelCartesJ4){
-			traiterCartes(panelCartesJ4, e.getX(), e.getY(), 3);
-		}
-	}
-
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-    
+    }    
 }
