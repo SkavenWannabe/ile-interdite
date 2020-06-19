@@ -90,7 +90,14 @@ public class IleInterdite extends Observable<Message> {
     public int getUtilisateur(){
         return utilisateur;
     }
-
+    public ArrayList<Integer> getPositions(){
+        ArrayList<Integer> positions = new ArrayList<>();
+        for(int y = 0; y < aventuriers.size(); y++)
+            positions.add(aventuriers.get(y).getPosition());
+        return positions;
+    }
+    
+    
     /*
         METHODES
     */
@@ -448,6 +455,8 @@ public class IleInterdite extends Observable<Message> {
         tour++;                                 //Incrémente le compteur de tour
         nbInondations = calculNbInondations();  //Recalcule le nombre de carte Inondation qu'il va falloir piocher à la fin du tour
         nbActions = 3;
+        if(getAventurierEnCours().toString().equals("Navigateur"))
+            nbActions++;
         return tour;
     }    
     

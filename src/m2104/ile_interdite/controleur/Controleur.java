@@ -49,7 +49,7 @@ public class Controleur implements Observateur<Message> {
                 
                 HashMap<String,Integer> aventuriers = new HashMap<String, Integer>();
                 for (int i = 0; i < msg.getNbJoueurs(); i++) {
-                	aventuriers.put(this.ileInterdite.getAventuriers().get(i).toString(), this.ileInterdite.getAventuriers().get(i).getPosition());
+                    aventuriers.put(this.ileInterdite.getAventuriers().get(i).toString(), this.ileInterdite.getAventuriers().get(i).getPosition());
                 }
                 
                 HashMap<Integer, ArrayList> mains = new HashMap<Integer, ArrayList>();
@@ -59,7 +59,7 @@ public class Controleur implements Observateur<Message> {
                 	mains.put(i, cartes);
                 }
                 
-                this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille(), aventuriers, mains);
+                this.ihm.creerVuesJeu(nomAventuriers, msg.getDifficulte(), ileInterdite.getGrille(), aventuriers, mains,ileInterdite.getPositions());
 
                 this.nouveauTour();
                 break;
@@ -87,7 +87,7 @@ public class Controleur implements Observateur<Message> {
                 if(res.size() == 1)
                     nbInondAVenir--;
                 System.out.println("Nb inonde après : " + nbInondAVenir);
-                if(nbInondAVenir == 0){
+                if(nbInondAVenir < 1){
                     this.nouveauTour();
                 }
             	break;
