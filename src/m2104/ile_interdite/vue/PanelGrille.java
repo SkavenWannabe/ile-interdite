@@ -423,6 +423,7 @@ public class PanelGrille extends JPanel {
     }
 
     public void deplacerAventurier(String role, int tuile) {
+    	System.out.println("PAN : deplaceraventuriers");
     	aventuriers.put(role, tuile);
     	effacerSelection();
     	repaint();

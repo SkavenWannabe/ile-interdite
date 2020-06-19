@@ -22,6 +22,7 @@ public class Controleur implements Observateur<Message> {
     private int joueurSac = -1;
     private int carteSac = -1;
     private int id;
+    private boolean helico = false;
     
     public Controleur() {
         this.ileInterdite = new IleInterdite(this);
@@ -167,6 +168,36 @@ public class Controleur implements Observateur<Message> {
             	ihm.clickPossible(ileInterdite.assechePossibleSacDeSable());
             	break;
             	
+            case SETDEPART:
+                if(ileInterdite.estGagnable())
+                    traiterMessage(Message.victoire());
+                else
+                    ihm.clickPossible(ileInterdite.positionsJoueurs(msg.getIdAventurier()));
+                break;
+                
+            case SETARRIVEE:
+            	System.out.println("helico arrive, idTuile : " + msg.getIdTuile());
+                id = msg.getIdTuile();
+                ihm.clickPossible(ileInterdite.pasInondee());
+                break;
+                
+            case HELICO:
+            	System.out.println("decolage :" + id + " / atterrissage : " + msg.getIdTuile());
+                ileInterdite.helico(id, msg.getIdTuile(), helico);
+                helico = false;
+                id = 0;
+                System.out.println("CON : avant ");
+                for(int i = 0; i < ileInterdite.getAventuriers().size(); i++) {
+                	System.out.println("CON : rentrer dans la boucle");
+                    ihm.deplacerAventurier(ileInterdite.getAventuriers().get(i).toString(),ileInterdite.getAventuriers().get(i).getPosition());
+                    System.out.println("CON : deplacer aventurier :" + ileInterdite.getAventuriers().get(i).toString() + " nv position :" + ileInterdite.getAventuriers().get(i).getPosition());
+                }
+                
+                ArrayList<String> main2 = new ArrayList<>();
+                ileInterdite.getMain(ileInterdite.getUtilisateur()).forEach(x -> main2.add(x.toString()));
+                ihm.afficherMain(ileInterdite.getUtilisateur(),main2);
+                break;
+                
             case NOYADE:
                 if(this.ileInterdite.nagePossible(msg.getIdAventurier()).length == 0)
                     traiterMessage(Message.defaite());
@@ -197,32 +228,24 @@ public class Controleur implements Observateur<Message> {
             	
                 ArrayList<String> cartesNV = new ArrayList<>();
             	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> cartesNV.add(x.toString()));
-            	System.out.println("creation cartesNV");
-            	ihm.continuerPartie();
-                ihm.afficherMain(msg.getIdAventurier(), cartesNV);
-            	break;
+            	System.out.println(" action :" + msg.getAction());
             	
-            case SETDEPART:
-                if(ileInterdite.estGagnable())
-                    traiterMessage(Message.victoire());
-                else
+            	ihm.continuerPartie();
+
+            	if (msg.getAction() == "Decolage") {
+            		System.out.println("suppression carte helico");
+            		helico = true;
+            		ihm.nvActionCourante(msg.getAction());
                     ihm.clickPossible(ileInterdite.positionsJoueurs(msg.getIdAventurier()));
-                break;
+                    
+            	}else if (msg.getAction() == "Assecher") {
+            		ihm.nvActionCourante(msg.getAction());
+            		ihm.clickPossible(ileInterdite.assechePossibleSacDeSable());
+            	}
+            	
+                ihm.afficherMain(msg.getIdAventurier(), cartesNV);
                 
-            case SETARRIVEE:
-                id = msg.getIdTuile();
-                ihm.clickPossible(ileInterdite.pasInondee());
-                break;
-                
-            case HELICO:
-                ileInterdite.helico(id, msg.getIdTuile());
-                id = 0;
-                for(int i = 0; i < ileInterdite.getAventuriers().size(); i++)
-                    ihm.deplacerAventurier(ileInterdite.getAventuriers().get(i).toString(),ileInterdite.getAventuriers().get(i).getPosition());
-                ArrayList<String> main2 = new ArrayList<>();
-                ileInterdite.getMain(ileInterdite.getUtilisateur()).forEach(x -> main2.add(x.toString()));
-                ihm.afficherMain(ileInterdite.getUtilisateur(),main2);
-                break;
+            	break;
             	
             case DEFAITE:
                 ihm.creerVueFinJeu(Boolean.FALSE);
