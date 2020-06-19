@@ -88,7 +88,7 @@ public class VueJeu implements MouseListener {
 	private JButton innondeDef;
 	private JLabel nom;
 	
-	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille, HashMap<String,Integer> aventuriers, HashMap<Integer, ArrayList> mains) {
+	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille, HashMap<String,Integer> aventuriers, HashMap<Integer, ArrayList> mains, ArrayList<Integer> pos) {
 		//initialisation attribut
 		this.ihm = ihm;
 		this.nomsJoueurs = nomsJoueurs;
@@ -127,10 +127,17 @@ public class VueJeu implements MouseListener {
         // Initialisation Haut de page
         nomTour = new JLabel("Tour 1 : ");
         // recuperation des role uniquement pour l'affichage
-        ArrayList<String> role = new ArrayList<String>();
-        aventuriers.forEach((k,v) -> {
-            role.add(k);
-        });
+        ArrayList<String> role = new ArrayList<>();
+        for(int a = 0; a < pos.size(); a++){
+            for(String key : aventuriers.keySet()){
+                if(aventuriers.get(key) == pos.get(a))
+                    role.add(key);
+            }
+        }
+        System.out.print("IHM : Init perso | ");
+        for(int p = 0; p < role.size(); p++)
+            System.out.print(role.get(p) + " | ");
+        System.out.println("");
         // utilisation de nom par default si l'utilisateur n'en rentre rien
         ArrayList<String> nomsPif = initNomsPif();
         panelNorth.add(nomTour); 

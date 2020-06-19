@@ -90,7 +90,14 @@ public class IleInterdite extends Observable<Message> {
     public int getUtilisateur(){
         return utilisateur;
     }
-
+    public ArrayList<Integer> getPositions(){
+        ArrayList<Integer> positions = new ArrayList<>();
+        for(int y = 0; y < aventuriers.size(); y++)
+            positions.add(aventuriers.get(y).getPosition());
+        return positions;
+    }
+    
+    
     /*
         METHODES
     */
