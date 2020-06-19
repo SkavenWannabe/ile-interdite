@@ -127,39 +127,45 @@ public class VueJeu implements MouseListener {
         
         // Initialisation Haut de page
         nomTour = new JLabel("Tour 1 : ");
+        // recuperation des role uniquement pour l'affichage
+        ArrayList<String> role = new ArrayList<String>();
+        aventuriers.forEach((k,v) -> {
+        	role.add(k);
+        });
+        // utilisation de nom par default si l'utilisateur n'en rentre rien
         ArrayList<String> nomsPif = initNomsPif();
-        panelNorth.add(nomTour); panelNorth.add(new JLabel());
+        panelNorth.add(nomTour); 
         labelNom1 = new JLabel();
         if (nomsJoueurs[0].equals(""))
-            labelNom1.setText(nomsPif.get(0));
+            labelNom1.setText(nomsPif.get(0) + " - " + role.get(0));
         else
-            labelNom1.setText(nomsJoueurs[0]);
+            labelNom1.setText(nomsJoueurs[0]+ " - " + role.get(0));
         labelNom2 = new JLabel();
         if (nomsJoueurs[1].equals(""))
-            labelNom2.setText(nomsPif.get(1));
+            labelNom2.setText(nomsPif.get(1) + " - " + role.get(1));
         else
-            labelNom2.setText(nomsJoueurs[0]);
+            labelNom2.setText(nomsJoueurs[0]+ " - " + role.get(1));
         labelNom2.setForeground(Color.red);
         panelNorth.add(labelNom1);panelNorth.add(labelNom2);
         
         if (nbJoueur == 3) {
         	labelNom3 = new JLabel();
                 if (nomsJoueurs[2].equals(""))
-                    labelNom3.setText(nomsPif.get(2));
+                    labelNom3.setText(nomsPif.get(2)+ " - " + role.get(2));
                 else
-                    labelNom3.setText(nomsJoueurs[2]);
+                    labelNom3.setText(nomsJoueurs[2]+ " - " + role.get(2));
         	panelNorth.add(labelNom3);
         } else if (nbJoueur == 4) {
         	labelNom3 = new JLabel();
                 if (nomsJoueurs[2].equals(""))
-                    labelNom3.setText(nomsPif.get(2));
+                    labelNom3.setText(nomsPif.get(2)+ " - " + role.get(2));
                 else
-                    labelNom3.setText(nomsJoueurs[2]);
+                    labelNom3.setText(nomsJoueurs[2]+ " - " + role.get(2));
         	labelNom4 = new JLabel();
                 if (nomsJoueurs[3].equals(""))
-                    labelNom4.setText(nomsPif.get(3));
+                    labelNom4.setText(nomsPif.get(3)+ " - " + role.get(3));
                 else
-                    labelNom4.setText(nomsJoueurs[3]);
+                    labelNom4.setText(nomsJoueurs[3]+ " - " + role.get(3));
         	panelNorth.add(labelNom3);panelNorth.add(labelNom4);
         }
         panelNorth.add(new JLabel());
