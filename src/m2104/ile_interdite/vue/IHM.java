@@ -18,6 +18,7 @@ import patterns.observateur.Observateur;
 public class IHM extends Observable<Message> {
 
     private final VueInscriptionJoueurs vueInscription;
+    private VueFinJeu finJeu;
 
     private VueJeu jeu;
     private VueTropDeCarte tropDeCarte;
@@ -32,9 +33,17 @@ public class IHM extends Observable<Message> {
     	jeu = new VueJeu(this, nomsJoueurs,nomsJoueurs.length,difficulte, grille, aventuriers, mains);
     }
     
+    public void creerVueFinJeu(IHM this,Boolean win){
+        finJeu = new VueFinJeu(win,this);
+    }
+    
     public void piocheTresors(ArrayList<CarteTresor> main) {
         //TODO : Faudra faire quelque chose de cette main
     	jeu.piocheTresors();
+    }
+    
+    public VueJeu getVueJeu(){
+        return jeu;
     }
     
     public void afficherDefausse(Stack defausse) {

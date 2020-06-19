@@ -554,11 +554,9 @@ public class VueJeu implements MouseListener {
     	if (panel.helicoSelectionner(numCarte)) {
     		actionCourante = "Helicouptere";
                 ihm.notifierObservateurs(Message.setDepart());
-    		
     	} else if (panel.sacSelectionner(numCarte)) {
     		actionCourante = "Assecher";
     		ihm.notifierObservateurs(Message.sacDeSable(joueur, numCarte));
-    		
     	} else if (actionCourante == "Donner") {
             if (panel.estSelectionnables(numCarte)) {
             	if (carteADonner == -1) {
@@ -601,12 +599,17 @@ public class VueJeu implements MouseListener {
         return actionCourante;
     }
     
+<<<<<<< HEAD
     public void tropDeCarte(boolean bool) {
     	if (bool) {
     		innonde.setEnabled(false);
     	}else {
     		innonde.setEnabled(true);
     	}
+=======
+    public void detruire(){
+        fenetre.dispose();
+>>>>>>> 1375cfe6e2f340f7572e9b8f4f1c120e5562a18d
     }
     
 	@Override

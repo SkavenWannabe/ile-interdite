@@ -170,11 +170,23 @@ public class Controleur implements Observateur<Message> {
                     this.nouveauTour();
                 }
                 break;
+
             case TROMAIN:            	
             	ArrayList<String> mainTropPleine = new ArrayList<String>();
             	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> mainTropPleine.add(x.toString()));
                 this.ihm.tropDeCarteEnMain(msg.getIdAventurier(), mainTropPleine);
+
+            case SETDEPART:
+                ihm.clickPossible(ileInterdite.positionsJoueurs());
                 break;
+            case SETARRIVEE:
+                break;
+            case HELICO:
+                break;
+
+
+
+
             case NOUVELLE_MAIN:
             	System.out.println("notifier Observateur");
             	ileInterdite.majMain(msg.getIdAventurier(), msg.getDeffausseMain());
@@ -186,10 +198,10 @@ public class Controleur implements Observateur<Message> {
                 ihm.afficherMain(msg.getIdAventurier(), cartesNV);
             	break;
             case DEFAITE:
-                if(Parameters.LOGS){System.out.println("CON : OH ! Perdu !");}
+                ihm.creerVueFinJeu(Boolean.FALSE);
                 break;
             case VICTOIRE:
-                //C'est gagné !!
+                ihm.creerVueFinJeu(Boolean.TRUE);
                 break;
             default:
                 if (Parameters.LOGS) {

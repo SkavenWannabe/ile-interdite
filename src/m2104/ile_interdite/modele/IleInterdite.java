@@ -100,6 +100,7 @@ public class IleInterdite extends Observable<Message> {
     public void initialisation(int nbJoueurs, int difficulte){
 
         System.out.println("INITIALISATION ...");
+        tour=0;
         niveau = difficulte;
         System.out.println("DIFFICULTE INITIALISEE");
         tresors = new HashMap(4);
@@ -242,12 +243,20 @@ public class IleInterdite extends Observable<Message> {
     }
     
     public int piocheInonde(){
-
+        int id;
+        int j = 0;
         if (paquetInonde.isEmpty())                                      //Si la pioche est vide, la réinitialise
             resetPiocheInonde();
 
-        int id = (int) paquetInonde.pop();                               //Pioche la position de la tuile a inonder
-            
+        //int id = (int) paquetInonde.pop();                               //Pioche la position de la tuile a inonder
+         
+        //HACK
+        while(!(grille.getTuille(j).getSpecial().equals("HELICO"))){
+            j++;
+        }
+        id = j;
+        //FIN HACK
+        
         grille.changeEtat(id, -1);                                       //Change l'état de la tuile à inonder
         
         if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
@@ -393,11 +402,21 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public int nouveauTour(){
+        if(getAventurierEnCours().toString().equals("Pilote"))
+            getAventurierEnCours().setPouvoir(true);
         tour++;                                 //Incrémente le compteur de tour
         nbInondations = calculNbInondations();  //Recalcule le nombre de carte Inondation qu'il va falloir piocher à la fin du tour
         nbActions = 3;
         return tour;
     }    
+    
+    public int[] positionsJoueurs(){
+        ArrayList<Integer> positions = new ArrayList<>();
+        for(int i = 0; i < aventuriers.size(); i++)
+            positions.add(aventuriers.get(i).getPosition());
+        Collections.sort(positions);
+        return positions.stream().mapToInt(i -> i).toArray();
+    }
     
     public void helico(int ancien, int nouveau){
 
