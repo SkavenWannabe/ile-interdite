@@ -194,16 +194,6 @@ public class Controleur implements Observateur<Message> {
             	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> mainTropPleine.add(x.toString()));
                 this.ihm.tropDeCarteEnMain(msg.getIdAventurier(), mainTropPleine);
                 break;
-            case SETDEPART:
-                if(ileInterdite.estGagnable())
-                    traiterMessage(Message.victoire());
-                else
-                    ihm.clickPossible(ileInterdite.positionsJoueurs(msg.getIdAventurier()));
-                break;
-            case SETARRIVEE:
-                id = msg.getIdTuile();
-                ihm.clickPossible(ileInterdite.pasInondee());
-                break;
             case HELICO:
                 ileInterdite.helico(id, msg.getIdTuile());
                 id = 0;
@@ -222,6 +212,16 @@ public class Controleur implements Observateur<Message> {
             	System.out.println("creation cartesNV");
             	ihm.continuerPartie();
                 ihm.afficherMain(msg.getIdAventurier(), cartesNV);
+                break;
+            case SETDEPART:
+                if(ileInterdite.estGagnable())
+                    traiterMessage(Message.victoire());
+                else
+                    ihm.clickPossible(ileInterdite.positionsJoueurs(msg.getIdAventurier()));
+                break;
+            case SETARRIVEE:
+                id = msg.getIdTuile();
+                ihm.clickPossible(ileInterdite.pasInondee());
                 break;
             case DEFAITE:
                 ihm.creerVueFinJeu(Boolean.FALSE);
