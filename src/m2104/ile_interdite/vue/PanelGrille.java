@@ -189,7 +189,7 @@ public class PanelGrille extends JPanel {
     		int i = 0;
     		switch (k) {
 	        	case "calice" : i = 0; break;
-	        	case "zephyr" : i = 5; break;
+	        	case "statue" : i = 5; break;
 	        	case "pierre" : i = 30; break;
 	        	case "cristal" : i = 35; break;
     		}

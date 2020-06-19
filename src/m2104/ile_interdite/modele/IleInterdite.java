@@ -100,6 +100,7 @@ public class IleInterdite extends Observable<Message> {
     public void initialisation(int nbJoueurs, int difficulte){
 
         System.out.println("INITIALISATION ...");
+        tour=0;
         niveau = difficulte;
         System.out.println("DIFFICULTE INITIALISEE");
         tresors = new HashMap(4);
