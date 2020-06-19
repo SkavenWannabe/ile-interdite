@@ -32,7 +32,7 @@ public class Controleur implements Observateur<Message> {
     @Override
     public void traiterMessage(Message msg) {
         if (Parameters.LOGS) {
-            System.out.println("Controleur.traiterMessage" + msg);
+            System.out.println("Controleur.traiterMessage : " + msg);
         }
 
         switch (msg.getCommande()) {
