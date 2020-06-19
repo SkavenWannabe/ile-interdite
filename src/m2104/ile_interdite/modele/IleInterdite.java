@@ -407,10 +407,10 @@ public class IleInterdite extends Observable<Message> {
     }
 
 //    public void tricheTresor(){
-//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
-//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
-//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
-//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_CALICE);
+//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_STATUE);
+//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_STATUE);
+//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_STATUE);
+//        getAventurierEnCours().ajouterCarte(CarteTresor.TRESOR_STATUE);
 //    }
     
     public void gagneTresor(){

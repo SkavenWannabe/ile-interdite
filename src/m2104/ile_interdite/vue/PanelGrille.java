@@ -28,14 +28,13 @@ public class PanelGrille extends JPanel {
     private ArrayList<BufferedImage> tuilles_innondes = new ArrayList<>(); //contient les images des tuilles innondé
     private HashMap<String,BufferedImage> pions = new HashMap<>(); //contient les images des pions
     private HashMap<String,BufferedImage> tresors = new HashMap<>(); //contient les images des cartes tresors
-    
     private BufferedImage abysse; //contient l'image de la tuile de l'abysse
+    
     private String[] tuiles;
     private String[] tuillesEtat;
     private HashMap<String,Integer> aventuriers;
-    private HashMap<String,Boolean> traizor = new HashMap<>();
+    private HashMap<String,Boolean> tresorsGagner;
     private boolean[] tuilesSelectionnable;
-    private boolean[] tresorsGagne = new boolean[4];
 
     PanelGrille(Tuille[] tuis, HashMap<String,Integer> aventuriers) {
         initImagesTuiles();
@@ -203,7 +202,7 @@ public class PanelGrille extends JPanel {
     
     public void dessinerTresor(Graphics g){
         
-    	traizor.forEach( (k,v) -> { 
+    	tresorsGagner.forEach( (k,v) -> { 
     		int i = 0;
     		switch (k) {
 	        	case "calice" : i = 0; break;
@@ -389,7 +388,7 @@ public class PanelGrille extends JPanel {
        try {
     		//récupération des images des cartes tresors
 	
-	        //on récupére les Path vers tous les fichiers dans src/assets/tuiles   
+	        //on récupére les Path vers tous les fichiers dans src/assets/tresors   
 	        Stream<Path> walk = Files.walk(Paths.get("src/assets/tresors/"));
 	
 	
@@ -412,13 +411,14 @@ public class PanelGrille extends JPanel {
     }
     
     public void initTresor(){
+    	tresorsGagner = new HashMap<>();
         for(String list : tresors.keySet()){
             switch(list){ 
                 case "calice": 
                 case "cristal":
                 case "pierre" :
                 case "statue" :
-                    traizor.put(list, Boolean.FALSE); 
+                    tresorsGagner.put(list, Boolean.FALSE); 
                 break; 
             }
         }
@@ -427,7 +427,7 @@ public class PanelGrille extends JPanel {
     
     public void changerEtatTresor(HashMap tresor){
         tresor.forEach( (k,v) -> { 
-            traizor.put((String) k,(Boolean) v);
+            tresorsGagner.put((String) k,(Boolean) v);
             System.out.println("PAN : changer etat tresor : k " + k + " v " + v);
         });
         repaint();

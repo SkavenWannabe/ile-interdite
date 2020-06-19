@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.metal.MetalButtonUI;
 
@@ -105,12 +106,12 @@ public class VueJeu implements MouseListener {
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetre.setSize(1380,1480);
         
-        mainPanel = new JPanel(new BorderLayout()); mainPanel.setBorder(BorderFactory.createLineBorder(mainPanel.getBackground(), 5, false));
-        panelNorth = new JPanel(new GridLayout(1,nbJoueur+4)); panelNorth.setBorder(BorderFactory.createLineBorder(panelNorth.getBackground(), 5, false));
-        panelSouth = new JPanel(new GridLayout(1,4)); panelSouth.setBorder(BorderFactory.createLineBorder(panelSouth.getBackground(), 5, false));
-        panelEast = new JPanel(new GridLayout(2,1)); panelEast.setBorder(BorderFactory.createLineBorder(panelEast.getBackground(), 5, false));
-        panelWeast = new JPanel(new GridLayout(4,1)); panelWeast.setBorder(BorderFactory.createLineBorder(panelWeast.getBackground(), 5, false));
-        panelCentre = new JPanel(new BorderLayout()); panelCentre.setBorder(BorderFactory.createLineBorder(panelCentre.getBackground(), 5, false));
+        mainPanel = new JPanel(new BorderLayout()); mainPanel.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
+        panelNorth = new JPanel(new GridLayout(1,nbJoueur+4)); panelNorth.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
+        panelSouth = new JPanel(new GridLayout(1,4)); panelSouth.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
+        panelEast = new JPanel(new GridLayout(2,1)); panelEast.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
+        panelWeast = new JPanel(new GridLayout(4,1)); panelWeast.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
+        panelCentre = new JPanel(new BorderLayout()); panelCentre.setBorder(BorderFactory.createLineBorder(UIManager.getColor("Button.background"), 5, false));
         
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
