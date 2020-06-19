@@ -18,7 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import m2104.ile_interdite.modele.CarteTresor;
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
 
@@ -608,15 +607,15 @@ public class VueJeu implements MouseListener {
                             System.out.println("Case valide");
 				switch (actionCourante) {
 					case "Deplacer" : 
-                                            ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                                            break;
+                        ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
 					case "Assecher" :
-                                            ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                                            break;
-                                        case "Noyade" :
-                                            System.out.println("Nage valide");
-                                            ihm.notifierObservateurs(Message.nage(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                                            break;
+                        ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
+                    case "Noyade" :
+                        System.out.println("Nage valide");
+                        ihm.notifierObservateurs(Message.nage(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
 				}
 			}
 		} else if(e.getSource() == panelCartesJ1) {
