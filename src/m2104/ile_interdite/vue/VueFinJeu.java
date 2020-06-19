@@ -37,7 +37,7 @@ public class VueFinJeu {
         this.ihm = ihm;
         //Création de la fenêtre
         finJeu = new JFrame("Fin de partie");
-        finJeu.setSize(400,200);
+        finJeu.setSize(800,200);
         
         //Ajout du titre 
         titre = new JLabel("La partie est terminée", JLabel.CENTER);
@@ -47,11 +47,12 @@ public class VueFinJeu {
         //Création des zones de texte en fonction de si la partie est gagnée ou perdue
         victoire = new JTextArea(""
         +"Bravo ! Vous avez réussi à récupérer les trésors et à vous enfuir ! \n"
-        +"Insert plus de textes, j'ai pas d'inspiration");
+        +"Que diriez-vous de retenter votre chance ?");
         
         defaite = new JTextArea(""
-        +"Vous avez perdu lol !\n"
-        +"Pourquoi ne pas prendre votre revanche ? \n");
+        +"Vous avez perdu... Peut être que la difficulté était trop haute ou alors avez-vous beaucoup de malchance...\n"
+        +"Pourquoi ne pas prendriez vous pas votre revanche ? \n"
+        +"Les trésors vous attendent !");
         
         //Affichage du texte en fonction du message victoire() ou defaite() 
         if(win){

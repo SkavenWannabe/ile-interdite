@@ -37,7 +37,7 @@ public class VueTropDeCarte implements MouseListener {
         
         fenetre = new JFrame("Surplu de carte");
         fenetre.setLayout(new BorderLayout());
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         fenetre.setSize(500, 400);
         
         mainPanel = new JPanel(new BorderLayout());
@@ -93,9 +93,11 @@ public class VueTropDeCarte implements MouseListener {
 		if (panelCartes.getSelection() > 5 || panelCartes.dejaCliquer(panelCartes.getNumeroCarte(e.getX(), e.getY()))) {
 			System.out.println("nbCarte > 5");
 			panelCartes.setSelection(panelCartes.getNumeroCarte(e.getX(), e.getY()));
-			continuer.setEnabled(true);
-		} else {
+		} 
+		if (panelCartes.getSelection() > 5 ) {
 			continuer.setEnabled(false);
+		} else {
+			continuer.setEnabled(true);
 		}
 	}
 
