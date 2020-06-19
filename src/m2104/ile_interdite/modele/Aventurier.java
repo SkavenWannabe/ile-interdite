@@ -58,6 +58,7 @@ public abstract class Aventurier {
     public ArrayList<CarteTresor> getMain(){
         return main;
     }
-    
+
+    public boolean getPouvoir(){return false;}
     public void setPouvoir(boolean val){}
 }
