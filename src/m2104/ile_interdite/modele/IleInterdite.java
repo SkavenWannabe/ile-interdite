@@ -100,6 +100,7 @@ public class IleInterdite extends Observable<Message> {
     public void initialisation(int nbJoueurs, int difficulte){
 
         System.out.println("INITIALISATION ...");
+        tour=0;
         niveau = difficulte;
         System.out.println("DIFFICULTE INITIALISEE");
         tresors = new HashMap(4);
@@ -393,11 +394,21 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public int nouveauTour(){
+        if(getAventurierEnCours().toString().equals("Pilote"))
+            getAventurierEnCours().setPouvoir(true);
         tour++;                                 //Incrémente le compteur de tour
         nbInondations = calculNbInondations();  //Recalcule le nombre de carte Inondation qu'il va falloir piocher à la fin du tour
         nbActions = 3;
         return tour;
     }    
+    
+    public int[] positionsJoueurs(){
+        ArrayList<Integer> positions = new ArrayList<>();
+        for(int i = 0; i < aventuriers.size(); i++)
+            positions.add(aventuriers.get(i).getPosition());
+        Collections.sort(positions);
+        return positions.stream().mapToInt(i -> i).toArray();
+    }
     
     public void helico(int ancien, int nouveau){
 
