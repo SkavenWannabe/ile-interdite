@@ -50,7 +50,6 @@ public class PanelGrille extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
     	super.paintComponent(g);
-    	// effacerComposant();  
     	dessinerTuiles(g);
         dessinerAventuriers(g);
         dessinerSelection(g);
@@ -149,7 +148,22 @@ public class PanelGrille extends JPanel {
     }
     
     private void dessinerAventuriers(Graphics g) {
+        HashMap<Integer, Integer> nbAventurierParCase = new HashMap<>();
+
+        aventuriers.forEach((k,v) -> {
+            if(nbAventurierParCase.get(v) == null) {
+                nbAventurierParCase.put(v, 1);
+            } else {
+                nbAventurierParCase.put(v, nbAventurierParCase.get(v) + 1);
+            }
+        });
+
+        HashMap<Integer, Integer> aventurierRestantSurCase = (HashMap<Integer, Integer>) nbAventurierParCase.clone();
+
     	aventuriers.forEach((k,v) -> {
+    	    //k est le nom de l'aventurier
+            //v est la position de l'aventurier
+
     		String couleur = "Violet";
             switch (k) {
             	case "Explorateur" : couleur = "Vert"; break;
@@ -159,11 +173,16 @@ public class PanelGrille extends JPanel {
             	case "Pilote" : couleur = "Bleu"; break;
             	case "Plongeur" : couleur = "Noir"; break;
             }
-            int sizeX = (int) ((getWidth() / 6)*0.7);
-            int sizeY = (int) ((getHeight() / 6)*0.7);
-            int posX = (v % 6) * getWidth() / 6 + sizeX / 3;
-            int posY = v / 6 * getHeight() / 6 + sizeY / 4;
+
+            int sizeX = (int) ((getWidth() / 6)*0.7) / (nbAventurierParCase.get(v) < 2 ? 1 : 2);
+            int sizeY = (int) ((getHeight() / 6)*0.7) / (nbAventurierParCase.get(v) < 3 ? 1 : 2);
+
+
+            int posX = (v % 6) * getWidth() / 6 + (aventurierRestantSurCase.get(v) % 2 == 0 ? 1 : 0) * sizeX + sizeX / 3;
+            int posY = v / 6 * getHeight() / 6 + (aventurierRestantSurCase.get(v) < 3 ? 0 : 1) * sizeY + sizeY / 4;
+
             g.drawImage(pions.get(couleur).getScaledInstance(sizeX, sizeY, Image.SCALE_DEFAULT),posX, posY, null, null);
+            aventurierRestantSurCase.put(v, aventurierRestantSurCase.get(v) - 1);
         } );
     }
     
