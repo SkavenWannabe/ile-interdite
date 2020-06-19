@@ -28,6 +28,7 @@ public class VueTropDeCarte implements MouseListener {
     private JButton continuer;
     private ArrayList<String> main;
     private int idAventurier;
+    private String action;
     
     public VueTropDeCarte(IHM ihm, int idAventurier, ArrayList<String> main) {
     	System.out.println("VUE : trop de carte");
@@ -42,7 +43,7 @@ public class VueTropDeCarte implements MouseListener {
         
         mainPanel = new JPanel(new BorderLayout());
         panelNorth = new JPanel();
-        panelSouth = new JPanel(new GridLayout(3,1));
+        panelSouth = new JPanel(new GridLayout(1,3));
         
         indication = new JTextArea(""
                 + "Au maximum un joueur peu avoir dans sa main que 5 cartes, \n"
@@ -77,13 +78,19 @@ public class VueTropDeCarte implements MouseListener {
     
     public void calculNouvelleMain() {
     	System.out.println("Calcul nouvel main");
+    	action = "";
     	ArrayList<Integer> deffausseMain = new ArrayList<Integer>();
     	for (int i = 0; i < main.size(); i++) {
     		if (panelCartes.estSelectionner(i)) {
-    			deffausseMain.add(i);
+    			deffausseMain.add(i); 
+    			if (main.get(i) == "HELICO") {
+    				action = "Decolage";
+    			}else if(main.get(i) == "SAC_SABLE") {
+    				action = "Assecher";
+    			}
     		}
     	}
-    	ihm.notifierObservateurs(Message.nvMain(idAventurier, deffausseMain));
+    	ihm.notifierObservateurs(Message.nvMain(idAventurier, deffausseMain, action));
     }
     
     

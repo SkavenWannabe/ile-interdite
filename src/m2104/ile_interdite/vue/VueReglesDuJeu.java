@@ -65,7 +65,7 @@ public class VueReglesDuJeu {
                 + "  indentique, a condition que votre pion soit sur la tuile correspondante au\n"
                 + "  Trésor en question !\n"
                 + "\n"
-                + "Quelques execptions :\n"
+                + "Quelques exception :\n"
                 + "L'Explorateur peut se déplacer et assécher diagonalement !\n"
                 + "Le Pilote peut aller une fois par tour sur n'importe quelle tuilee pour une (1) action !\n"
                 + "Le Navigateur peut déplacer d'autres joueurs d'une ou deux tuile adjacente par action !\n"
@@ -81,8 +81,17 @@ public class VueReglesDuJeu {
                 + "- Un aventurier est sur une tuile qui sombre et qu'il n'a pas de tuile adjacente où nager.\n"
                 + "- Si le niveau de l'eau atteind dix (10).\n"
                 + "\n"
-                + "Bonne chance !");
-        
+                + "Bonne chance !"
+                + "Quelques informations complémentaires :"
+                + "Chaque couleur de pion correspond a un Aventurier différent :"
+                + "Le BLEU est le Pilote"
+                + "Le GRIS est le Messager"
+                + "Le JAUNE est le Navigateur"
+                + "Le NOIR est le Plongeur"
+                + "Le ROUGE est l'Ingénieur"
+                + "Le VERT est l'Explorateur"
+                );
+               
         regles.setEnabled(false);
         regles.setDisabledTextColor(Color.BLACK);
         regles.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));

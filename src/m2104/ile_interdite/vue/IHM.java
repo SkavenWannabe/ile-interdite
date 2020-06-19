@@ -100,6 +100,10 @@ public class IHM extends Observable<Message> {
     	tropDeCarte = new VueTropDeCarte(this,idJoueur, main);
     }
     
+    public void nvActionCourante(String action) {
+    	jeu.nvActionCourante(action);
+    }
+    
     public void continuerPartie() {
     	System.out.println("IHM : continuer partie");
     	jeu.tropDeCarte(false);
