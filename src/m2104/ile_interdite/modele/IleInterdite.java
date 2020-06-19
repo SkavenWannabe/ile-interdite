@@ -255,9 +255,9 @@ public class IleInterdite extends Observable<Message> {
         return j;
     }
     
-    public int piocheInonde(){
+    public ArrayList<Integer> piocheInonde(){
         int id;
-        int j = 0;
+        ArrayList<Integer> resultat = new ArrayList<>();
         if (paquetInonde.isEmpty())                                      //Si la pioche est vide, la réinitialise
             resetPiocheInonde();
 
@@ -270,6 +270,8 @@ public class IleInterdite extends Observable<Message> {
         id = j;
         //FIN HACK*/
         
+        System.out.println("ILE : Tuille : " + id);
+        resultat.add(id);
         grille.changeEtat(id, -1);                                       //Change l'état de la tuile à inonder
         
         if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
@@ -288,7 +290,8 @@ public class IleInterdite extends Observable<Message> {
                 }
                 for(int k = 0; k < aventuriers.size(); k++){
                     if(aventuriers.get(k).getPosition() == id){         //Si un aventurier est sur la tuille qui tombe dans l'abysse ...
-                        notifierObservateurs(Message.noyade(k));        //On prévient le contrôleur d'une potentiel noyade
+                        resultat.add(-1);
+                        notifierObservateurs(Message.noyade(k));        //On prévient le contrôleur d'une potentiel 
                     }
                 }
             }
@@ -298,7 +301,7 @@ public class IleInterdite extends Observable<Message> {
         }
         
         nbInondations--;
-        return id;
+        return resultat;
     }
 
     public void asseche(int position){
@@ -513,6 +516,7 @@ public class IleInterdite extends Observable<Message> {
         }
         else
             possibles = getAventurierEnCours().deplacementPossible(grille);
+        possibles.add(getAventurierEnCours().getPosition());
         ArrayList<Integer> caseAssechables = new ArrayList<>();
         for(int i = 0; i < possibles.size();i++){
             if(grille.getTuille(possibles.get(i)).getEtat() == Etat.INONDE)

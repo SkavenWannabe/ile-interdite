@@ -129,7 +129,7 @@ public class VueJeu implements MouseListener {
         // recuperation des role uniquement pour l'affichage
         ArrayList<String> role = new ArrayList<String>();
         aventuriers.forEach((k,v) -> {
-        	role.add(k);
+            role.add(k);
         });
         // utilisation de nom par default si l'utilisateur n'en rentre rien
         ArrayList<String> nomsPif = initNomsPif();
@@ -143,7 +143,7 @@ public class VueJeu implements MouseListener {
         if (nomsJoueurs[1].equals(""))
             labelNom2.setText(nomsPif.get(1) + " - " + role.get(1));
         else
-            labelNom2.setText(nomsJoueurs[0]+ " - " + role.get(1));
+            labelNom2.setText(nomsJoueurs[1]+ " - " + role.get(1));
         labelNom2.setForeground(Color.red);
         panelNorth.add(labelNom1);panelNorth.add(labelNom2);
         
