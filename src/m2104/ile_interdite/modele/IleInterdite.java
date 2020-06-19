@@ -234,12 +234,20 @@ public class IleInterdite extends Observable<Message> {
     }
     
     public int piocheInonde(){
-
+        int id;
+        int j = 0;
         if (paquetInonde.isEmpty())                                      //Si la pioche est vide, la réinitialise
             resetPiocheInonde();
 
-        int id = (int) paquetInonde.pop();                               //Pioche la position de la tuile a inonder
-            
+        //int id = (int) paquetInonde.pop();                               //Pioche la position de la tuile a inonder
+         
+        //HACK
+        while(!(grille.getTuille(j).getSpecial().equals("HELICO"))){
+            j++;
+        }
+        id = j;
+        //FIN HACK
+        
         grille.changeEtat(id, -1);                                       //Change l'état de la tuile à inonder
         
         if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
