@@ -34,6 +34,9 @@ public class Utils {
         NAGE("Un aventurier sur le point de se noyer nage à terre"),
         NOUVELLE_MAIN("L'utilisateur a choisis les cartes"),
         TROMAIN("Il y'a trop de carte dans ta main !"),
+        SETDEPART("Un hélicoptère arrive"),
+        SETARRIVEE("L'hélicptère va se déplacer"),
+        HELICO("L'hélicoptère a fait son taff"),
         VICTOIRE("La partie est gagnée"),
         DEFAITE("La partie est perdue");
 
