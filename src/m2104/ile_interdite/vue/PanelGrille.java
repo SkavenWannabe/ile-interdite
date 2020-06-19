@@ -1,6 +1,5 @@
 package m2104.ile_interdite.vue;
 
-import m2104.ile_interdite.modele.Aventurier;
 import m2104.ile_interdite.modele.Etat;
 import m2104.ile_interdite.modele.Tuille;
 

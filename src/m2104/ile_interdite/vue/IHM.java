@@ -21,6 +21,7 @@ public class IHM extends Observable<Message> {
     private VueFinJeu finJeu;
 
     private VueJeu jeu;
+    private VueTropDeCarte tropDeCarte;
 
     public IHM(Observateur<Message> observateur) {
         this.addObservateur(observateur);
@@ -91,6 +92,18 @@ public class IHM extends Observable<Message> {
     
     public void actionsPossibles(ArrayList<Boolean> actionsPossibles){
         jeu.actionsPossibles(actionsPossibles);
+    }
+    
+    public void tropDeCarteEnMain(int idJoueur, ArrayList<String> main) {
+    	System.out.println("IHM : trop de carte");
+    	jeu.tropDeCarte(true);
+    	tropDeCarte = new VueTropDeCarte(this,idJoueur, main);
+    }
+    
+    public void continuerPartie() {
+    	System.out.println("IHM : continuer partie");
+    	jeu.tropDeCarte(false);
+    	tropDeCarte.desactiver();
     }
 
     public void noyadeEnCours(){

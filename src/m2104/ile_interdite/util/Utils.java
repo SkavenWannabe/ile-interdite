@@ -32,6 +32,7 @@ public class Utils {
         SAC_DE_SABLE("Un joueur utilise la carte speciale sac de sable"),
         NOYADE("Un aventurier va sombrer dans l'abyssse"),
         NAGE("Un aventurier sur le point de se noyer nage à terre"),
+        NOUVELLE_MAIN("L'utilisateur a choisis les cartes"),
         TROMAIN("Il y'a trop de carte dans ta main !"),
         SETDEPART("Un hélicoptère arrive"),
         SETARRIVEE("L'hélicptère va se déplacer"),

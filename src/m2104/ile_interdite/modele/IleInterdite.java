@@ -220,6 +220,14 @@ public class IleInterdite extends Observable<Message> {
         }
     }
     
+    public void majMain(int idJoueur, ArrayList<Integer> deffausse) {
+    	for(int i = 0; i < deffausse.size(); i++) {
+    		defausseTresor.push(aventuriers.get(idJoueur).enleverCarte(deffausse.get(i)));
+    	}
+    	System.out.println("ile : main mis a jour");
+    }
+    
+    
     public int calculNbInondations(){
         
         int j;

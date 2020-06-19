@@ -137,7 +137,6 @@ public class Controleur implements Observateur<Message> {
             	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartesDonneur.add(x.toString()));
             	ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartesDonneur);
                 
-                this.ileInterdite.mainPleine();
             	this.ihm.actionsPossibles(this.ileInterdite.clicable());
                 ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;
@@ -172,6 +171,12 @@ public class Controleur implements Observateur<Message> {
                     this.nouveauTour();
                 }
                 break;
+
+            case TROMAIN:            	
+            	ArrayList<String> mainTropPleine = new ArrayList<String>();
+            	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> mainTropPleine.add(x.toString()));
+                this.ihm.tropDeCarteEnMain(msg.getIdAventurier(), mainTropPleine);
+
             case SETDEPART:
                 if(ileInterdite.estGagnable())
                     traiterMessage(Message.victoire());
@@ -191,9 +196,20 @@ public class Controleur implements Observateur<Message> {
                 ileInterdite.getMain(ileInterdite.getUtilisateur()).forEach(x -> main2.add(x.toString()));
                 ihm.afficherMain(ileInterdite.getUtilisateur(),main2);
                 break;
-            case TROMAIN:
-                //this.ihm.tropDeCarteEnMain();
-                break;
+
+
+
+
+            case NOUVELLE_MAIN:
+            	System.out.println("notifier Observateur");
+            	ileInterdite.majMain(msg.getIdAventurier(), msg.getDeffausseMain());
+            	
+                ArrayList<String> cartesNV = new ArrayList<>();
+            	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> cartesNV.add(x.toString()));
+            	System.out.println("creation cartesNV");
+            	ihm.continuerPartie();
+                ihm.afficherMain(msg.getIdAventurier(), cartesNV);
+            	break;
             case DEFAITE:
                 ihm.creerVueFinJeu(Boolean.FALSE);
                 break;
