@@ -86,7 +86,7 @@ public class Controleur implements Observateur<Message> {
                 if(res.size() == 1)
                     nbInondAVenir--;
                 System.out.println("Nb inonde après : " + nbInondAVenir);
-                if(nbInondAVenir == 0){
+                if(nbInondAVenir < 1){
                     this.nouveauTour();
                 }
             	break;
