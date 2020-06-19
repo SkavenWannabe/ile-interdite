@@ -491,14 +491,14 @@ public class IleInterdite extends Observable<Message> {
         for(int i = 0; i < aventuriers.size(); i++)
             if(aventuriers.get(i).getPosition() == ancien) {
                 aventuriers.get(i).changerPosition(nouveau,grille);    //Change la position de chaque aventurier se trouvant sur la case de départ de l'hélico à celle d'arrivée
-                System.out.println("ile : nouvelle position " + aventuriers.get(i).getPosition());
             }
         int k = 0;
         while(aventuriers.get(utilisateur).getMain().get(k) != CarteTresor.HELICO && !helicoTrop)
             k++;
         
-        defausseTresor.push(aventuriers.get(utilisateur).enleverCarte(k));
-        
+        if (!helicoTrop) {
+        	defausseTresor.push(aventuriers.get(utilisateur).enleverCarte(k));
+        }
     }
     
 

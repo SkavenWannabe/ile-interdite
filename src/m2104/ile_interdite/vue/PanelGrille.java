@@ -417,7 +417,7 @@ public class PanelGrille extends JPanel {
                 case "calice": 
                 case "cristal":
                 case "pierre" :
-                case "zephyr" :
+                case "statue" :
                     traizor.put(list, Boolean.FALSE); 
                 break; 
             }
@@ -428,6 +428,7 @@ public class PanelGrille extends JPanel {
     public void changerEtatTresor(HashMap tresor){
         tresor.forEach( (k,v) -> { 
             traizor.put((String) k,(Boolean) v);
+            System.out.println("PAN : changer etat tresor : k " + k + " v " + v);
         });
         repaint();
     }

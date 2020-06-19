@@ -13,10 +13,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.MatteBorder;
+import javax.swing.plaf.metal.MetalButtonUI;
 
 import m2104.ile_interdite.modele.Grille;
 import m2104.ile_interdite.util.Message;
@@ -102,12 +105,12 @@ public class VueJeu implements MouseListener {
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetre.setSize(1380,1480);
         
-        mainPanel = new JPanel(new BorderLayout());
-        panelNorth = new JPanel(new GridLayout(1,nbJoueur+4));
-        panelSouth = new JPanel(new GridLayout(1,4));
-        panelEast = new JPanel(new GridLayout(2,1));
-        panelWeast = new JPanel(new GridLayout(4,1));
-        panelCentre = new JPanel(new BorderLayout());
+        mainPanel = new JPanel(new BorderLayout()); mainPanel.setBorder(BorderFactory.createLineBorder(mainPanel.getBackground(), 5, false));
+        panelNorth = new JPanel(new GridLayout(1,nbJoueur+4)); panelNorth.setBorder(BorderFactory.createLineBorder(panelNorth.getBackground(), 5, false));
+        panelSouth = new JPanel(new GridLayout(1,4)); panelSouth.setBorder(BorderFactory.createLineBorder(panelSouth.getBackground(), 5, false));
+        panelEast = new JPanel(new GridLayout(2,1)); panelEast.setBorder(BorderFactory.createLineBorder(panelEast.getBackground(), 5, false));
+        panelWeast = new JPanel(new GridLayout(4,1)); panelWeast.setBorder(BorderFactory.createLineBorder(panelWeast.getBackground(), 5, false));
+        panelCentre = new JPanel(new BorderLayout()); panelCentre.setBorder(BorderFactory.createLineBorder(panelCentre.getBackground(), 5, false));
         
         panelMvt = new JPanel(new GridLayout(6,1));
         panelBtn = new JPanel(new GridLayout(2,1));
@@ -118,6 +121,13 @@ public class VueJeu implements MouseListener {
         panelJ3 = new JPanel(new BorderLayout());
         panelJ4 = new JPanel(new BorderLayout());
 
+        panelNorth.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));
+        panelSouth.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));
+        panelEast.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));
+        panelWeast.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));        
+        panelCentre.setBorder(new MatteBorder(2, 2, 2, 2, Color.WHITE));
+
+        
         mainPanel.add(panelNorth, BorderLayout.NORTH);
         mainPanel.add(panelSouth, BorderLayout.SOUTH);
         mainPanel.add(panelCentre, BorderLayout.CENTER);
@@ -286,6 +296,7 @@ public class VueJeu implements MouseListener {
                                 System.out.println("IHM : Carte choisie : " + carteADonner);
         			ihm.notifierObservateurs(Message.donner(0, carteADonner));
         			carteADonner = -1;
+        			indication.setText("pioche = fin tour");
         			desactiverBoutonJoueur();
         		}
         	}
@@ -297,12 +308,18 @@ public class VueJeu implements MouseListener {
         panelJ1.add(panelCartesJ1);
         
         btnJ2 = new JButton(labelNom2.getText());
+        btnJ2.setUI(new MetalButtonUI() {
+            protected Color getDisabledTextColor() {
+                return Color.RED;
+            }
+        });
         btnJ2.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		if(carteADonner !=-1) {
-                                System.out.println("IHM : Receveur choisi : 1");
+                    System.out.println("IHM : Receveur choisi : 1");
         			ihm.notifierObservateurs(Message.donner(1, carteADonner));
         			carteADonner = -1;
+        			indication.setText("pioche = fin tour");
         			desactiverBoutonJoueur();
         		}
         	}
@@ -322,6 +339,7 @@ public class VueJeu implements MouseListener {
                                 System.out.println("IHM : Receveur choisi : 2");
             			ihm.notifierObservateurs(Message.donner(2, carteADonner));
             			carteADonner = -1;
+            			indication.setText("pioche = fin tour");
             			desactiverBoutonJoueur();
             		}
             	}
@@ -339,6 +357,7 @@ public class VueJeu implements MouseListener {
                                 System.out.println("IHM : Receveur choisi : 3");
             			ihm.notifierObservateurs(Message.donner(3, carteADonner));
             			carteADonner = -1;
+            			indication.setText("pioche = fin tour");
             			desactiverBoutonJoueur();
             		}
             	}
@@ -357,6 +376,7 @@ public class VueJeu implements MouseListener {
                                 System.out.println("Receveur choisi : 1");
             			ihm.notifierObservateurs(Message.donner(2, carteADonner));
             			carteADonner = -1;
+            			indication.setText("pioche = fin tour");
             			desactiverBoutonJoueur();
             		}
             	}
@@ -386,9 +406,8 @@ public class VueJeu implements MouseListener {
             panelSouth.add(panelJ4);
         }
         
-        
         fenetre.add(mainPanel);
-        fenetre.setVisible(true);
+        fenetre.setVisible(true); 
 
 	}
 	
@@ -497,28 +516,70 @@ public class VueJeu implements MouseListener {
     }
     
     public void nouveauTour(int tour) {
-        innonde.setEnabled(false);
+    	actionCourante = "";
+    	innonde.setEnabled(false);
         tresors.setEnabled(true);
     	nomTour.setText("Tour "+ tour+ ":");
     	labelNom1.setForeground(Color.black);
+    	btnJ1.setUI(new MetalButtonUI() {
+            protected Color getDisabledTextColor() {
+                return Color.black;
+            }
+        });
     	labelNom2.setForeground(Color.black);
+    	btnJ2.setUI(new MetalButtonUI() {
+            protected Color getDisabledTextColor() {
+                return Color.black;
+            }
+        });
     	if (nbJoueur == 3) {
     		labelNom3.setForeground(Color.black);
     	} else if (nbJoueur == 4) {
     		labelNom3.setForeground(Color.black);
-        	labelNom4.setForeground(Color.black);}
+    		btnJ3.setUI(new MetalButtonUI() {
+                protected Color getDisabledTextColor() {
+                    return Color.black;
+                }
+            });
+        	labelNom4.setForeground(Color.black);
+        	btnJ4.setUI(new MetalButtonUI() {
+                protected Color getDisabledTextColor() {
+                    return Color.black;
+                }
+            });
+    	}
     	
     	if ((tour % nbJoueur) == 0) {
     		labelNom1.setForeground(Color.red);
+    		btnJ1.setUI(new MetalButtonUI() {
+                protected Color getDisabledTextColor() {
+                    return Color.RED;
+                }
+            });
     		System.out.println(0);
     	}else if ((tour % nbJoueur) == 1) {
     		labelNom2.setForeground(Color.red);
+    		btnJ2.setUI(new MetalButtonUI() {
+                protected Color getDisabledTextColor() {
+                    return Color.RED;
+                }
+            });
     		System.out.println(1);
     	}else if ((tour % nbJoueur) == 2){
     		labelNom3.setForeground(Color.red);
+    		btnJ3.setUI(new MetalButtonUI() {
+                protected Color getDisabledTextColor() {
+                    return Color.RED;
+                }
+            });
     		System.out.println(2);
     	}else if ((tour % nbJoueur) == 3){
     		labelNom4.setForeground(Color.red);
+    		btnJ4.setUI(new MetalButtonUI() {
+                protected Color getDisabledTextColor() {
+                    return Color.RED;
+                }
+            });
     		System.out.println(3);
     	}
     }
@@ -609,12 +670,9 @@ public class VueJeu implements MouseListener {
         return actionCourante;
     }
     
+    //Pour empecher l'utilisateur de continuer la partie lorsqu'il a trop de carte en main
     public void tropDeCarte(boolean bool) {
-    	if (bool) {
-    		innonde.setEnabled(false);
-    	}else {
-    		innonde.setEnabled(true);
-    	}
+    	innonde.setEnabled(!bool);
     }
     
     public void nvActionCourante(String action) {
@@ -627,6 +685,7 @@ public class VueJeu implements MouseListener {
     	}
     }
     
+    // A la fin d'une partie (gagner/perdue) pour pouvoir supprimer la fenetre et en rouvrir une
     public void detruire(){
         fenetre.dispose();
     }
