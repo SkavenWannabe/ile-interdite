@@ -147,10 +147,22 @@ public class Message implements Serializable {
         return new Message(Utils.Commandes.NAGE, null, null, null, tuile, null, null);
     }
     
-    public static Message tromain(){
-        return new Message(Utils.Commandes.TROMAIN, null, null, null, null, null, null);
+    public static Message tromain(int idAventurier){
+        return new Message(Utils.Commandes.TROMAIN, idAventurier, null, null, null, null, null);
     }
 
+    public static Message setDepart(){
+        return new Message(Utils.Commandes.SETDEPART, null, null, null, null, null, null);
+    }
+
+    public static Message setArrivee(){
+        return new Message(Utils.Commandes.SETARRIVEE, null, null, null, null, null, null);
+    }
+
+    public static Message helico(){
+        return new Message(Utils.Commandes.HELICO, null, null, null, null, null, null);
+    }
+    
     public static Message defaite(){
         return new Message(Utils.Commandes.DEFAITE, null, null, null, null, null, null);
     }

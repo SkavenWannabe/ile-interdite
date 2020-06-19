@@ -65,7 +65,7 @@ public class Controleur implements Observateur<Message> {
                 joueurSac = -1; carteSac = -1;
                 //ileInterdite.tricheTresor();
                 ihm.piocheTresors(this.ileInterdite.piocheTresor());
-                //this.ileInterdite.mainPleine();
+                this.ileInterdite.mainPleine();
                 nbInondAVenir = this.ileInterdite.getNbInondations();
                 
                 ArrayList<String> cartes = new ArrayList<>();
@@ -134,7 +134,9 @@ public class Controleur implements Observateur<Message> {
             	//Afficher Main du donneur
             	ArrayList<String> cartesDonneur = new ArrayList<String>();
             	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartesDonneur.add(x.toString()));
-            	ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartesDonneur);         
+            	ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartesDonneur);
+                
+                this.ileInterdite.mainPleine();
             	this.ihm.actionsPossibles(this.ileInterdite.clicable());
                 ihm.nbActionsRestantes(this.ileInterdite.getNbActionsRestantes());
             	break;

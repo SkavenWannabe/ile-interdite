@@ -209,8 +209,10 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public void mainPleine(){
-        if(getAventurierEnCours().getMain().size() > 5)
-            notifierObservateurs(Message.tromain());
+        for(int i = 0; i < aventuriers.size(); i++){
+            if(aventuriers.get(i).getMain().size() > 5)
+                notifierObservateurs(Message.tromain(i));
+        }
     }
     
     public int calculNbInondations(){
