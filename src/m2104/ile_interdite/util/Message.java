@@ -17,9 +17,9 @@ public class Message implements Serializable {
     private final Integer idTuile;
     private final Integer nbJoueurs;
     private final Integer difficulte;
-    private final ArrayList<String> deffausse;
+    private final ArrayList<Integer> deffausse;
     
-    private Message(Utils.Commandes commande, Integer idAventurier, Integer idCarte, Utils.Tresor tresor, Integer idTuile, Integer nbJoueurs, Integer difficulte, ArrayList<String> deffausse) {
+    private Message(Utils.Commandes commande, Integer idAventurier, Integer idCarte, Utils.Tresor tresor, Integer idTuile, Integer nbJoueurs, Integer difficulte, ArrayList<Integer> deffausse) {
         this.commande = commande;
         this.idAventurier = idAventurier;
         this.idCarte = idCarte;
@@ -150,29 +150,26 @@ public class Message implements Serializable {
         return new Message(Utils.Commandes.NAGE, null, null, null, tuile, null, null, null);
     }
 
-    public static Message nvMain(int idAventurier, ArrayList<String> deffausse){
+    public static Message nvMain(int idAventurier, ArrayList<Integer> deffausse){
         return new Message(Utils.Commandes.NOUVELLE_MAIN, idAventurier, null, null, null, null, null, deffausse);
     }
     
 
-    public static Message tromain(){
-        return new Message(Utils.Commandes.TROMAIN, null, null, null, null, null, null, null);
+    public static Message tromain(int idAventurier){
+        return new Message(Utils.Commandes.TROMAIN, idAventurier, null, null, null, null, null, null);
 
-
-
-
-
+    }
 
     public static Message setDepart(){
-        return new Message(Utils.Commandes.SETDEPART, null, null, null, null, null, null);
+        return new Message(Utils.Commandes.SETDEPART, null, null, null, null, null, null, null);
     }
 
     public static Message setArrivee(){
-        return new Message(Utils.Commandes.SETARRIVEE, null, null, null, null, null, null);
+        return new Message(Utils.Commandes.SETARRIVEE, null, null, null, null, null, null, null);
     }
 
     public static Message helico(){
-        return new Message(Utils.Commandes.HELICO, null, null, null, null, null, null);
+        return new Message(Utils.Commandes.HELICO, null, null, null, null, null, null, null);
     }
     
     public static Message defaite(){
@@ -251,6 +248,11 @@ public class Message implements Serializable {
     public Integer getIdTuile() {
         return idTuile;
     }
+    
+    public ArrayList<Integer> getDeffausseMain(){
+    	return deffausse;
+    }
+    
 
     @Override
     public String toString() {

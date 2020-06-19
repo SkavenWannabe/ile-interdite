@@ -601,6 +601,14 @@ public class VueJeu implements MouseListener {
         return actionCourante;
     }
     
+    public void tropDeCarte(boolean bool) {
+    	if (bool) {
+    		innonde.setEnabled(false);
+    	}else {
+    		innonde.setEnabled(true);
+    	}
+    }
+    
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == panelGrille) {
