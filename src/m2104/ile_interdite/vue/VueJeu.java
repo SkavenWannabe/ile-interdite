@@ -600,6 +600,10 @@ public class VueJeu implements MouseListener {
         return actionCourante;
     }
     
+    public void detruire(){
+        fenetre.dispose();
+    }
+    
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == panelGrille) {

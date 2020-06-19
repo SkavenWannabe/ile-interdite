@@ -195,10 +195,10 @@ public class Controleur implements Observateur<Message> {
                 //this.ihm.tropDeCarteEnMain();
                 break;
             case DEFAITE:
-                if(Parameters.LOGS){System.out.println("CON : OH ! Perdu !");}
+                ihm.creerVueFinJeu(Boolean.FALSE);
                 break;
             case VICTOIRE:
-                //C'est gagné !!
+                ihm.creerVueFinJeu(Boolean.TRUE);
                 break;
             default:
                 if (Parameters.LOGS) {
