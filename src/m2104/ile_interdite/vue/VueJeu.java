@@ -202,16 +202,17 @@ public class VueJeu implements MouseListener {
         tresorsDef.setEnabled(false);
         tresorsDef.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                    ihm.notifierObservateurs(Message.voirDefausse());
+                ihm.notifierObservateurs(Message.voirDefausse());
         	}
         });
         tresors = new JButton("Carte Tresors");
         tresors.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                    innonde.setEnabled(true);
-                    tresors.setEnabled(false);
-                    nbActionsRestantes(0);
-                    ihm.notifierObservateurs(Message.choisirCarteTresors());
+        		actionCourante = "";
+                innonde.setEnabled(true);
+                tresors.setEnabled(false);
+                nbActionsRestantes(0);
+                ihm.notifierObservateurs(Message.choisirCarteTresors());
         	}
         });
         indication = new JLabel("Pioche = fin de tour");
