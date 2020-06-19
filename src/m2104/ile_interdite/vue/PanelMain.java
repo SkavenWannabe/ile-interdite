@@ -77,7 +77,6 @@ public class PanelMain extends JPanel {
     }
     
     public void toutSelectionnable() {
-    	System.out.println("rendre selectionnabe" + this);
     	for (int i = 0; i < cartesSelectionnables.length; i++) {
     		cartesSelectionnables[i] = true;
     	}

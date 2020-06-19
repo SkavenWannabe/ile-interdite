@@ -96,7 +96,6 @@ public class IHM extends Observable<Message> {
     }
     
     public void tropDeCarteEnMain(int idJoueur, ArrayList<String> main) {
-    	System.out.println("IHM : trop de carte");
     	jeu.tropDeCarte(true);
     	tropDeCarte = new VueTropDeCarte(this,idJoueur, main);
     }
@@ -106,7 +105,6 @@ public class IHM extends Observable<Message> {
     }
     
     public void continuerPartie() {
-    	System.out.println("IHM : continuer partie");
     	jeu.tropDeCarte(false);
     	tropDeCarte.desactiver();
     }

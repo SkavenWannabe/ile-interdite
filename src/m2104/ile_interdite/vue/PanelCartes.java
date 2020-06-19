@@ -22,14 +22,12 @@ public class PanelCartes extends JPanel{
 	
     
     PanelCartes(ArrayList<String> main) {
-    	System.out.println("PAN : controleur");
         this.main = main;
         initImg();
         initCartesSelectionner();
     }
 
     private void initImg() {
-    	System.out.println("PAN: init image");
         img = new BufferedImage[7];
 
         try {
@@ -40,7 +38,6 @@ public class PanelCartes extends JPanel{
             img[4] = ImageIO.read(new File("src/assets/cartes/Pierre.png"));
             img[5] = ImageIO.read(new File("src/assets/cartes/SacsDeSable.png"));
             img[6] = ImageIO.read(new File("src/assets/cartes/Zephyr.png"));
-        	System.out.println("PAN: fin init en dur");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,29 +45,24 @@ public class PanelCartes extends JPanel{
     }
     
     public void initCartesSelectionner() {
-    	System.out.println("PAN : init selection");
     	cartesSelectionner = new boolean[main.size()];
     	for (int i = 0; i < main.size(); i++) {
     		cartesSelectionner[i] = Boolean.FALSE;
     	}
-    	System.out.println("PAN: fin init selection");
     }
     
     public int getNumeroCarte(int x, int y) {
-    	System.out.print("get numero de carte :");
     	int nbCartes = main.size();
         int width = getWidth() / 3;
         int heigh = getHeight() / 3;
         
     	int colonne = (int) (x / width);
     	int ligne= (int) (y / heigh);
-    	System.out.println((ligne *3+colonne));
     	return ligne * 3 + colonne;
     }
 	
     
     public void setSelection(int idCartes) {
-    	System.out.println("SetSelection");
     	for (int i = 0; i < cartesSelectionner.length; i++) {
     		if(i == idCartes) {
     			if(cartesSelectionner[i]) {
@@ -104,8 +96,6 @@ public class PanelCartes extends JPanel{
 	
     @Override
     protected void paintComponent(Graphics g) {
-    	System.out.println("PAN : paintComponent");
-
     	super.paintComponent(g);
     	
     	dessinerCartes(g);
@@ -114,8 +104,6 @@ public class PanelCartes extends JPanel{
     }
     
     private void dessinerCartes(Graphics g) {
-    	System.out.println("PAN : dessiner Carte");
-
     	int nbCartes = main.size();
 
         int width = getWidth() / 3;
@@ -153,8 +141,6 @@ public class PanelCartes extends JPanel{
     }
     
     private void dessinerSelection(Graphics g) {
-    	System.out.println("PAN : dessiner Selection");
-
     	Graphics2D g2 = (Graphics2D) g;
     	float epaisseur = 5;
     	Stroke trait = g2.getStroke();

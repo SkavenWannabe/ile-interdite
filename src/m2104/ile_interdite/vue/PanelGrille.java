@@ -250,14 +250,12 @@ public class PanelGrille extends JPanel {
     
     public void changerEtatTuile(int tuile, String etat) {
     	effacerSelection();
-    	System.out.println("Etat : " + etat);
     	tuillesEtat[tuile] = etat;
     	repaint();
     }
 
     public void deplacerAventurier(String role, int tuile) {
     	effacerSelection();
-    	System.out.println("PAN : deplaceraventuriers");
     	aventuriers.put(role, tuile);
     	repaint();
     }
@@ -266,7 +264,6 @@ public class PanelGrille extends JPanel {
     public void changerEtatTresor(HashMap<String, Boolean> tresor){
         tresor.forEach( (k,v) -> { 
             tresorsGagner.put((String) k,(Boolean) v);
-            System.out.println("PAN : changer etat tresor : k " + k + " v " + v);
         });
         repaint();
     }
@@ -462,9 +459,6 @@ public class PanelGrille extends JPanel {
     		}
            
            if(v){ 
-               System.out.println("k = " + k);
-               System.out.println("tresors.get(k) = " + tresors.get(k));
-               System.out.println("tresors.get(CALICE) = " + tresors.get("CALICE"));
                g.drawImage(tresors.get(k).getScaledInstance(getWidth()/6, getHeight()/6, Image.SCALE_DEFAULT),(i%6)*getWidth()/6, i/6*getHeight()/6, null, null);   
            }
         });

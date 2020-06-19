@@ -146,10 +146,6 @@ public class VueJeu implements MouseListener {
                     role.add(key);
             }
         }
-        System.out.print("IHM : Init perso | ");
-        for(int p = 0; p < role.size(); p++)
-            System.out.print(role.get(p) + " | ");
-        System.out.println("");
         // utilisation de nom par default si l'utilisateur n'en rentre rien
         ArrayList<String> nomsPif = initNomsPif();
         panelNorth.add(nomTour); 
@@ -198,7 +194,6 @@ public class VueJeu implements MouseListener {
         innonde = new JButton("Carte Innondation");
         innonde.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                System.out.println("J\'INNONDE SON PERE");
                 ihm.notifierObservateurs(Message.choisirCarteInnondation());
                 actionCourante = "Innonde";
         	}
@@ -302,8 +297,6 @@ public class VueJeu implements MouseListener {
         btnJ1.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		if(carteADonner != -1) {
-                                System.out.println("IHM : Receveur choisi : 0");
-                                System.out.println("IHM : Carte choisie : " + carteADonner);
         			ihm.notifierObservateurs(Message.donner(0, carteADonner));
         			carteADonner = -1;
         			indication.setText("pioche = fin tour");
@@ -326,7 +319,6 @@ public class VueJeu implements MouseListener {
         btnJ2.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		if(carteADonner !=-1) {
-                    System.out.println("IHM : Receveur choisi : 1");
         			ihm.notifierObservateurs(Message.donner(1, carteADonner));
         			carteADonner = -1;
         			indication.setText("pioche = fin tour");
@@ -346,7 +338,6 @@ public class VueJeu implements MouseListener {
         	btnJ3.addActionListener(new java.awt.event.ActionListener() {
             	public void actionPerformed(ActionEvent e) {
             		if(carteADonner !=-1) {
-                                System.out.println("IHM : Receveur choisi : 2");
             			ihm.notifierObservateurs(Message.donner(2, carteADonner));
             			carteADonner = -1;
             			indication.setText("pioche = fin tour");
@@ -364,7 +355,6 @@ public class VueJeu implements MouseListener {
             btnJ4.addActionListener(new java.awt.event.ActionListener() {
             	public void actionPerformed(ActionEvent e) {
             		if(carteADonner !=-1) {
-                                System.out.println("IHM : Receveur choisi : 3");
             			ihm.notifierObservateurs(Message.donner(3, carteADonner));
             			carteADonner = -1;
             			indication.setText("pioche = fin tour");
@@ -383,7 +373,6 @@ public class VueJeu implements MouseListener {
         	btnJ3.addActionListener(new java.awt.event.ActionListener() {
             	public void actionPerformed(ActionEvent e) {
             		if(carteADonner !=-1) {
-                                System.out.println("Receveur choisi : 1");
             			ihm.notifierObservateurs(Message.donner(2, carteADonner));
             			carteADonner = -1;
             			indication.setText("pioche = fin tour");
@@ -423,7 +412,6 @@ public class VueJeu implements MouseListener {
 
     public void traiterCartes(PanelMain panel, int x, int y, int joueur) {
     	int numCarte = panel.getNumeroCarte(x, y);
-        System.out.println("IHM : numCarte = " + numCarte);
         
     	if (panel.helicoSelectionner(numCarte)) {
     		actionCourante = "Decolage";
@@ -447,10 +435,8 @@ public class VueJeu implements MouseListener {
     
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("IHM : action courante : " + actionCourante);
 		if (e.getSource() == panelGrille) {
 			if (panelGrille.estSelectionnable(panelGrille.getNumeroTuile(e.getX(), e.getY()))) {
-                            System.out.println("Case valide");
 				switch (actionCourante) {
 					case "Deplacer" : 
                         ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
@@ -468,7 +454,7 @@ public class VueJeu implements MouseListener {
                         break;
                    case "Aterrisage" :
                 	    indication.setText("pioche = fin tour");
-                        actionCourante = ""; System.out.println("numero tuile : " + panelGrille.getNumeroTuile(e.getX(), e.getY()));
+                        actionCourante = "";
                         ihm.notifierObservateurs(Message.helico(panelGrille.getNumeroTuile(e.getX(), e.getY())));
                         break;
 				}
@@ -547,7 +533,6 @@ public class VueJeu implements MouseListener {
                     return Color.RED;
                 }
             });
-    		System.out.println(0);
     	}else if ((tour % nbJoueur) == 1) {
     		labelNom2.setForeground(Color.red);
     		btnJ2.setUI(new MetalButtonUI() {
@@ -555,7 +540,6 @@ public class VueJeu implements MouseListener {
                     return Color.RED;
                 }
             });
-    		System.out.println(1);
     	}else if ((tour % nbJoueur) == 2){
     		labelNom3.setForeground(Color.red);
     		btnJ3.setUI(new MetalButtonUI() {
@@ -563,7 +547,6 @@ public class VueJeu implements MouseListener {
                     return Color.RED;
                 }
             });
-    		System.out.println(2);
     	}else if ((tour % nbJoueur) == 3){
     		labelNom4.setForeground(Color.red);
     		btnJ4.setUI(new MetalButtonUI() {
@@ -571,7 +554,6 @@ public class VueJeu implements MouseListener {
                     return Color.RED;
                 }
             });
-    		System.out.println(3);
     	}
     }
     
@@ -632,7 +614,6 @@ public class VueJeu implements MouseListener {
 	}
 	
     public void deplacerAventurier(String role, int tuile) {
-    	System.out.println("VUE : role - " + role + " tuile : "+tuile);
         panelGrille.deplacerAventurier(role, tuile);
     	actionCourante = "";
     }
@@ -706,7 +687,6 @@ public class VueJeu implements MouseListener {
     }
     
     public void nvActionCourante(String action) {
-    	System.out.println("nouvelle action courante" + action);
     	actionCourante = action;
     	if (action == "Decolage") {
     		indication.setText("choix joueur deplacer");

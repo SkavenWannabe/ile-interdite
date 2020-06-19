@@ -29,8 +29,6 @@ public class PanelDefausse extends JPanel {
             int ligne = i / 6;
             int col = i % 6;
 
-            System.out.println(i + "     " + col + "     "+ ligne);
-
             switch ((CarteTresor) draw.pop()) {
                 case HELICO:
                     g.drawImage(

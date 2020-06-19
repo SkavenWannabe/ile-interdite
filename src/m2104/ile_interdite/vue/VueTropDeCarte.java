@@ -31,7 +31,6 @@ public class VueTropDeCarte implements MouseListener {
     private String action;
     
     public VueTropDeCarte(IHM ihm, int idAventurier, ArrayList<String> main) {
-    	System.out.println("VUE : trop de carte");
         this.ihm = ihm;
         this.main = main;
         this.idAventurier = idAventurier;
@@ -72,12 +71,10 @@ public class VueTropDeCarte implements MouseListener {
     }
     
     public void desactiver() {
-    	System.out.println("desactiver vue trop de carte");
     	fenetre.dispose();
     }
     
     public void calculNouvelleMain() {
-    	System.out.println("Calcul nouvel main");
     	action = "";
     	ArrayList<Integer> deffausseMain = new ArrayList<Integer>();
     	for (int i = 0; i < main.size(); i++) {
@@ -96,9 +93,7 @@ public class VueTropDeCarte implements MouseListener {
     
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("mouseClicked");
 		if (panelCartes.getSelection() > 5 || panelCartes.dejaCliquer(panelCartes.getNumeroCarte(e.getX(), e.getY()))) {
-			System.out.println("nbCarte > 5");
 			panelCartes.setSelection(panelCartes.getNumeroCarte(e.getX(), e.getY()));
 		} 
 		if (panelCartes.getSelection() > 5 ) {
