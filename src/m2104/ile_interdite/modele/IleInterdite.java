@@ -259,9 +259,9 @@ public class IleInterdite extends Observable<Message> {
         return j;
     }
     
-    public int piocheInonde(){
+    public ArrayList<Integer> piocheInonde(){
         int id;
-        int j = 0;
+        ArrayList<Integer> resultat = new ArrayList<>();
         if (paquetInonde.isEmpty())                                      //Si la pioche est vide, la réinitialise
             resetPiocheInonde();
 
@@ -274,6 +274,8 @@ public class IleInterdite extends Observable<Message> {
         id = j;
         //FIN HACK*/
         
+        System.out.println("ILE : Tuille : " + id);
+        resultat.add(id);
         grille.changeEtat(id, -1);                                       //Change l'état de la tuile à inonder
         
         if(grille.getTuille(id).getEtat() == Etat.ABYSSE){
@@ -292,7 +294,8 @@ public class IleInterdite extends Observable<Message> {
                 }
                 for(int k = 0; k < aventuriers.size(); k++){
                     if(aventuriers.get(k).getPosition() == id){         //Si un aventurier est sur la tuille qui tombe dans l'abysse ...
-                        notifierObservateurs(Message.noyade(k));        //On prévient le contrôleur d'une potentiel noyade
+                        resultat.add(-1);
+                        notifierObservateurs(Message.noyade(k));        //On prévient le contrôleur d'une potentiel 
                     }
                 }
             }
@@ -302,22 +305,39 @@ public class IleInterdite extends Observable<Message> {
         }
         
         nbInondations--;
-        return id;
+        return resultat;
     }
 
     public void asseche(int position){
         grille.changeEtat(position, 1); //Change l'état de la tuile à assécher
-        nbActions--;                    //Réduit le compteur d'action de 1
+        if(Parameters.LOGS)  System.out.println("Asseche : aventurier : " + getAventurierEnCours().toString());
+
+        if(getAventurierEnCours().toString().equals("Ingenieur") && getAventurierEnCours().getPouvoir()) {
+            if(Parameters.LOGS)  System.out.println("Asseche : ingénieur n\'a pas consommer son action");
+            getAventurierEnCours().setPouvoir(false);
+        } else {
+            nbActions--;//Réduit le compteur d'action de 1
+            if(getAventurierEnCours().toString().equals("Ingenieur")) {
+                if(Parameters.LOGS) System.out.println("Asseche : ingénieur : prochain asséche gratuit");
+                getAventurierEnCours().setPouvoir(true);
+            }
+        }
+        if(Parameters.LOGS)  System.out.println("Assecher : nbAction après : " + nbActions);
     }
 
     
     public void deplace(int position){
-        getAventurierEnCours().changerPosition(position,grille); //Change la position de l'aventurier en cours avec sa nouvelle position
+        if(getAventurierEnCours().toString().equals("Ingenieur")) {
+            getAventurierEnCours().setPouvoir(false);
+        }
+        getAventurierEnCours().changerPosition(position, grille); //Change la position de l'aventurier en cours avec sa nouvelle position
         nbActions--;                                             //Réduit le compteur d'action de 1
     }
 
     public void donnerTresor(int receveur, int numCarte){
-        
+        if(getAventurierEnCours().toString().equals("Ingenieur")) {
+            getAventurierEnCours().setPouvoir(false);
+        }
         System.out.println("ILE : entrée dans méthode (receveur = " + receveur + ")");
         aventuriers.get(receveur).ajouterCarte(getAventurierEnCours().enleverCarte(numCarte));  //Ajoute dans la main de l'aventurier receveur la carte qu'on enlève de la main de l'aventurier donneur
         System.out.println("ILE : méthode réussie");
@@ -387,6 +407,9 @@ public class IleInterdite extends Observable<Message> {
 //    }
     
     public void gagneTresor(){
+        if(getAventurierEnCours().toString().equals("Ingenieur")) {
+            getAventurierEnCours().setPouvoir(false);
+        }
         CarteTresor tresor;
         switch(grille.getTuille(getAventurierEnCours().getPosition()).getSpecial()){  //A partir de la caractéristique Spécial de la tuille, détermine le trésor à obtenir
             case "TRESOR_PIERRE":
@@ -518,6 +541,7 @@ public class IleInterdite extends Observable<Message> {
         }
         else
             possibles = getAventurierEnCours().deplacementPossible(grille);
+        possibles.add(getAventurierEnCours().getPosition());
         ArrayList<Integer> caseAssechables = new ArrayList<>();
         for(int i = 0; i < possibles.size();i++){
             if(grille.getTuille(possibles.get(i)).getEtat() == Etat.INONDE)

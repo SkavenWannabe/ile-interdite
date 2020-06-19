@@ -79,12 +79,13 @@ public class Controleur implements Observateur<Message> {
             	
             case CHOISIR_CARTE_INNONDE:
                 System.out.println("CON : CHOISIR_CARTE_INNONDE");
-                int tuile = this.ileInterdite.piocheInonde();
-                System.out.println("Tuiles piochées : " + tuile);
+                System.out.println("Nb inonde avant : " + nbInondAVenir);
+                ArrayList<Integer> res = this.ileInterdite.piocheInonde();
+                int tuile = res.get(0);
             	ihm.changerEtatTuile(tuile, ileInterdite.getGrille().getTuille(tuile).getEtat().toString());
-                if(!(ihm.getActionEnCours().equals("Noyade")))
+                if(res.size() == 1)
                     nbInondAVenir--;
-                System.out.println("Nb inonde à venir : " + nbInondAVenir);
+                System.out.println("Nb inonde après : " + nbInondAVenir);
                 if(nbInondAVenir == 0){
                     this.nouveauTour();
                 }
@@ -199,10 +200,14 @@ public class Controleur implements Observateur<Message> {
                 break;
                 
             case NOYADE:
-                if(this.ileInterdite.nagePossible(msg.getIdAventurier()).length == 0)
+                if(this.ileInterdite.nagePossible(msg.getIdAventurier()).length == 0){
+                    System.out.println("CON : NOYADE : On ne peut pas le sauver ...");
                     traiterMessage(Message.defaite());
-                else
+                }
+                else{
+                    System.out.println("CON : NOYADE : nage petit !");
                     ihm.clickPossible(this.ileInterdite.nagePossible(msg.getIdAventurier()));
+                }
                 ihm.noyadeEnCours();
                 break;
                 
@@ -215,12 +220,19 @@ public class Controleur implements Observateur<Message> {
                     this.nouveauTour();
                 }
                 break;
-
             case TROMAIN:            	
-            	ArrayList<String> mainTropPleine = new ArrayList<String>();
+            	ArrayList<String> mainTropPleine = new ArrayList<>();
             	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> mainTropPleine.add(x.toString()));
                 this.ihm.tropDeCarteEnMain(msg.getIdAventurier(), mainTropPleine);
                 break;
+
+
+
+
+
+
+
+
 
             case NOUVELLE_MAIN:
             	System.out.println("notifier Observateur");
@@ -228,6 +240,7 @@ public class Controleur implements Observateur<Message> {
             	
                 ArrayList<String> cartesNV = new ArrayList<>();
             	ileInterdite.getMain(msg.getIdAventurier()).forEach(x -> cartesNV.add(x.toString()));
+
             	System.out.println(" action :" + msg.getAction());
             	
             	ihm.continuerPartie();
@@ -247,6 +260,22 @@ public class Controleur implements Observateur<Message> {
                 
             	break;
             	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             case DEFAITE:
                 ihm.creerVueFinJeu(Boolean.FALSE);
                 break;
