@@ -171,6 +171,13 @@ public class Controleur implements Observateur<Message> {
                     this.nouveauTour();
                 }
                 break;
+            case SETDEPART:
+                ihm.clickPossible(ileInterdite.positionsJoueurs());
+                break;
+            case SETARRIVEE:
+                break;
+            case HELICO:
+                break;
             case TROMAIN:
                 //this.ihm.tropDeCarteEnMain();
                 break;

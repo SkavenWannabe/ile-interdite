@@ -555,11 +555,9 @@ public class VueJeu implements MouseListener {
     	if (panel.helicoSelectionner(numCarte)) {
     		actionCourante = "Helicouptere";
                 ihm.notifierObservateurs(Message.setDepart());
-    		
     	} else if (panel.sacSelectionner(numCarte)) {
     		actionCourante = "Assecher";
     		ihm.notifierObservateurs(Message.sacDeSable(joueur, numCarte));
-    		
     	} else if (actionCourante == "Donner") {
             if (panel.estSelectionnables(numCarte)) {
             	if (carteADonner == -1) {
