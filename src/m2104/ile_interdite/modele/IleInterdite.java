@@ -28,6 +28,7 @@ public class IleInterdite extends Observable<Message> {
     private int nbActions;
     private int nbInondations;
     private HashMap specialAbysse;
+    private int utilisateur;
     
     public IleInterdite(Observateur<Message> observateur) {
         this.addObservateur(observateur);
@@ -84,6 +85,9 @@ public class IleInterdite extends Observable<Message> {
     }
     public ArrayList<CarteTresor> getMain(int numAv){
         return aventuriers.get(numAv).getMain();
+    }
+    public int getUtilisateur(){
+        return utilisateur;
     }
 
     /*
@@ -385,6 +389,7 @@ public class IleInterdite extends Observable<Message> {
     }
 
     public int nouveauTour(){
+        utilisateur = -1;
         if(getAventurierEnCours().toString().equals("Pilote"))
             getAventurierEnCours().setPouvoir(true);
         tour++;                                 //Incrémente le compteur de tour
@@ -393,12 +398,39 @@ public class IleInterdite extends Observable<Message> {
         return tour;
     }    
     
-    public int[] positionsJoueurs(){
+    public int[] positionsJoueurs(int joueur){
+        
+        utilisateur = joueur;
+        
         ArrayList<Integer> positions = new ArrayList<>();
         for(int i = 0; i < aventuriers.size(); i++)
             positions.add(aventuriers.get(i).getPosition());
         Collections.sort(positions);
+        
+        System.out.println("ILE : Positions avant " + positions);
+        
+        for(int i = 0; i < positions.size()-1; i++){
+            int j = i+1;
+            while(j < positions.size()){
+                if(positions.get(j) == positions.get(i))
+                    positions.remove(j);
+                else
+                    j++;
+            }
+        }
+        
+        System.out.println("ILE : Positions après " + positions);
+        
         return positions.stream().mapToInt(i -> i).toArray();
+    }
+    
+    public int[] pasInondee(){
+        ArrayList<Integer> ret = new ArrayList<>();
+        for(int i = 0; i < grille.getTuilles().length; i++) {
+            if (grille.getTuille(i).getEtat() != Etat.ABYSSE)
+                ret.add(i);
+        }
+        return ret.stream().mapToInt(i -> i).toArray();
     }
     
     public void helico(int ancien, int nouveau){
@@ -406,6 +438,13 @@ public class IleInterdite extends Observable<Message> {
         for(int i = 0; i < aventuriers.size(); i++)
             if(aventuriers.get(i).getPosition() == ancien)
                 aventuriers.get(i).changerPosition(nouveau,grille);    //Change la position de chaque aventurier se trouvant sur la case de départ de l'hélico à celle d'arrivée
+        
+        int k = 0;
+        while(aventuriers.get(utilisateur).getMain().get(k) != CarteTresor.HELICO)
+            k++;
+        
+        defausseTresor.push(aventuriers.get(utilisateur).enleverCarte(k));
+        
     }
     
 

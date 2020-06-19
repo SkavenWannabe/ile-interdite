@@ -151,16 +151,16 @@ public class Message implements Serializable {
         return new Message(Utils.Commandes.TROMAIN, idAventurier, null, null, null, null, null);
     }
 
-    public static Message setDepart(){
-        return new Message(Utils.Commandes.SETDEPART, null, null, null, null, null, null);
+    public static Message setDepart(int idAventurier){
+        return new Message(Utils.Commandes.SETDEPART, idAventurier, null, null, null, null, null);
     }
 
-    public static Message setArrivee(){
-        return new Message(Utils.Commandes.SETARRIVEE, null, null, null, null, null, null);
+    public static Message setArrivee(int tuile){
+        return new Message(Utils.Commandes.SETARRIVEE, null, null, null, tuile, null, null);
     }
 
-    public static Message helico(){
-        return new Message(Utils.Commandes.HELICO, null, null, null, null, null, null);
+    public static Message helico(int tuile){
+        return new Message(Utils.Commandes.HELICO, null, null, null, tuile, null, null);
     }
     
     public static Message defaite(){

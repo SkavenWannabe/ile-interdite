@@ -553,8 +553,8 @@ public class VueJeu implements MouseListener {
     	int numCarte = panel.getNumeroCarte(x, y);
         System.out.println("IHM : numCarte = " + numCarte);
     	if (panel.helicoSelectionner(numCarte)) {
-    		actionCourante = "Helicouptere";
-                ihm.notifierObservateurs(Message.setDepart());
+    		actionCourante = "Decolage";
+                ihm.notifierObservateurs(Message.setDepart(joueur));
     	} else if (panel.sacSelectionner(numCarte)) {
     		actionCourante = "Assecher";
     		ihm.notifierObservateurs(Message.sacDeSable(joueur, numCarte));
@@ -613,8 +613,15 @@ public class VueJeu implements MouseListener {
                                             ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
                                             break;
                                         case "Noyade" :
-                                            System.out.println("Nage valide");
                                             ihm.notifierObservateurs(Message.nage(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                                            break;
+                                        case "Decolage" :
+                                            actionCourante = "Aterrisage";
+                                            ihm.notifierObservateurs(Message.setArrivee(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                                            break;
+                                        case "Aterrisage" :
+                                            actionCourante = "";
+                                            ihm.notifierObservateurs(Message.helico(panelGrille.getNumeroTuile(e.getX(), e.getY())));
                                             break;
 				}
 			}

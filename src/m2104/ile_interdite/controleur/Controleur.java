@@ -21,6 +21,7 @@ public class Controleur implements Observateur<Message> {
     
     private int joueurSac = -1;
     private int carteSac = -1;
+    private int id;
     
     public Controleur() {
         this.ileInterdite = new IleInterdite(this);
@@ -65,13 +66,13 @@ public class Controleur implements Observateur<Message> {
                 joueurSac = -1; carteSac = -1;
                 //ileInterdite.tricheTresor();
                 ihm.piocheTresors(this.ileInterdite.piocheTresor());
-                this.ileInterdite.mainPleine();
                 nbInondAVenir = this.ileInterdite.getNbInondations();
                 
                 ArrayList<String> cartes = new ArrayList<>();
             	ileInterdite.getMain(ileInterdite.getNumeroAventurierEnCours()).forEach(x -> cartes.add(x.toString()));
                 ihm.afficherMain(ileInterdite.getNumeroAventurierEnCours(), cartes);
                 ihm.augmentNiveau(ileInterdite.getNiveau());
+                this.ileInterdite.mainPleine();
             	break;
             case CHOISIR_CARTE_INNONDE:
                 System.out.println("CON : CHOISIR_CARTE_INNONDE");
@@ -172,11 +173,23 @@ public class Controleur implements Observateur<Message> {
                 }
                 break;
             case SETDEPART:
-                ihm.clickPossible(ileInterdite.positionsJoueurs());
+                if(ileInterdite.estGagnable())
+                    traiterMessage(Message.victoire());
+                else
+                    ihm.clickPossible(ileInterdite.positionsJoueurs(msg.getIdAventurier()));
                 break;
             case SETARRIVEE:
+                id = msg.getIdTuile();
+                ihm.clickPossible(ileInterdite.pasInondee());
                 break;
             case HELICO:
+                ileInterdite.helico(id, msg.getIdTuile());
+                id = 0;
+                for(int i = 0; i < ileInterdite.getAventuriers().size(); i++)
+                    ihm.deplacerAventurier(ileInterdite.getAventuriers().get(i).toString(),ileInterdite.getAventuriers().get(i).getPosition());
+                ArrayList<String> main2 = new ArrayList<>();
+                ileInterdite.getMain(ileInterdite.getUtilisateur()).forEach(x -> main2.add(x.toString()));
+                ihm.afficherMain(ileInterdite.getUtilisateur(),main2);
                 break;
             case TROMAIN:
                 //this.ihm.tropDeCarteEnMain();
