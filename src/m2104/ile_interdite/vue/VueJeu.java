@@ -88,7 +88,7 @@ public class VueJeu implements MouseListener {
 	private JButton innondeDef;
 	private JLabel nom;
 	
-	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille, HashMap<String,Integer> aventuriers, HashMap<Integer, ArrayList> mains) {
+	public VueJeu(IHM ihm, String[] nomsJoueurs, int nbJoueur, int difficulte, Grille grille, HashMap<String,Integer> aventuriers, HashMap<Integer, ArrayList> mains, ArrayList<Integer> pos) {
 		//initialisation attribut
 		this.ihm = ihm;
 		this.nomsJoueurs = nomsJoueurs;
@@ -127,10 +127,17 @@ public class VueJeu implements MouseListener {
         // Initialisation Haut de page
         nomTour = new JLabel("Tour 1 : ");
         // recuperation des role uniquement pour l'affichage
-        ArrayList<String> role = new ArrayList<String>();
-        aventuriers.forEach((k,v) -> {
-            role.add(k);
-        });
+        ArrayList<String> role = new ArrayList<>();
+        for(int a = 0; a < pos.size(); a++){
+            for(String key : aventuriers.keySet()){
+                if(aventuriers.get(key) == pos.get(a))
+                    role.add(key);
+            }
+        }
+        System.out.print("IHM : Init perso | ");
+        for(int p = 0; p < role.size(); p++)
+            System.out.print(role.get(p) + " | ");
+        System.out.println("");
         // utilisation de nom par default si l'utilisateur n'en rentre rien
         ArrayList<String> nomsPif = initNomsPif();
         panelNorth.add(nomTour); 
@@ -242,6 +249,7 @@ public class VueJeu implements MouseListener {
         donnerT.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		actionCourante = "Donner";
+        		indication.setText("choix carte a donner");
         		ihm.notifierObservateurs(Message.testDonner());
         	}
         });
@@ -462,10 +470,12 @@ public class VueJeu implements MouseListener {
     }
         
     public void clickPossible(int[] tab) {
+    	System.out.println("vue jeu : click possible");
     	panelGrille.selectionnerTuiles(tab);
     }
     
     public void deplacerAventurier(String role, int tuile) {
+    	System.out.println("VUE : role - " + role + " tuile : "+tuile);
         panelGrille.deplacerAventurier(role, tuile);
     	actionCourante = "";
     }
@@ -531,7 +541,7 @@ public class VueJeu implements MouseListener {
     }
 
     public void actionsPossibles(ArrayList<Boolean> actionsPossibles){
-        
+	    //indication.setText("pioche = fin tour");
         deplacer.setEnabled(actionsPossibles.get(0));
         assecher.setEnabled(actionsPossibles.get(1));
         donnerT.setEnabled(actionsPossibles.get(2));
@@ -552,14 +562,20 @@ public class VueJeu implements MouseListener {
     public void traiterCartes(PanelMain panel, int x, int y, int joueur) {
     	int numCarte = panel.getNumeroCarte(x, y);
         System.out.println("IHM : numCarte = " + numCarte);
+        
     	if (panel.helicoSelectionner(numCarte)) {
     		actionCourante = "Decolage";
-                ihm.notifierObservateurs(Message.setDepart(joueur));
+    		indication.setText("choix joueur deplacer");
+            ihm.notifierObservateurs(Message.setDepart(joueur));
+            
     	} else if (panel.sacSelectionner(numCarte)) {
     		actionCourante = "Assecher";
+    		indication.setText("choix tuile assecher");
     		ihm.notifierObservateurs(Message.sacDeSable(joueur, numCarte));
+    		
     	} else if (actionCourante == "Donner") {
             if (panel.estSelectionnables(numCarte)) {
+        		indication.setText("choix joueur a donner");
             	if (carteADonner == -1) {
                     carteADonner = numCarte;
             	}	
@@ -608,12 +624,23 @@ public class VueJeu implements MouseListener {
     	}
     }
     
+    public void nvActionCourante(String action) {
+    	System.out.println("nouvelle action courante" + action);
+    	actionCourante = action;
+    	if (action == "Decolage") {
+    		indication.setText("choix joueur deplacer");
+    	} else if (action == "Assecher") {
+    		indication.setText("choix tuile assecher");
+    	}
+    }
+    
     public void detruire(){
         fenetre.dispose();
     }
     
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		System.out.println("IHM : action courante : " + actionCourante);
 		if (e.getSource() == panelGrille) {
 			if (panelGrille.estSelectionnable(panelGrille.getNumeroTuile(e.getX(), e.getY()))) {
                             System.out.println("Case valide");
@@ -622,19 +649,21 @@ public class VueJeu implements MouseListener {
                         ihm.notifierObservateurs(Message.bouger(panelGrille.getNumeroTuile(e.getX(), e.getY())));
                         break;
 					case "Assecher" :
-                                            ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                                            break;
-                                        case "Noyade" :
-                                            ihm.notifierObservateurs(Message.nage(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                                            break;
-                                        case "Decolage" :
-                                            actionCourante = "Aterrisage";
-                                            ihm.notifierObservateurs(Message.setArrivee(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                                            break;
-                                        case "Aterrisage" :
-                                            actionCourante = "";
-                                            ihm.notifierObservateurs(Message.helico(panelGrille.getNumeroTuile(e.getX(), e.getY())));
-                                            break;
+                        ihm.notifierObservateurs(Message.assecher(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
+                   case "Noyade" :
+                        ihm.notifierObservateurs(Message.nage(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
+                   case "Decolage" :
+                        actionCourante = "Aterrisage";
+                        indication.setText("choix aterrisage");
+                        ihm.notifierObservateurs(Message.setArrivee(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
+                   case "Aterrisage" :
+                	    indication.setText("pioche = fin tour");
+                        actionCourante = ""; System.out.println("numero tuile : " + panelGrille.getNumeroTuile(e.getX(), e.getY()));
+                        ihm.notifierObservateurs(Message.helico(panelGrille.getNumeroTuile(e.getX(), e.getY())));
+                        break;
 				}
 			}
 		} else if(e.getSource() == panelCartesJ1) {

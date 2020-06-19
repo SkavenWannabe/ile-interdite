@@ -90,7 +90,14 @@ public class IleInterdite extends Observable<Message> {
     public int getUtilisateur(){
         return utilisateur;
     }
-
+    public ArrayList<Integer> getPositions(){
+        ArrayList<Integer> positions = new ArrayList<>();
+        for(int y = 0; y < aventuriers.size(); y++)
+            positions.add(aventuriers.get(y).getPosition());
+        return positions;
+    }
+    
+    
     /*
         METHODES
     */
@@ -486,14 +493,15 @@ public class IleInterdite extends Observable<Message> {
         return ret.stream().mapToInt(i -> i).toArray();
     }
     
-    public void helico(int ancien, int nouveau){
+    public void helico(int ancien, int nouveau, boolean helicoTrop){
 
         for(int i = 0; i < aventuriers.size(); i++)
-            if(aventuriers.get(i).getPosition() == ancien)
+            if(aventuriers.get(i).getPosition() == ancien) {
                 aventuriers.get(i).changerPosition(nouveau,grille);    //Change la position de chaque aventurier se trouvant sur la case de départ de l'hélico à celle d'arrivée
-        
+                System.out.println("ile : nouvelle position " + aventuriers.get(i).getPosition());
+            }
         int k = 0;
-        while(aventuriers.get(utilisateur).getMain().get(k) != CarteTresor.HELICO)
+        while(aventuriers.get(utilisateur).getMain().get(k) != CarteTresor.HELICO && !helicoTrop)
             k++;
         
         defausseTresor.push(aventuriers.get(utilisateur).enleverCarte(k));
