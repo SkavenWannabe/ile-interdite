@@ -227,6 +227,7 @@ public class VueJeu implements MouseListener {
         tresors = new JButton("Carte Tresors");
         tresors.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		panelGrille.effacerSelection();
         		actionCourante = "";
                 innonde.setEnabled(true);
                 tresors.setEnabled(false);
@@ -598,7 +599,6 @@ public class VueJeu implements MouseListener {
     }
     
     public void clickPossible(int[] tab) {
-    	System.out.println("vue jeu : click possible");
     	panelGrille.selectionnerTuiles(tab);
     }
     

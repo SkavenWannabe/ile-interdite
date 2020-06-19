@@ -13,12 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -156,7 +153,7 @@ public class PanelGrille extends JPanel {
         tuilesSelectionnable = new boolean[tuis.length];
 
         boolean[] premierTrouve = new boolean[4];
-        Stack nomNormal = new Stack();
+        Stack<String> nomNormal = new Stack<String>();
 
         nomNormal.push("ForetPourpre");
         nomNormal.push("TourGuet");
@@ -252,16 +249,16 @@ public class PanelGrille extends JPanel {
     
     
     public void changerEtatTuile(int tuile, String etat) {
+    	effacerSelection();
     	System.out.println("Etat : " + etat);
     	tuillesEtat[tuile] = etat;
-    	effacerSelection();
     	repaint();
     }
 
     public void deplacerAventurier(String role, int tuile) {
+    	effacerSelection();
     	System.out.println("PAN : deplaceraventuriers");
     	aventuriers.put(role, tuile);
-    	effacerSelection();
     	repaint();
     }
     
@@ -292,6 +289,7 @@ public class PanelGrille extends JPanel {
     	for (int i = 0; i < tuilesSelectionnable.length; i++) {
     		tuilesSelectionnable[i] = false;
     	}
+    	repaint();
     }
     
     public boolean estSelectionnable(int tuile) {
