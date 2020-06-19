@@ -93,9 +93,11 @@ public class VueTropDeCarte implements MouseListener {
 		if (panelCartes.getSelection() > 5 || panelCartes.dejaCliquer(panelCartes.getNumeroCarte(e.getX(), e.getY()))) {
 			System.out.println("nbCarte > 5");
 			panelCartes.setSelection(panelCartes.getNumeroCarte(e.getX(), e.getY()));
-			continuer.setEnabled(true);
-		} else {
+		} 
+		if (panelCartes.getSelection() > 5 ) {
 			continuer.setEnabled(false);
+		} else {
+			continuer.setEnabled(true);
 		}
 	}
 
