@@ -37,6 +37,7 @@ public class VueTropDeCarte implements MouseListener {
         
         fenetre = new JFrame("Surplu de carte");
         fenetre.setLayout(new BorderLayout());
+        fenetre.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         fenetre.setSize(500, 400);
         
         mainPanel = new JPanel(new BorderLayout());
