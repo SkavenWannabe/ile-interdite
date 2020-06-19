@@ -2,6 +2,7 @@ package m2104.ile_interdite.modele;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Stack;
@@ -221,8 +222,16 @@ public class IleInterdite extends Observable<Message> {
     }
     
     public void majMain(int idJoueur, ArrayList<Integer> deffausse) {
-    	for(int i = 0; i < deffausse.size(); i++) {
-    		defausseTresor.push(aventuriers.get(idJoueur).enleverCarte(deffausse.get(i)));
+        
+        Collections.sort(deffausse);
+        ArrayList<Integer> carteAEnlever = new ArrayList<>();
+        
+        for(int j = deffausse.size()-1; j > -1; j--){
+            carteAEnlever.add(deffausse.get(j));
+        }
+        
+    	for(int i = 0; i < carteAEnlever.size(); i++) {
+    		defausseTresor.push(aventuriers.get(idJoueur).enleverCarte(carteAEnlever.get(i)));
     	}
     	System.out.println("ile : main mis a jour");
     }
@@ -252,14 +261,14 @@ public class IleInterdite extends Observable<Message> {
         if (paquetInonde.isEmpty())                                      //Si la pioche est vide, la réinitialise
             resetPiocheInonde();
 
-        //int id = (int) paquetInonde.pop();                               //Pioche la position de la tuile a inonder
+        id = (int) paquetInonde.pop();                               //Pioche la position de la tuile a inonder
          
-        //HACK
+        /*HACK
         while(!(grille.getTuille(j).getSpecial().equals("HELICO"))){
             j++;
-        }
+         }
         id = j;
-        //FIN HACK
+        //FIN HACK*/
         
         grille.changeEtat(id, -1);                                       //Change l'état de la tuile à inonder
         
