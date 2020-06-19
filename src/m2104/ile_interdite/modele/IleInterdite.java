@@ -214,11 +214,15 @@ public class IleInterdite extends Observable<Message> {
         return getAventurierEnCours().getMain();
     }
 
-    public void mainPleine(){
-        for(int i = 0; i < aventuriers.size(); i++){
-            if(aventuriers.get(i).getMain().size() > 5)
-                notifierObservateurs(Message.tromain(i));
+    public boolean mainPleine(){
+        boolean mainPleine = false;
+    	for(int i = 0; i < aventuriers.size(); i++){
+            if(aventuriers.get(i).getMain().size() > 5) {
+            	mainPleine = true;
+            	notifierObservateurs(Message.tromain(i));
+            }
         }
+    	return mainPleine;
     }
     
     public void majMain(int idJoueur, ArrayList<Integer> deffausse) {
