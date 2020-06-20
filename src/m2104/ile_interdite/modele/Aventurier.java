@@ -18,11 +18,9 @@ public abstract class Aventurier {
 
     public void ajouterCarte(CarteTresor carte){
         main.add(carte);
-        System.out.println("AVE : carte ajoutée");
     }
 
     public CarteTresor enleverCarte(int numCarte) {
-        System.out.println("AVE : carte enlevée");
         return main.remove(numCarte);
     }
 

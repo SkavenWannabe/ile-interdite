@@ -35,6 +35,7 @@ public class IHM extends Observable<Message> {
     }
     
     public void creerVueFinJeu(IHM this,Boolean win){
+        jeu.finDePartie();
         finJeu = new VueFinJeu(win,this);
     }
     

@@ -15,6 +15,7 @@ public class Navigateur extends Aventurier{
         super(p);
     }
 
+    //Prévue mais finalement pas implantée
     public void deplaceAutreJoueur(Aventurier aventurier, int position, Grille grille) {
         aventurier.changerPosition(position,grille);
     }

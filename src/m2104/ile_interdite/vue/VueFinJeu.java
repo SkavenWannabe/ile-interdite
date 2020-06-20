@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,6 +43,7 @@ public class VueFinJeu {
         //Ajout du titre 
         titre = new JLabel("La partie est terminée", JLabel.CENTER);
         titre.setFont(new Font("Arial", Font.PLAIN, 20));
+        titre.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         finJeu.add(titre, BorderLayout.NORTH);
         
         //Création des zones de texte en fonction de si la partie est gagnée ou perdue
@@ -59,15 +61,20 @@ public class VueFinJeu {
           victoire.setFont(new Font("Arial", Font.PLAIN, 14));
           victoire.setDisabledTextColor(Color.BLACK);
           finJeu.add(victoire, BorderLayout.CENTER);
-          victoire.setEnabled(true);}
+          victoire.setEnabled(false);
+          victoire.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        }
         else{
           defaite.setFont(new Font("Arial", Font.PLAIN, 14));
           defaite.setDisabledTextColor(Color.BLACK);
           finJeu.add(defaite, BorderLayout.CENTER);
-          defaite.setEnabled(false);}
+          defaite.setEnabled(false);
+          defaite.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        }
         
         //Création et ajout des boutons pour quitter le jeu ou recommencer une partie
         panelBas = new JPanel(new GridLayout(1,3));
+        panelBas.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         
         recommencer = new JButton ("Recommencer");
         recommencer.addActionListener(new java.awt.event.ActionListener() {

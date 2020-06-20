@@ -695,6 +695,17 @@ public class VueJeu implements MouseListener {
     	}
     }
     
+    public void finDePartie(){
+        tresors.setEnabled(false);
+        tresorsDef.setEnabled(false);
+        deplacer.setEnabled(false);
+	assecher.setEnabled(false);
+	gagnerT.setEnabled(false);
+	donnerT.setEnabled(false);
+	retour.setEnabled(false);
+        innonde.setEnabled(false);
+    }
+    
     // A la fin d'une partie (gagner/perdue) pour pouvoir supprimer la fenetre et en rouvrir une
     public void detruire(){
         fenetre.dispose();

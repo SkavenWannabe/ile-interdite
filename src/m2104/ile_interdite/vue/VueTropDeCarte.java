@@ -1,6 +1,7 @@
 package m2104.ile_interdite.vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -46,8 +47,10 @@ public class VueTropDeCarte implements MouseListener {
         
         indication = new JTextArea(""
                 + "Au maximum un joueur peu avoir dans sa main que 5 cartes, \n"
-                + "Veuillez donc cliquer sur les cartes dont vous souhaitez vous deffaussez, \n"
-                + "Une fois que cela est fait cliquer sur continuer pour reprendre le jeu."); 
+                + "Veuillez donc cliquer sur les cartes dont vous souhaitez vous défaussez, \n"
+                + "Une fois que cela est fait cliquer sur Continuer pour reprendre le jeu."); 
+        indication.setEnabled(false);
+        indication.setDisabledTextColor(Color.black);
         panelNorth.add(indication);
         
         panelCartes = new PanelCartes(main);
