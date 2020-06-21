@@ -1,0 +1,23 @@
+Scénario de la vidéo de Présentation :
+
+Initialisation :
+
+- Partie de 3 joueurs
+- Difficulté Normal
+- Le joueur n°2 est le seul à donner un nom : Basile
+
+Premier tour :
+
+- Le Messager donne un trésor au plongeur
+- Le Messager se déplace deux fois pour se trouver sur la même tuile que le Pilote
+
+Deuxième tour :
+
+- Le Plongeur traverse une tuile inondée pour atteindre les deux autres aventuriers
+- Le plongeur donne une carte trésor au Messager
+
+Troisième tour :
+
+- Le Pilote donne une carte trésor au plongeur
+- Le Pilote utilise un sac de sable pour assécher une tuile loin de lui
+- Le Pilote se déplace grâce à sa capacité pour rejoindre la tuile précédement asséchée
