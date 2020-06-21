@@ -21,3 +21,5 @@ Troisième tour :
 - Le Pilote donne une carte trésor au plongeur
 - Le Pilote utilise un sac de sable pour assécher une tuile loin de lui
 - Le Pilote se déplace grâce à sa capacité pour rejoindre la tuile précédement asséchée
+
+La vidéo peut être trouvé à ce lien : https://youtu.be/SI1KBL0H9fU
